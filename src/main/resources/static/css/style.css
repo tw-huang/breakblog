@@ -1,0 +1,46 @@
+body {
+    background-color: #E2E2E2;
+}
+/*背景颜色类*/
+.bg-gary {
+    background-color: #E2E2E2;
+}
+
+.bg-white {
+    background-color: white;
+}
+
+/*自定义行高*/
+#Wrapper {
+    line-height: 1.6rem;
+}
+
+#Wrapper p {
+    margin-bottom: 8px;
+}
+
+#Bottom p {
+    margin: 8px 0;
+}
+
+.pagination {
+    margin-bottom: 0;
+}
+
+a {
+    color: rgb(33, 37, 41);
+}
+
+
+/*文章页面优化显示格式*/
+article h1 {
+    font-size: 28px;
+}
+
+article h2 {
+    font-size: 24px;
+}
+
+article h3 {
+    font-size: 20px;
+}

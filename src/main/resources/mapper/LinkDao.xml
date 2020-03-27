@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="me.breakblog.dao.LinkDao">
+    <select id="findAll" resultType="Link">
+        select * from link order by id
+    </select>
+
+    <select id="findById" resultType="Link" parameterType="Integer">
+        select * from link where id = #{id}
+    </select>
+
+    <insert id="addLink" parameterType="Link">
+        insert into link (name, url) value (#{name}, #{url})
+    </insert>
+
+    <update id="updateLink" parameterType="Link">
+        update link set name = #{name}, url = #{url} where id = #{id}
+    </update>
+
+    <delete id="deleteLink" parameterType="Integer">
+        delete from link where id = #{id}
+    </delete>
+</mapper>

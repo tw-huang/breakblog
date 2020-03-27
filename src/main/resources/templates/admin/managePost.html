@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/layout :: commonCss(~{::title},~{})">
+    <title th:text="${session.admin.blogTitle} + ' - ManagePost' "></title>
+</head>
+<body>
+<div th:replace="common/layout :: commonTop"></div>
+<div id="Wrapper" class="bg-gary">
+    <div class="content py-3">
+        <div class="container">
+            <div th:replace="common/layout :: commonMsg"></div>
+            <div class="row">
+                <div class="col-lg-12 col-12 p-3 bg-white">
+                    <h2>Manage Post</h2>
+                    <h6 class="text-muted" th:text="${session.admin.blogSubtitle}"></h6>
+                    <div class="btn-group btn-group-sm float-right">
+                        <a th:href="@{/admin/post/new}">
+                            <button type="button" class="btn btn-info btn-sm p-1">New Post</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-12 p-3 bg-white mt-3">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th>PageView</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tr th:each="post:${posts}">
+                            <td th:text="${post.id}"></td>
+                            <td><a th:href="@{'/post/'+${post.id}}" th:text="${post.title}"></a></td>
+                            <td th:text="${post.category.name}"></td>
+                            <td><span class="moment" th:attr="data-timestamp=${post.getTimestampFormat()}"
+                                      data-format="format('LL')"></span></td>
+                            <td th:text="${post.pageView}"></td>
+                            <td>
+                                <div class="btn-group">
+                                    <a th:href="@{'/admin/post/edit/'+${post.id}}">
+                                        <button type="submit" class="btn btn-info btn-sm p-1">Edit</button>
+                                    </a>
+                                    <form class="inline" method="post"
+                                          th:action="@{'/admin/post/delete/'+${post.id}}">
+                                        <button type="submit" class="btn btn-danger btn-sm p-1"
+                                                onclick="return confirm('Are you sure?')">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <hr>
+                    <div class="page" th:if="${page.hasPreviousPage || page.hasNextPage}" th:fragment="commonPag">
+                        <ul class="pagination">
+                            <li th:class="${page.hasPreviousPage}?'page-item':'page-item disabled'">
+                                <a class="page-link" th:href="@{'/admin/post/manage?page='+${page.pageNum - 1}}">
+                                    <span aria-hidden="true">←</span> Prev
+                                </a>
+                            </li>
+                            <li th:class="${page.hasNextPage}?'page-item':'page-item disabled'">
+                                <a class="page-link float-right" th:href="@{'/admin/post/manage?page='+${page.pageNum + 1}}">
+                                    Next <span aria-hidden="true">→</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="common/layout :: commonBottom"></div>
+<div th:replace="common/layout :: commonJs(~{})"></div>
+</body>
+</html>

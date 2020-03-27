@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="me.breakblog.dao.CategoryDao">
+    <!--  定义Category的resultMap  -->
+    <resultMap id="categoryPostMap" type="Category">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <!--配置Post对象中的Category集合的映射-->
+        <collection property="posts" column="id" ofType="Post" select="me.breakblog.dao.PostDao.findByCategoryId"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="categoryPostMap">
+        select * from category
+    </select>
+
+    <select id="findById" resultType="Category" parameterType="Integer">
+        select * from category where id=#{id}
+    </select>
+    <select id="findByName" resultType="Category" parameterType="String">
+        select * from category where name=#{name}
+    </select>
+
+    <insert id="addCategory" parameterType="Category">
+        insert into category (name) value (#{name})
+    </insert>
+
+    <update id="updateCategory" parameterType="Category">
+        update category set name = #{name} where id = #{id}
+    </update>
+
+    <delete id="deleteCategory" parameterType="Integer">
+        delete from category where id = #{id}
+    </delete>
+</mapper>

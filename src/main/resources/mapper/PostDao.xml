@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.breakblog.dao.PostDao">
+    <!--定义封装Post和Category的resultMap-->
+    <resultMap id="postCategoryMap" type="Post">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="subtitle" column="subtitle"/>
+        <result property="body" column="body"/>
+        <result property="timestamp" column="timestamp"/>
+        <result property="canComment" column="can_comment"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="pageView" column="page_view"/>
+        <!-- 一对一的关系映射，配置封装Category的内容
+         select属性指定的内容：查询分类的唯一的标志
+         column属性指定的内容：分类根据id查询时，所需的参数的值
+         -->
+        <association property="category" column="category_id" javaType="Category"
+                     select="me.breakblog.dao.CategoryDao.findById">
+        </association>
+    </resultMap>
+    <!--select post.*,category.id as cid ,category.name from post,category where post.category_id = category.id order by post.id-->
+    <select id="findAll" resultMap="postCategoryMap">
+            select * from post order by id desc
+        </select>
+
+    <select id="findByCategoryId" resultType="Post" parameterType="Integer">
+        select * from post where category_id=#{id} order by id desc
+    </select>
+
+    <select id="findById" resultMap="postCategoryMap" parameterType="Integer">
+        select * from post where id=#{id}
+    </select>
+
+    <insert id="addPost" parameterType="Post">
+        insert into post (title, subtitle, body, timestamp, category_id) value (#{title}, #{subtitle}, #{body}, #{timestamp}, #{categoryId})
+    </insert>
+
+    <update id="updatePost" parameterType="Post">
+        update post set title = #{title}, subtitle = #{subtitle}, body = #{body}, category_id = #{categoryId} where id = #{id}
+    </update>
+
+    <delete id="deletePost" parameterType="Integer">
+        delete from post where id = #{id}
+    </delete>
+
+    <update id="addPageViews" parameterType="Integer">
+        update post set page_view = page_view + 1 where id = #{id}
+    </update>
+
+</mapper>
