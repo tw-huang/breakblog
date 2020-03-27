@@ -1,6 +1,6 @@
 # breakblog-springboot
 
-本项目使用：springboot + mybatis + Thymeleaf 技术重构我的个人博客 BreakBlog(Flask 实现)，前端页面基本一样。页面布局和功能主要参考李辉的：[Blueblog]("https://github.com/greyli/bluelog") 项目，感谢！
+本项目使用：springboot + mybatis + Thymeleaf 技术重构我的个人博客 BreakBlog(Flask 实现)，前端页面基本一样。页面布局和功能主要参考李辉的：[Blueblog](https://github.com/greyli/bluelog) 项目，感谢！
 博客主要实现了：
 
 - 前台
@@ -28,7 +28,7 @@
     - 个性副标题
     - 作者
 
-功能具体实现请看我的博客地址：[BreakBlog]("https://github.com/tw-huang/breakblog")
+功能具体实现请看我的博客地址：[BreakBlog](https://github.com/tw-huang/breakblog)
 
 ## 使用说明
 
