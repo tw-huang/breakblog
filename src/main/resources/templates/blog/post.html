@@ -13,6 +13,7 @@
                     <h2 th:text="${post.title}"></h2>
                     <h6 class="text-muted">Category:
                         <a th:href="@{'/category/'+ ${post.categoryId}}" th:text="${post.category.name}"></a>
+                        &nbsp;Date:
                         <span class="moment" th:attr="data-timestamp=${post.getTimestampFormat()}"
                               data-format="format('LLL')"></span>
                     </h6>
