@@ -37,7 +37,7 @@
                             <td th:text="${post.id}"></td>
                             <td><a th:href="@{'/post/'+${post.id}}" th:text="${post.title}"></a></td>
                             <td th:text="${post.category.name}"></td>
-                            <td><span class="moment" th:attr="data-timestamp=${post.getTimestampFormat()}"
+                            <td><span class="moment" th:attr="data-timestamp=${post.timestamp}"
                                       data-format="format('LL')"></span></td>
                             <td th:text="${post.pageView}"></td>
                             <td>

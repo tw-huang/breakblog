@@ -3,11 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="me.breakblog.dao.AdminDao">
-    <select id="findAdmin" resultType="Admin">
+    <select id="findAdmin" resultType="me.breakblog.entity.Admin">
         select * from admin where id = 1
     </select>
 
-    <update id="updateAdmin" parameterType="Admin">
+    <update id="updateAdmin" parameterType="me.breakblog.entity.Admin">
         update admin set blog_title = #{blogTitle}, blog_subtitle = #{blogSubtitle}, name = #{name}, email = #{email}, about = #{about} where id = 1
     </update>
 </mapper>

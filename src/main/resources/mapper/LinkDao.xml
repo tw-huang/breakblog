@@ -4,19 +4,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="me.breakblog.dao.LinkDao">
-    <select id="findAll" resultType="Link">
+    <select id="findAll" resultType="me.breakblog.entity.Link">
         select * from link order by id
     </select>
 
-    <select id="findById" resultType="Link" parameterType="Integer">
+    <select id="findById" resultType="me.breakblog.entity.Link" parameterType="Integer">
         select * from link where id = #{id}
     </select>
 
-    <insert id="addLink" parameterType="Link">
+    <insert id="addLink" parameterType="me.breakblog.entity.Link">
         insert into link (name, url) value (#{name}, #{url})
     </insert>
 
-    <update id="updateLink" parameterType="Link">
+    <update id="updateLink" parameterType="me.breakblog.entity.Link">
         update link set name = #{name}, url = #{url} where id = #{id}
     </update>
 

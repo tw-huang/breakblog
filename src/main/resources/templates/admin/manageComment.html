@@ -36,7 +36,7 @@
                                 <a th:href="${'mailto:'+ comment.email}" th:text="${comment.email}"></a>
                             </td>
                             <td th:text="${comment.body}"></td>
-                            <td><span class="moment" th:attr="data-timestamp=${comment.getTimestampFormat()}"
+                            <td><span class="moment" th:attr="data-timestamp=${comment.timestamp}"
                                       data-format="format('LL')"></span></td>
                             <td>
                                 <div class="btn-group">

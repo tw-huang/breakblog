@@ -14,7 +14,7 @@
                     <h6 class="text-muted">Category:
                         <a th:href="@{'/category/'+ ${post.categoryId}}" th:text="${post.category.name}"></a>
                         &nbsp;Date:
-                        <span class="moment" th:attr="data-timestamp=${post.getTimestampFormat()}"
+                        <span class="moment" th:attr="data-timestamp=${post.timestamp}"
                               data-format="format('LLL')"></span>
                     </h6>
                     <div class="btn-group btn-group-sm float-right" th:if="${session.admin != null}">
@@ -68,7 +68,7 @@
                                                    style="font-size: 10px">admin</small>
                                             &nbsp;
                                             <small class="moment text-muted font-weight-light" style="font-size: 12px"
-                                                   th:attr="data-timestamp=${comment.getTimestampFormat()}"
+                                                   th:attr="data-timestamp=${comment.timestamp}"
                                                    data-format="fromNow()">
                                             </small>
                                         </h5>

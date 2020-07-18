@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="me.breakblog.dao.PostDao">
     <!--定义封装Post和Category的resultMap-->
-    <resultMap id="postCategoryMap" type="Post">
+    <resultMap id="postCategoryMap" type="me.breakblog.entity.Post">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="subtitle" column="subtitle"/>
@@ -17,7 +17,7 @@
          select属性指定的内容：查询分类的唯一的标志
          column属性指定的内容：分类根据id查询时，所需的参数的值
          -->
-        <association property="category" column="category_id" javaType="Category"
+        <association property="category" column="category_id" javaType="me.breakblog.entity.Category"
                      select="me.breakblog.dao.CategoryDao.findById">
         </association>
     </resultMap>
@@ -26,7 +26,7 @@
             select * from post order by id desc
         </select>
 
-    <select id="findByCategoryId" resultType="Post" parameterType="Integer">
+    <select id="findByCategoryId" resultType="me.breakblog.entity.Post" parameterType="Integer">
         select * from post where category_id=#{id} order by id desc
     </select>
 
@@ -34,11 +34,11 @@
         select * from post where id=#{id}
     </select>
 
-    <insert id="addPost" parameterType="Post">
+    <insert id="addPost" parameterType="me.breakblog.entity.Post">
         insert into post (title, subtitle, body, timestamp, category_id) value (#{title}, #{subtitle}, #{body}, #{timestamp}, #{categoryId})
     </insert>
 
-    <update id="updatePost" parameterType="Post">
+    <update id="updatePost" parameterType="me.breakblog.entity.Post">
         update post set title = #{title}, subtitle = #{subtitle}, body = #{body}, category_id = #{categoryId} where id = #{id}
     </update>
 
