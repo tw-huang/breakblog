@@ -1,20 +1,11 @@
 package me.breakblog.service;
 
-import java.util.List;
-
+import com.baomidou.mybatisplus.extension.service.IService;
 import me.breakblog.entity.Category;
 
-public interface CategoryService {
+import java.util.List;
 
-    List<Category> findAll();
+public interface CategoryService extends IService<Category> {
 
-    Category findById(int id);
-
-    Category findByName(String name);
-
-    int addCategory(Category category);
-
-    int updateCategory(Category category);
-
-    int deleteCategory(int id);
+    List<Category> getList();
 }

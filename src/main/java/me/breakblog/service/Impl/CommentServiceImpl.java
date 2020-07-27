@@ -1,48 +1,40 @@
 package me.breakblog.service.Impl;
 
-import com.github.pagehelper.PageHelper;
-import me.breakblog.dao.CommentDao;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.breakblog.entity.Comment;
+import me.breakblog.mapper.CommentMapper;
 import me.breakblog.service.CommentService;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import javax.annotation.Resource;
+
 
 @Service
-public class CommentServiceImpl implements CommentService {
+public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> implements CommentService {
 
-    private CommentDao commentDao;
+    @Resource
+    private CommentMapper commentMapper;
 
-    @Autowired
-    public CommentServiceImpl(CommentDao commentDao) {
-        this.commentDao = commentDao;
+    @Override
+    public Page getPageByPostId(int id, int page, int size) {
+        QueryWrapper<Comment> qw = new QueryWrapper<>();
+        Page<Comment> commentPage = commentMapper.selectPage(new Page<>(page, size), qw.eq("post_id", id));
+        for (Comment c : commentPage.getRecords()) {
+            c.setComment(commentMapper.selectById(c.getRepliedId()));
+        }
+        return commentPage;
     }
 
     @Override
-    public List<Comment> findAllByPostId(int id,int page,int size) {
-        PageHelper.startPage(page, size);
-        return commentDao.findAllByPostId(id);
-    }
-
-    @Override
-    public List<Comment> findAll(int page, int size) {
-        PageHelper.startPage(page, size);
-        return commentDao.findAll();
-    }
-
-    @Override
-    public int addComment(Comment comment) {
-        return commentDao.addComment(comment);
-    }
-
-    @Override
-    public int deleteComment(int id) {
-        return commentDao.deleteComment(id);
-    }
-
-    @Override
-    public int updateComment(int id, int reviewed) {
-        return commentDao.updateComment(id, reviewed);
+    public Page getPage(int page, int size) {
+        QueryWrapper<Comment> qw = new QueryWrapper<>();
+        Page<Comment> commentPage = commentMapper.selectPage(new Page<>(page, size), null);
+        for (Comment c : commentPage.getRecords()) {
+            c.setComment(commentMapper.selectById(c.getRepliedId()));
+        }
+        return commentPage;
     }
 }

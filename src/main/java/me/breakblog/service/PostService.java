@@ -1,21 +1,17 @@
 package me.breakblog.service;
 
+
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
 import me.breakblog.entity.Post;
 
 import java.util.List;
 
-public interface PostService {
+public interface PostService extends IService<Post> {
 
-    List<Post> findAll(int page, int size);
+    Page getPage(int page, int size);
 
-    List<Post> findByCategoryId(int id, int page, int size);
+    Page getPageByCategoryId(int id, int page, int size);
 
-    Post findById(int id);
-
-    int addPost(Post post);
-
-    int updatePost(Post post);
-
-    int deletePost(int id);
-
+    Post getPostById(int id);
 }

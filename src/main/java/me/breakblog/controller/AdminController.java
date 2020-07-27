@@ -22,7 +22,7 @@ public class AdminController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(Admin admin, HttpSession session, Model model) {
-        Admin adminDb = adminService.findAdmin();
+        Admin adminDb = adminService.getById(1);
         if (admin.getUsername().equals(adminDb.getUsername()) && admin.getPassword().equals(adminDb.getPassword())) {
             session.setAttribute("admin", adminDb);
             return "redirect:/";
@@ -44,8 +44,9 @@ public class AdminController {
 
     @RequestMapping(value = "/settings", method = RequestMethod.POST)
     public String settingsPost(Admin admin, Model model, HttpSession session) {
-        int i = adminService.updateAdmin(admin);
-        if (i == 1) {
+        admin.setId(1);
+        boolean i = adminService.updateById(admin);
+        if (i) {
             session.removeAttribute("admin");
             return "redirect:/about";
         }

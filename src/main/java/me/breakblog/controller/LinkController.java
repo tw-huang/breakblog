@@ -28,8 +28,8 @@ public class LinkController {
 
     @RequestMapping(value = "/link/new", method = RequestMethod.POST)
     public String newLinkPost(Link link, Model model) {
-        int i = linkService.addLink(link);
-        if (i == 1) {
+        boolean save = linkService.save(link);
+        if (save) {
             return "redirect:/admin/link/manage";
         }
         model.addAttribute("msg", "New Link Error！");
@@ -38,7 +38,7 @@ public class LinkController {
 
     @RequestMapping(value = "/link/edit/{id}", method = RequestMethod.GET)
     public String editLinkGet(@PathVariable("id") int id, Model model) {
-        Link link = linkService.findById(id);
+        Link link = linkService.getById(id);
         model.addAttribute("link", link);
         return "admin/editLink";
     }
@@ -46,8 +46,8 @@ public class LinkController {
     @RequestMapping(value = "/link/edit/{id}", method = RequestMethod.POST)
     public String editLinkPost(@PathVariable("id") int id, Link link, Model model) {
         link.setId(id);
-        int i = linkService.updateLink(link);
-        if (i == 1) {
+        boolean update = linkService.updateById(link);
+        if (update) {
             return "redirect:/admin/link/manage";
         }
         model.addAttribute("msg", "Edit Link Error！");
@@ -56,8 +56,8 @@ public class LinkController {
 
     @RequestMapping(value = "/link/delete/{id}", method = RequestMethod.POST)
     public String deleteLinkPost(@PathVariable("id") int id, Model model) {
-        int i = linkService.deleteLink(id);
-        if (i == 1) {
+        boolean remove = linkService.removeById(id);
+        if (remove) {
             return "redirect:/admin/link/manage";
         }
         model.addAttribute("msg", "Delete Error！");
@@ -66,7 +66,7 @@ public class LinkController {
 
     @RequestMapping(value = "/link/manage", method = {RequestMethod.GET, RequestMethod.POST})
     public String manageLink(Model model) {
-        List<Link> links = linkService.findAll();
+        List<Link> links = linkService.list();
         model.addAttribute("links", links);
         return "admin/manageLink";
     }

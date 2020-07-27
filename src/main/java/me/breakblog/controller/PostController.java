@@ -1,6 +1,7 @@
 package me.breakblog.controller;
 
-import com.github.pagehelper.PageInfo;
+//import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import me.breakblog.entity.Category;
 import me.breakblog.entity.Post;
 import me.breakblog.service.CategoryService;
@@ -30,7 +31,7 @@ public class PostController {
 
     @RequestMapping(value = "/post/new", method = RequestMethod.GET)
     public String newPostGet(Model model) {
-        List<Category> categories = categoryService.findAll();
+        List<Category> categories = categoryService.getList();
         model.addAttribute("categories", categories);
         return "admin/newPost";
     }
@@ -38,8 +39,8 @@ public class PostController {
     @RequestMapping(value = "/post/new", method = RequestMethod.POST)
     public String newPostPost(Post post, Model model) {
         post.setTimestamp(new Timestamp(new java.util.Date().getTime()));
-        int i = postService.addPost(post);
-        if (i == 1) {
+        boolean save = postService.save(post);
+        if (save) {
             return "redirect:/admin/post/manage";
         }
         model.addAttribute("msg", "New Post Error！");
@@ -48,8 +49,8 @@ public class PostController {
 
     @RequestMapping(value = "/post/edit/{id}", method = RequestMethod.GET)
     public String editPostGet(@PathVariable("id") int id, Model model) {
-        Post post = postService.findById(id);
-        List<Category> categories = categoryService.findAll();
+        Post post = postService.getById(id);
+        List<Category> categories = categoryService.getList();
         model.addAttribute("post", post);
         model.addAttribute("categories", categories);
         return "admin/editPost";
@@ -57,8 +58,9 @@ public class PostController {
 
     @RequestMapping(value = "/post/edit/{id}", method = RequestMethod.POST)
     public String editPostPost(@PathVariable("id") int id, Post post, Model model) {
-        int i = postService.updatePost(post);
-        if (i == 1) {
+        post.setId(id);
+        boolean update = postService.updateById(post);
+        if (update) {
             return "redirect:/admin/post/manage";
         }
         model.addAttribute("msg", "Edit Post Error！");
@@ -67,8 +69,8 @@ public class PostController {
 
     @RequestMapping(value = "/post/delete/{id}", method = RequestMethod.POST)
     public String deletePostPost(@PathVariable("id") int id, Model model) {
-        int i = postService.deletePost(id);
-        if (i == 1) {
+        boolean remove = postService.removeById(id);
+        if (remove) {
             return "redirect:/admin/post/manage";
         }
         model.addAttribute("msg", "Delete Error！");
@@ -78,10 +80,8 @@ public class PostController {
     @RequestMapping(value = "/post/manage", method = {RequestMethod.GET, RequestMethod.POST})
     public String managePost(@RequestParam(name = "page", required = true, defaultValue = "1") int page,
                              @RequestParam(name = "size", required = true, defaultValue = "15") int size, Model model) {
-        List<Post> posts = postService.findAll(page, size);
-        PageInfo<Post> pageInfo = new PageInfo<>(posts);
-        model.addAttribute("posts", posts);
-        model.addAttribute("page", pageInfo);
+        Page postPage = postService.getPage(page, size);
+        model.addAttribute("page", postPage);
         return "admin/managePost";
     }
 }

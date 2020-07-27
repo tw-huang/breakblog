@@ -1,5 +1,9 @@
 package me.breakblog.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -8,8 +12,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Data
+@TableName(value = "post")
 public class Post implements Serializable {
 
+    @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
 
     private String title;
@@ -26,8 +32,7 @@ public class Post implements Serializable {
     private Integer categoryId;
 
     private Integer pageView;
-    /**
-     * 从表实体应该包含一个主表实体的对象引用
-     */
+
+    @TableField(exist = false)
     private Category category;
 }

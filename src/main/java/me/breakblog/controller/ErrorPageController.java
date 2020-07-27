@@ -27,8 +27,8 @@ public class ErrorPageController {
 
     @RequestMapping(value = "/{code}")
     public String getErrorPath(@PathVariable int code, Model model) {
-        List<Link> links = linkService.findAll();
-        List<Category> categories = categoryService.findAll();
+        List<Link> links = linkService.list();
+        List<Category> categories = categoryService.getList();
         model.addAttribute("links", links);
         model.addAttribute("categories", categories);
         return "error/" + code;

@@ -1,7 +1,7 @@
 package me.breakblog.controller;
 
-import com.github.pagehelper.PageInfo;
-import me.breakblog.dao.CommentDao;
+
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import me.breakblog.entity.Admin;
 import me.breakblog.entity.Comment;
 import me.breakblog.service.CommentService;
@@ -28,7 +28,7 @@ public class CommentController {
     }
 
     @RequestMapping(value = "/comment/new/{pid}", method = RequestMethod.POST)
-    public String newCommentPost(@PathVariable("pid") int pid, Comment comment, Model model, HttpSession session,
+    public String newCommentPost(@PathVariable("pid") int pid, Comment comment, HttpSession session,
                                  @RequestParam(name = "reply", required = false) Integer rid) {
         comment.setPostId(pid);
         comment.setTimestamp(new Timestamp(new java.util.Date().getTime()));
@@ -46,17 +46,18 @@ public class CommentController {
             comment.setFromAdmin(1);
             comment.setReviewed(1);
         }
-        System.out.println(comment);
-        int i = commentService.addComment(comment);
-        System.out.println(i);
+        commentService.save(comment);
         return "redirect:/post/" + pid;
     }
 
     @RequestMapping(value = "/admin/comment/edit/{id}",method = RequestMethod.GET)
     public String editCommentGet(@PathVariable("id") int id, @RequestParam(name = "read") Integer reviewed, Model model) {
         reviewed = reviewed == 0 ? 1 : 0;
-        int i = commentService.updateComment(id, reviewed);
-        if (i == 1) {
+        Comment comment = new Comment();
+        comment.setId(id);
+        comment.setReviewed(reviewed);
+        boolean update = commentService.updateById(comment);
+        if (update) {
             return "redirect:/admin/comment/manage";
         }
         model.addAttribute("msg", "Update Error！");
@@ -66,8 +67,8 @@ public class CommentController {
 
     @RequestMapping(value = "/admin/comment/delete/{id}")
     public String deleteCommentPost(@PathVariable("id") int id, Model model) {
-        int i = commentService.deleteComment(id);
-        if (i == 1) {
+        boolean remove = commentService.removeById(id);
+        if (remove) {
             return "redirect:/admin/comment/manage";
         }
         model.addAttribute("msg", "Delete Error！");
@@ -77,10 +78,8 @@ public class CommentController {
     @RequestMapping(value = "/admin/comment/manage", method = {RequestMethod.GET, RequestMethod.POST})
     public String manageComment(@RequestParam(name = "page", defaultValue = "1") int page,
                                 @RequestParam(name = "size", defaultValue = "15") int size, Model model) {
-        List<Comment> comments = commentService.findAll(page, size);
-        PageInfo<Comment> pageInfo = new PageInfo<>(comments);
-        model.addAttribute("comments", comments);
-        model.addAttribute("page", pageInfo);
+        Page commentPage = commentService.getPage(page, size);
+        model.addAttribute("page", commentPage);
         return "admin/manageComment";
     }
 

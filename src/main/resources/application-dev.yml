@@ -5,13 +5,9 @@ spring:
     password: "080155"
     url: jdbc:mysql://localhost:3306/breakblog-sb?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
     type: com.alibaba.druid.pool.DruidDataSource
-mybatis:
+
+mybatis-plus:
+  mapper-locations: classpath*:me/breakblog/mapper/xml/*Mapper.xml
   type-aliases-package: me.breakblog.entity
-  mapper-locations: classpath:mapper/*.xml
   configuration:
-    map-underscore-to-camel-case: true
-pagehelper:
-  helper-dialect: mysql
-  reasonable: true
-  support-methods-arguments: true
-  params: count=countSql
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

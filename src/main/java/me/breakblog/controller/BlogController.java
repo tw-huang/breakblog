@@ -1,6 +1,7 @@
 package me.breakblog.controller;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import me.breakblog.entity.*;
 import me.breakblog.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,9 @@ public class BlogController {
 
     @ModelAttribute
     public void baseModel(Model model) {
-        List<Link> links = linkService.findAll();
-        List<Category> categories = categoryService.findAll();
-        Admin admin = adminService.findAdmin();
+        List<Link> links = linkService.list();
+        List<Category> categories = categoryService.getList();
+        Admin admin = adminService.getById(1);
         model.addAttribute("links", links);
         model.addAttribute("categories", categories);
         model.addAttribute("blogTitle", admin.getBlogTitle());
@@ -46,16 +47,14 @@ public class BlogController {
     public String home(
             @RequestParam(name = "page", defaultValue = "1") int page,
             @RequestParam(name = "size", defaultValue = "10") int size, Model model) {
-        List<Post> posts = postService.findAll(page, size);
-        PageInfo<Post> pageInfo = new PageInfo<>(posts);
-        model.addAttribute("posts", posts);
-        model.addAttribute("page", pageInfo);
+        Page postPage = postService.getPage(page, size);
+        model.addAttribute("page", postPage);
         return "blog/index";
     }
 
     @RequestMapping(value = "/about", method = RequestMethod.GET)
     public String about(Model model) {
-        Admin admin = adminService.findAdmin();
+        Admin admin = adminService.getById(1);
         model.addAttribute("about", admin.getAbout());
         return "blog/about";
     }
@@ -66,16 +65,15 @@ public class BlogController {
                        @RequestParam(name = "author", required = false) String author,
                        @RequestParam(name = "page", defaultValue = "1") int page,
                        @RequestParam(name = "size", defaultValue = "10") int size) {
-        Post post = postService.findById(id);
-        List<Comment> comments = commentService.findAllByPostId(id, page, size);
-        PageInfo<Comment> pageInfo = new PageInfo<>(comments);
+        Post post = postService.getPostById(id);
+        Page commentPage = commentService.getPageByPostId(id, page, size);
+
         if (rid != null && author != null) {
             model.addAttribute("replyId", rid);
             model.addAttribute("replyAuthor", author);
         }
         model.addAttribute("post", post);
-        model.addAttribute("comments", comments);
-        model.addAttribute("page", pageInfo);
+        model.addAttribute("page", commentPage);
         return "blog/post";
     }
 
@@ -84,11 +82,9 @@ public class BlogController {
             @PathVariable("id") int id,
             @RequestParam(name = "page", defaultValue = "1") int page,
             @RequestParam(name = "size", defaultValue = "10") int size, Model model) {
-        List<Post> posts = postService.findByCategoryId(id, page, size);
-        PageInfo<Post> pageInfo = new PageInfo<>(posts);
-        Category categoryById = categoryService.findById(id);
-        model.addAttribute("posts", posts);
-        model.addAttribute("page", pageInfo);
+        Page postPage = postService.getPageByCategoryId(id, page, size);
+        Category categoryById = categoryService.getById(id);
+        model.addAttribute("page", postPage);
         model.addAttribute("categoryById", categoryById);
         return "blog/category";
     }

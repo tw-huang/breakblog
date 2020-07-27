@@ -1,18 +1,12 @@
 package me.breakblog.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
 import me.breakblog.entity.Comment;
 
-import java.util.List;
+public interface CommentService extends IService<Comment> {
 
-public interface CommentService {
+    Page getPageByPostId(int id, int page, int size);
 
-    List<Comment> findAllByPostId(int id, int page, int size);
-
-    List<Comment> findAll(int page, int size);
-
-    int addComment(Comment comment);
-
-    int deleteComment(int id);
-
-    int updateComment(int id, int reviewed);
+    Page getPage(int page, int size);
 }

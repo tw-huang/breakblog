@@ -1,10 +1,8 @@
 package me.breakblog.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import me.breakblog.entity.Admin;
 
-public interface AdminService {
+public interface AdminService extends IService<Admin> {
 
-    Admin findAdmin();
-
-    int updateAdmin(Admin admin);
 }
