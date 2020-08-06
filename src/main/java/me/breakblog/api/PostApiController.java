@@ -1,21 +1,14 @@
-package me.breakblog.Api;
+package me.breakblog.api;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import me.breakblog.dto.LoginDTO;
 import me.breakblog.dto.PageDTO;
-import me.breakblog.entity.Admin;
 import me.breakblog.entity.Post;
-import me.breakblog.service.AdminService;
 import me.breakblog.service.PostService;
-import me.breakblog.util.JwtUtil;
 import me.breakblog.util.Result;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -29,16 +22,16 @@ public class PostApiController {
 
     @Autowired
     private PostService postService;
-    
+
     @GetMapping("/posts")
     public Result posts(PageDTO pageDTO) {
-        Page page = postService.getPage(pageDTO.getPageNum(), pageDTO.getPageSize());
-        return Result.success(page);
+        Map map = postService.getPage(pageDTO);
+        return Result.success(map);
     }
 
     @GetMapping("/post/{id}")
     public Result getPost(@PathVariable Integer id) {
-        Post post = postService.getPostById(id);
+        Post post = postService.getById(id);
         return Result.success(post);
     }
 
@@ -61,13 +54,12 @@ public class PostApiController {
     }
 
     @DeleteMapping("/post/{id}")
-    public Result putPost(@PathVariable String id) {
+    public Result deletePost(@PathVariable String id) {
         boolean remove = postService.removeById(id);
         if (remove) {
             return Result.success();
         }
         return Result.failure();
     }
-
 
 }

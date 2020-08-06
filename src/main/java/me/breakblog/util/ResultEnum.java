@@ -7,19 +7,19 @@ package me.breakblog.util;
  */
 public enum ResultEnum {
 
-    SUCCESS("1", "成功"),
-    FAILURE("0", "失败");
+    SUCCESS(1, "成功"),
+    FAILURE(0, "失败");
 
-    private String code;
+    private Integer code;
 
     private String msg;
 
-    ResultEnum(String code, String msg) {
+    ResultEnum(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    public String getCode() {
+    public Integer getCode() {
         return code;
     }
 

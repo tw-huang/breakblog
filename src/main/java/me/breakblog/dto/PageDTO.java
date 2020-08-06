@@ -15,4 +15,6 @@ public class PageDTO {
 
     private Integer pageSize = 10;
 
+    private String keyword;
+
 }

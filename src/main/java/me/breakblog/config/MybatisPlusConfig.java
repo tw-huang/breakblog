@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * @Author: tw.huang
  * @DateTime: 2020-07-19 3:54
- * @Description: TODO
+ * @Description: MybatisPlus配置
  */
 @Configuration
 public class MybatisPlusConfig {
