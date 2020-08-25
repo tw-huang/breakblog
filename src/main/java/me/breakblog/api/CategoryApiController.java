@@ -39,7 +39,7 @@ public class CategoryApiController {
     }
 
     @PostMapping("/category")
-    public Result postCategory(Category category) {
+    public Result postCategory(@RequestBody Category category) {
         boolean save = categoryService.save(category);
         if (save) {
             return Result.success();
@@ -48,7 +48,7 @@ public class CategoryApiController {
     }
 
     @PutMapping("/category")
-    public Result putCategory(Category category) {
+    public Result putCategory(@RequestBody Category category) {
         boolean update = categoryService.updateById(category);
         if (update) {
             return Result.success();
@@ -57,7 +57,7 @@ public class CategoryApiController {
     }
 
     @DeleteMapping("/category/{id}")
-    public Result deleteCategory(@PathVariable String id) {
+    public Result deleteCategory(@PathVariable Integer id) {
         boolean remove = categoryService.removeById(id);
         if (remove) {
             return Result.success();

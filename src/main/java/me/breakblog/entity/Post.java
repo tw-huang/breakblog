@@ -3,6 +3,7 @@ package me.breakblog.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -28,6 +29,7 @@ public class Post extends BaseEntity {
 
     private Integer pageView;
 
+    @JsonIgnore
     @TableField(exist = false)
     private Category category;
 }

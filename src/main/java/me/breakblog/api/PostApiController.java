@@ -2,14 +2,16 @@ package me.breakblog.api;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import me.breakblog.dto.PageDTO;
+import me.breakblog.entity.Category;
 import me.breakblog.entity.Post;
+import me.breakblog.service.CategoryService;
 import me.breakblog.service.PostService;
 import me.breakblog.util.Result;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author: tw.huang
@@ -22,6 +24,10 @@ public class PostApiController {
 
     @Autowired
     private PostService postService;
+
+    @Autowired
+    private CategoryService categoryService;
+
 
     @GetMapping("/posts")
     public Result posts(PageDTO pageDTO) {
@@ -36,7 +42,8 @@ public class PostApiController {
     }
 
     @PostMapping("/post")
-    public Result postPost(Post post) {
+    public Result postPost(@RequestBody Post post) {
+        post.setTimestamp(new Date());
         boolean save = postService.save(post);
         if (save) {
             return Result.success();
@@ -45,7 +52,7 @@ public class PostApiController {
     }
 
     @PutMapping("/post")
-    public Result putPost(Post post) {
+    public Result putPost(@RequestBody Post post) {
         boolean update = postService.updateById(post);
         if (update) {
             return Result.success();
@@ -54,12 +61,25 @@ public class PostApiController {
     }
 
     @DeleteMapping("/post/{id}")
-    public Result deletePost(@PathVariable String id) {
+    public Result deletePost(@PathVariable Integer id) {
         boolean remove = postService.removeById(id);
         if (remove) {
             return Result.success();
         }
         return Result.failure();
+    }
+
+    @GetMapping("/post/new/categories")
+    public Result categories() {
+        List<Category> categoryList = categoryService.list();
+        ArrayList<Map> list = new ArrayList<>();
+        categoryList.forEach(x -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", x.getId());
+            map.put("name", x.getName());
+            list.add(map);
+        });
+        return Result.success(list);
     }
 
 }

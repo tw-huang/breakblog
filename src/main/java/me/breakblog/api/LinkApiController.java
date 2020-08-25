@@ -1,10 +1,12 @@
 package me.breakblog.api;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import me.breakblog.dto.PageDTO;
 import me.breakblog.entity.Link;
 import me.breakblog.service.LinkService;
 import me.breakblog.util.Result;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +25,11 @@ public class LinkApiController {
 
     @GetMapping("/links")
     public Result links(PageDTO pageDTO) {
-        Page<Link> page = linkService.page(new Page<>(pageDTO.getPageNum(), pageDTO.getPageSize()));
+        QueryWrapper<Link> qw = new QueryWrapper<>();
+        if (StringUtils.isNotEmpty(pageDTO.getKeyword())) {
+            qw.like("name", pageDTO.getKeyword());
+        }
+        Page<Link> page = linkService.page(new Page<>(pageDTO.getPageNum(), pageDTO.getPageSize()),qw);
         return Result.success(page);
     }
 
@@ -34,7 +40,7 @@ public class LinkApiController {
     }
 
     @PostMapping("/link")
-    public Result postLink(Link link) {
+    public Result postLink(@RequestBody Link link) {
         boolean save = linkService.save(link);
         if (save) {
             return Result.success();
@@ -43,7 +49,7 @@ public class LinkApiController {
     }
 
     @PutMapping("/link")
-    public Result putLink(Link link) {
+    public Result putLink(@RequestBody Link link) {
         boolean update = linkService.updateById(link);
         if (update) {
             return Result.success();
@@ -52,7 +58,7 @@ public class LinkApiController {
     }
 
     @DeleteMapping("/link/{id}")
-    public Result deleteLink(@PathVariable String id) {
+    public Result deleteLink(@PathVariable Integer id) {
         boolean remove = linkService.removeById(id);
         if (remove) {
             return Result.success();

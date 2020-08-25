@@ -1,7 +1,6 @@
 package me.breakblog.dto;
 
 import lombok.Data;
-import lombok.Setter;
 
 /**
  * @Author: tw.huang
