@@ -1,9 +1,19 @@
 body {
     background-color: #E2E2E2;
 }
+
+.main {
+    padding: 0;
+    /*border: 1px solid #212529;*/
+    box-shadow: 0 0 10px #000;
+    margin-top: 32px;
+    margin-bottom: 32px;
+    width: 60%;
+}
+
 /*背景颜色类*/
 .bg-gary {
-    background-color: #E2E2E2;
+    background-color: #ececec;
 }
 
 .bg-white {
@@ -30,7 +40,6 @@ body {
 a {
     color: rgb(33, 37, 41);
 }
-
 
 /*文章页面优化显示格式*/
 article h1 {

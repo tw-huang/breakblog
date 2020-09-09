@@ -1,6 +1,5 @@
-package me.breakblog.api;
+package me.breakblog.controller.api;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import me.breakblog.dto.PageDTO;
 import me.breakblog.entity.Category;
 import me.breakblog.entity.Post;

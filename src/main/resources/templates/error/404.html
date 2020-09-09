@@ -4,25 +4,27 @@
     <title>HTTP 404</title>
 </head>
 <body>
-<div th:replace="common/layout :: commonTop"></div>
-<div id="Wrapper" class="bg-gary">
-    <div class="content py-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-12 p-3 bg-white">
-                    <h2>404 Error</h2>
-                    <h6 class="text-muted">Sorry ! Page Not Found !</h6>
-                    <div class="float-right text-muted">-- tips</div>
+<div class="container main">
+    <div th:replace="common/layout :: commonTop"></div>
+    <div id="Wrapper" class="bg-gary">
+        <div class="content py-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-12 p-3 bg-white">
+                        <h2>404 Error</h2>
+                        <h6 class="text-muted">Sorry ! Page Not Found !</h6>
+                        <div class="float-right text-muted">-- tips</div>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-9 col-12 p-3 bg-white mt-3"></div>
-                <div th:replace="common/layout :: commonSidebar"></div>
+                <div class="row">
+                    <div class="col-lg-9 col-12 p-3 bg-white mt-3"></div>
+                    <div th:replace="common/layout :: commonSidebar"></div>
+                </div>
             </div>
         </div>
     </div>
+    <div th:replace="common/layout :: commonBottom"></div>
+    <div th:replace="common/layout :: commonJs(~{})"></div>
 </div>
-<div th:replace="common/layout :: commonBottom"></div>
-<div th:replace="common/layout :: commonJs(~{})"></div>
 </body>
 </html>

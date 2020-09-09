@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import me.breakblog.entity.Category;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @Author: tw.huang
  * @DateTime: 2020-07-19 2:53
@@ -11,4 +14,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface CategoryMapper extends BaseMapper<Category> {
+    List<Map> categoryReport();
+
 }

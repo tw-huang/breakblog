@@ -13,4 +13,6 @@ public interface CategoryService extends IService<Category> {
     List<Category> getList();
 
     Map getPage(PageDTO pageDTO);
+
+    Map<String, Object> categoryReport();
 }

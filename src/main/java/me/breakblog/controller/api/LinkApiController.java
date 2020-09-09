@@ -1,4 +1,4 @@
-package me.breakblog.api;
+package me.breakblog.controller.api;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

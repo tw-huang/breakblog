@@ -31,7 +31,7 @@ public class BaseEntity implements Serializable {
     public static final Boolean STATUS_DELETED = true;
 
     /**
-     * 删除状态（0，正常，1已删除）
+     * 删除状态（0正常，1已删除）
      */
     @JsonIgnore
     @TableLogic

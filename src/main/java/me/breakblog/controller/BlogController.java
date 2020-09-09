@@ -1,6 +1,5 @@
 package me.breakblog.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import me.breakblog.entity.*;
 import me.breakblog.service.*;
@@ -9,27 +8,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 
 @Controller
 public class BlogController {
-    private LinkService linkService;
-    private CategoryService categoryService;
-    private PostService postService;
-    private AdminService adminService;
-    private CommentService commentService;
 
     @Autowired
-    public BlogController(LinkService linkService, CategoryService categoryService, PostService postService,
-                          AdminService adminService, CommentService commentService) {
-        this.linkService = linkService;
-        this.categoryService = categoryService;
-        this.postService = postService;
-        this.adminService = adminService;
-        this.commentService = commentService;
-    }
+    private LinkService linkService;
+    @Autowired
+    private CategoryService categoryService;
+    @Autowired
+    private PostService postService;
+    @Autowired
+    private AdminService adminService;
+    @Autowired
+    private CommentService commentService;
 
     @ModelAttribute
     public void baseModel(Model model) {

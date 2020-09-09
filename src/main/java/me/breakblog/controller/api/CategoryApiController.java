@@ -1,16 +1,13 @@
-package me.breakblog.api;
+package me.breakblog.controller.api;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import me.breakblog.dto.PageDTO;
 import me.breakblog.entity.Category;
 import me.breakblog.service.CategoryService;
 import me.breakblog.util.Result;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -63,5 +60,11 @@ public class CategoryApiController {
             return Result.success();
         }
         return Result.failure();
+    }
+
+    @GetMapping("/category/report")
+    public Result categoryReport(){
+        Map<String, Object> map = categoryService.categoryReport();
+        return Result.success(map);
     }
 }
