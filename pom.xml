@@ -118,17 +118,17 @@
                         <phase>install</phase>
                         <goals>
                             <goal>upload-single</goal>
-<!--                            <goal>sshexec</goal>-->
+                            <goal>sshexec</goal>
                         </goals>
                         <configuration>
-                            <serverId>breakblog-springboot-test</serverId>
+                            <serverId>breakblog-springboot</serverId>
                             <fromFile>target/${artifactId}.jar</fromFile>
-                            <url>scp://break:080155@192.168.2.220/home/break/breakblog</url>
-<!--                            <commands>-->
-<!--                                <command>sh /home/break/breakblog/run.sh</command>-->
-<!--                            </commands>-->
-                            <!-- 显示运行命令的输出结果 -->
-<!--                            <displayCommandOutputs>true</displayCommandOutputs>-->
+                            <url>scp://58.87.115.24/datas/breakblog</url>
+                            <commands>
+                                <command>sh /datas/breakblog/run.sh</command>
+                            </commands>
+                             显示运行命令的输出结果
+                            <displayCommandOutputs>true</displayCommandOutputs>
                         </configuration>
                     </execution>
                 </executions>
