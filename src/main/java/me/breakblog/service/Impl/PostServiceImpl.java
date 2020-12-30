@@ -70,6 +70,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
         if (StringUtils.isNotEmpty(pageDTO.getKeyword())) {
             qw.like("title", pageDTO.getKeyword());
         }
+        qw.orderByDesc("id");
         Page<Post> page = postMapper.selectPage(new Page<>(pageDTO.getPageNum(), pageDTO.getPageSize()), qw);
         for (Post p : page.getRecords()) {
             HashMap<String, Object> hashMap = new HashMap<>();
