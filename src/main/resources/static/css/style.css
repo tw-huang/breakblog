@@ -1,6 +1,6 @@
-body {
-    background-color: #E2E2E2;
-}
+/*body {*/
+/*    background-color: #FDF6E3;*/
+/*}*/
 
 .main {
     padding: 0;
@@ -38,17 +38,4 @@ body {
 
 a {
     color: rgb(33, 37, 41);
-}
-
-/*文章页面优化显示格式*/
-article h1 {
-    font-size: 28px;
-}
-
-article h2 {
-    font-size: 24px;
-}
-
-article h3 {
-    font-size: 20px;
 }

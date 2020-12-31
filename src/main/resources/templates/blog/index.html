@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common/layout :: commonCss(~{::title},~{})">
+<head th:replace="common/layout :: commonCss(~{::title},~{::link})">
+    <link rel="stylesheet" th:href="@{/css/blog/index.css}" type="text/css">
     <title th:text="${blogTitle} + ' - home' "></title>
 </head>
 <body>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="commonCss(title,links)">
+<head th:fragment="commonCss(title,link)">
     <!-- Common styles -->
     <meta name="viewport" charset="UTF-8"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -9,7 +9,7 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/iconic/font/css/open-iconic-bootstrap.css}" type="text/css">
     <!--/* Per-page placeholder for additional links */-->
-    <th:block th:replace="${links}"/>
+    <th:block th:replace="${link}"/>
     <title th:replace="${title}">BreakBlog</title>
 </head>
 <body>

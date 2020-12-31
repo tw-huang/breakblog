@@ -7,7 +7,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: bigsight2019
-    url: jdbc:mysql://192.168.137.137:3306/breakblog-sb?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://192.168.2.220:3306/breakblog-sb?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
     platform: mysql
     druid:
       initial-size: 5
@@ -15,7 +15,7 @@ spring:
       max-active: 20
       max-wait: 60000
   redis:
-    host: 192.168.137.137
+    host: 192.168.2.220
     password: bigsight2019
     port: 6379
     jedis:
