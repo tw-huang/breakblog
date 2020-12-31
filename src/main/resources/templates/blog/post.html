@@ -12,21 +12,21 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 col-12 p-3 bg-white">
-                        <h2 th:text="${post.title}"></h2>
-                        <h6 class="text-muted">Category:
+                        <h1 th:text="${post.title}"></h1>
+                        <span class="text-muted">Category:
                             <a th:href="@{'/category/'+ ${post.categoryId}}" th:text="${post.category.name}"></a>
                             &nbsp;Date:
                             <span class="moment" th:attr="data-timestamp=${post.timestamp}"
                                   data-format="format('LLL')"></span>
-                        </h6>
-                        <div class="float-right text-muted" th:text="'-- ' + ${blogAuthor}"></div>
+                        </span>
+                        <span class="float-right text-muted" th:text="'-- ' + ${blogAuthor}"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-9 col-12 p-3 bg-white mt-3">
                         <article th:utext="${post.body}"></article>
                         <hr>
-                        <button type="button" data-toggle="modal" data-target=".postLinkModal" class="btn oi oi-share">
+                        <button type="button" data-toggle="modal" data-target=".postLinkModal" class="btn">
                             Share
                         </button>
                         <div class="modal fade postLinkModal" tabindex="-1" role="dialog"
@@ -53,46 +53,27 @@
                                 th:inline="text">Total: [[${page.records.size()}]] comments</h5>
                             <ul class="list-group" th:each="comment:${page.records}" id="comment-list">
                                 <li class="list-group-item list-group-item-action flex-column">
-                                    <div class="d-flex w-100 justify-content-between">
+                                    <div class="d-flex justify-content-between">
                                         <div>
-                                            <h5 class="my-1">
-                                                <a th:href="${comment.site}"
-                                                   target="_blank" th:title="${comment.site}"
-                                                   th:text="${comment.author}"></a>
-                                                <small class="badge badge-pill badge-info "
-                                                       th:if="${comment.fromAdmin == 1}"
-                                                       style="font-size: 10px">admin</small>
-                                                &nbsp;
-                                                <small class="moment text-muted font-weight-light"
-                                                       style="font-size: 12px"
-                                                       th:attr="data-timestamp=${comment.timestamp}"
-                                                       data-format="fromNow()">
-                                                </small>
-                                            </h5>
+                                            <a th:href="${comment.site}"
+                                               target="_blank" th:title="${comment.site}"
+                                               th:text="${comment.author}"></a>
+                                            <small class="badge badge-pill badge-info "
+                                                   th:if="${comment.fromAdmin == 1}"
+                                                   style="font-size: 10px">admin</small>
+                                            &nbsp;
+                                            <small class="moment text-muted font-weight-light"
+                                                   style="font-size: 12px"
+                                                   th:attr="data-timestamp=${comment.timestamp}"
+                                                   data-format="fromNow()">
+                                            </small>
                                         </div>
-                                        <div class="btn-group">
+                                        <div class="btn-group float-right">
                                             <a th:href="@{'/post/'+${post.id}+'?reply='+${comment.id}+'&author='+${comment.author}+'#comment-form'}">
-                                                <button type="button" class="btn btn-sm p-1 bg-white">
+                                                <button type="button" class="btn btn-sm  bg-white">
                                                     <span class="oi oi-chat"></span> Reply
                                                 </button>
                                             </a>
-                                            <a th:href="@{'/admin/comment/edit/'+ ${comment.id} +'?read=0'}"
-                                               th:if="${session.admin !=null && comment.reviewed == 0}">
-                                                <button type="submit" class="btn btn-warning btn-sm p-1">ReadF</button>
-                                            </a>
-                                            <a th:href="@{'/admin/comment/edit/'+ ${comment.id} +'?read=1'}"
-                                               th:if="${session.admin !=null && comment.reviewed == 1}">
-                                                <button type="submit" class="btn btn-info btn-sm p-1">ReadT</button>
-                                            </a>
-                                            <form class="inline" method="post"
-                                                  th:action="@{'/admin/comment/delete/'+${comment.id}}"
-                                                  th:if="${session.admin != null}">
-                                                <button type="submit" class="btn btn-danger btn-sm p-1"
-                                                        onclick="return confirm('Are you sure?')">
-                                                    Delete
-                                                </button>
-
-                                            </form>
                                         </div>
                                     </div>
                                     <div>
@@ -106,59 +87,53 @@
                                     </div>
                                 </li>
                             </ul>
-                            <div class="page my-3" th:if="${page.hasPrevious() || page.hasNext()}">
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination">
-                                        <li th:class="${page.hasPrevious()}?'page-item':'page-item disabled'">
-                                            <a class="page-link"
-                                               th:href="@{'/post/'+${post.id}+'?page='+${page.current - 1} + '#comment-list'}">
-                                                <span aria-hidden="true">←</span> Prev
-                                            </a>
-                                        </li>
-                                        <li th:class="${page.hasNext()}?'page-item':'page-item disabled'">
-                                            <a class="page-link"
-                                               th:href="@{'/post/'+${post.id}+'?page='+${page.current + 1} + '#comment-list'}">
-                                                Next <span aria-hidden="true">→</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
+                            <hr>
+                            <div class="comments-page my-3" th:if="${page.hasPrevious() || page.hasNext()}">
+                                <a th:class="${page.hasPrevious()}?'btn page-item':'btn page-item disabled'"
+                                   th:href="@{'/post/'+${post.id}+'?page='+${page.current - 1} + '#comment-list'}">
+                                    <span aria-hidden="true">←</span> Prev
+                                </a>
+                                <a th:class="${page.hasNext()}?'btn page-item float-right':'btn page-item float-right disabled'"
+                                   th:href="@{'/post/'+${post.id}+'?page='+${page.current + 1} + '#comment-list'}">
+                                    Next <span aria-hidden="true">→</span>
+                                </a>
                             </div>
                             <hr>
-                            <div class="d-flex justify-content-center">
-                                <h5 class="my-3">Say something ?</h5>
-                            </div>
-                            <div class="alert alert-secondary my-3" th:if="${replyId != null}">
-                                Reply to <strong th:text="${replyAuthor}"></strong> :
-                                <a class="float-right" th:href="@{'/post/'+${post.id}}">Cancel</a>
-                            </div>
-                            <div id="comment-form">
-                                <form th:action="${replyId!=null}?('/comment/new/'+${post.id}+'?reply='+${replyId}):('/comment/new/'+${post.id})"
-                                      method="post" class="form" role="form">
-                                    <div class="form-group required">
-                                        <label class="form-control-label" for="author">Name</label>
-                                        <input class="form-control" id="author" name="author" required="" type="text"
-                                               value="" placeholder="昵称">
-                                    </div>
-                                    <div class="form-group required">
-                                        <label class="form-control-label" for="email">Email</label>
-                                        <input class="form-control" id="email" name="email" required="" type="text"
-                                               value=""
-                                               placeholder="邮箱">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="site">Site</label>
-                                        <input class="form-control" id="site" name="site" type="text" value=""
-                                               placeholder="主页 (可不填)">
-                                    </div>
-                                    <div class="form-group required">
-                                        <label class="form-control-label" for="body">Comment</label>
-                                        <textarea class="form-control" id="body" name="body" required=""
-                                                  placeholder="评论"></textarea>
-                                    </div>
-                                    <input class="btn btn-secondary" id="submit" name="submit" type="submit"
-                                           value="Submit">
-                                </form>
+                            <div class="post-comment">
+                                <div class="alert alert-secondary my-3" th:if="${replyId != null}">
+                                    Reply to <strong th:text="${replyAuthor}"></strong> :
+                                    <a class="float-right" th:href="@{'/post/'+${post.id}}">Cancel</a>
+                                </div>
+                                <div id="comment-form">
+                                    <form th:action="${replyId!=null}?('/comment/new/'+${post.id}+'?reply='+${replyId}):('/comment/new/'+${post.id})"
+                                          method="post" class="form" role="form">
+                                        <div class="form-group required">
+                                            <label class="form-control-label" for="author">Name</label>
+                                            <input class="form-control" id="author" name="author" required=""
+                                                   type="text"
+                                                   value="" placeholder="昵称">
+                                        </div>
+                                        <div class="form-group required">
+                                            <label class="form-control-label" for="email">Email</label>
+                                            <input class="form-control" id="email" name="email" required=""
+                                                   type="text"
+                                                   value=""
+                                                   placeholder="邮箱">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="site">Site</label>
+                                            <input class="form-control" id="site" name="site" type="text" value=""
+                                                   placeholder="主页 (可不填)">
+                                        </div>
+                                        <div class="form-group required">
+                                            <label class="form-control-label" for="body">Comment</label>
+                                            <textarea class="form-control" id="body" name="body" required=""
+                                                      placeholder="评论"></textarea>
+                                        </div>
+                                        <input class="btn btn-secondary" id="submit" name="submit" type="submit"
+                                               value="Submit">
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>

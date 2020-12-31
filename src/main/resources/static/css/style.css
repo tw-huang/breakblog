@@ -1,41 +1,16 @@
-/*body {*/
-/*    background-color: #FDF6E3;*/
-/*}*/
+body {
+    background-color: #e2e2e2;
+}
 
 .main {
     padding: 0;
-    /*border: 1px solid #212529;*/
-    box-shadow: 0 0 10px #000;
-    margin-top: 32px;
-    margin-bottom: 32px;
+    /*border: 1px solid #e2e2e2;*/
 }
 
-/*背景颜色类*/
 .bg-gary {
-    background-color: #ececec;
-}
-
-.bg-white {
-    background-color: white;
-}
-
-/*自定义行高*/
-#Wrapper {
-    line-height: 1.6rem;
-}
-
-#Wrapper p {
-    margin-bottom: 8px;
-}
-
-#Bottom p {
-    margin: 8px 0;
-}
-
-.pagination {
-    margin-bottom: 0;
+    background-color: #e2e2e2;
 }
 
 a {
-    color: rgb(33, 37, 41);
+    color: #333333;
 }
