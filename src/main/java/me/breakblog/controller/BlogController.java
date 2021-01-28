@@ -1,5 +1,6 @@
 package me.breakblog.controller;
 
+import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import me.breakblog.entity.*;
 import me.breakblog.service.*;
@@ -59,6 +60,7 @@ public class BlogController {
                        @RequestParam(name = "author", required = false) String author,
                        @RequestParam(name = "page", defaultValue = "1") int page,
                        @RequestParam(name = "size", defaultValue = "10") int size) {
+        postService.updatePageView(id);
         Post post = postService.getPostById(id);
         Page commentPage = commentService.getPageByPostId(id, page, size);
 

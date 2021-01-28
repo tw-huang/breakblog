@@ -3,6 +3,7 @@ package me.breakblog.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import me.breakblog.entity.Post;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @Author: tw.huang
@@ -11,4 +12,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface PostMapper extends BaseMapper<Post> {
+    void updatePageView(@Param("id") int id);
 }

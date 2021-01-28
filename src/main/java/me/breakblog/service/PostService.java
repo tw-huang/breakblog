@@ -17,4 +17,6 @@ public interface PostService extends IService<Post> {
     Post getPostById(int id);
 
     Map getPage(PageDTO pageDTO);
+
+    void updatePageView(int id);
 }

@@ -88,4 +88,9 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
         map.put("size", page.getSize());
         return map;
     }
+
+    @Override
+    public void updatePageView(int id) {
+        postMapper.updatePageView(id);
+    }
 }
