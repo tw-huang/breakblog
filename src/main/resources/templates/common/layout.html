@@ -14,20 +14,20 @@
 <body>
 
 <div id="header" th:fragment="commonTop">
-    <div class="container navbar-dark bg-dark" style="padding: 0 16px">
-        <nav class="navbar navbar-expand-sm px-0">
-            <a class="navbar-brand" href="#">BreakBlog</a>
+    <div class="navbar-dark bg-dark">
+        <nav class="container navbar navbar-expand-sm px-0">
+            <a class="navbar-brand" href="#" style="padding-left: 16px">BreakBlog</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor"
                     aria-controls="navbarColor" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarColor">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav mr-auto" style="padding-right:16px">
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{'/'}">Home</a>
+                        <a class="nav-link px-3" th:href="@{'/'}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{'/about'}">About</a>
+                        <a class="nav-link px-3" th:href="@{'/about'}">About</a>
                     </li>
                 </ul>
             </div>

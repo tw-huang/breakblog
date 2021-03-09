@@ -121,13 +121,13 @@
                             <goal>sshexec</goal>
                         </goals>
                         <configuration>
-                            <serverId>breakblog-springboot</serverId>
+                            <serverId>breakblog-server</serverId>
                             <fromFile>target/${artifactId}.jar</fromFile>
-                            <url>scp://58.87.115.24/datas/breakblog</url>
+                            <url>scp://106.53.155.82/root/breakblog</url>
                             <commands>
-                                <command>sh /datas/breakblog/run.sh</command>
+                                <command>sh /root/breakblog/run.sh</command>
                             </commands>
-                             显示运行命令的输出结果
+                            <!-- 显示运行命令的输出结果 -->
                             <displayCommandOutputs>true</displayCommandOutputs>
                         </configuration>
                     </execution>

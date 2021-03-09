@@ -1,13 +1,13 @@
 server:
-  port: 9001
+  port: 9000
 
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: bigsight2019
-    url: jdbc:mysql://192.168.137.137:3306/breakblog-sb?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    password: breakblog
+    url: jdbc:mysql://106.53.155.82:3306/breakblog-sb?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
     platform: mysql
     druid:
       initial-size: 5
@@ -15,8 +15,8 @@ spring:
       max-active: 20
       max-wait: 60000
   redis:
-    host: 192.168.137.137
-    password: bigsight2019
+    host: 106.53.155.82
+    password: breakblog
     port: 6379
     jedis:
       pool:

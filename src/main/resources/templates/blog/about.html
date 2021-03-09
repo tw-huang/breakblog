@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common/layout :: commonCss(~{::title},~{})">
+<head th:replace="common/layout :: commonCss(~{::title},~{::link})">
+    <link rel="stylesheet" th:href="@{/css/blog/index.css}" type="text/css">
     <title th:text="${blogTitle} + ' - about' "></title>
 </head>
 <body>
+<div th:replace="common/layout :: commonTop"></div>
 <div class="container main">
-    <div th:replace="common/layout :: commonTop"></div>
     <div id="Wrapper" class="bg-gary">
         <div class="content py-3">
             <div class="container">
