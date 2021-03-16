@@ -7,6 +7,14 @@ h2 {
 }
 
 h3 {
-    font-size: 16px;
+    font-size: 14px;
     line-height: 1.6em;
+}
+
+.content-post-info {
+    font-size: 0.8rem;
+}
+
+.content-title {
+    font-size: 0.9rem;
 }

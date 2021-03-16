@@ -13,44 +13,25 @@
                 <div class="row">
                     <div class="col-lg-12 col-12 p-3 bg-white">
                         <h1 th:text="${post.title}"></h1>
-                        <span class="text-muted">Category:
+                        <div class="content-title">
+                            <span class="text-muted">Category:
                             <a th:href="@{'/category/'+ ${post.categoryId}}" th:text="${post.category.name}"></a>
                             &nbsp;Date:
                             <span class="moment" th:attr="data-timestamp=${post.timestamp}"
                                   data-format="format('LLL')"></span>
-                        </span>
-                        <span class="float-right text-muted" th:text="'-- ' + ${blogAuthor}"></span>
+                            </span>
+                            <span class="float-right text-muted" th:text="'-- ' + ${blogAuthor}"></span>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-9 col-12 p-3 bg-white mt-3">
                         <article th:utext="${post.body}"></article>
-                        <hr>
-                        <button type="button" data-toggle="modal" data-target=".postLinkModal" class="btn">
-                            Share
-                        </button>
-                        <div class="modal fade postLinkModal" tabindex="-1" role="dialog"
-                             aria-labelledby="mySmallModalLabel" style="display: none;" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Permalink</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control"
-                                                   th:value="${#httpServletRequest.requestURL}" readonly="">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="comments py-3" id="comments">
-                            <h5 class="py-3 d-flex justify-content-center" th:unless="${page.records.isEmpty()}"
-                                th:inline="text">Total: [[${page.records.size()}]] comments</h5>
+                            <hr>
+                            <h5 class="py-3" th:unless="${page.records.isEmpty()}"
+                                th:inline="text">Tips: [[${page.records.size()}]] comments
+                            </h5>
                             <ul class="list-group" th:each="comment:${page.records}" id="comment-list">
                                 <li class="list-group-item list-group-item-action flex-column">
                                     <div class="d-flex justify-content-between">
@@ -87,7 +68,6 @@
                                     </div>
                                 </li>
                             </ul>
-                            <hr>
                             <div class="comments-page my-3" th:if="${page.hasPrevious() || page.hasNext()}">
                                 <a th:class="${page.hasPrevious()}?'btn page-item':'btn page-item disabled'"
                                    th:href="@{'/post/'+${post.id}+'?page='+${page.current - 1} + '#comment-list'}">
@@ -97,8 +77,8 @@
                                    th:href="@{'/post/'+${post.id}+'?page='+${page.current + 1} + '#comment-list'}">
                                     Next <span aria-hidden="true">→</span>
                                 </a>
+                                <hr>
                             </div>
-                            <hr>
                             <div class="post-comment">
                                 <div class="alert alert-secondary my-3" th:if="${replyId != null}">
                                     Reply to <strong th:text="${replyAuthor}"></strong> :
