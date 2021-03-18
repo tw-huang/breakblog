@@ -33,9 +33,22 @@ spring:
     servlet:
       content-type: text/html
 
+  servlet:
+    multipart:
+      #开启文件上传
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+
 mybatis-plus:
   mapper-locations: classpath*:me/breakblog/mapper/xml/*Mapper.xml
   type-aliases-package: me.breakblog.entity
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+app:
+  upload:
+    type: local
+    path: /usr/local/nginx/html/file
+    host: http://www.twhuang.me:9010
 

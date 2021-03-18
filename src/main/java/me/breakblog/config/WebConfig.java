@@ -19,6 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
         // 跨域拦截器需放在最上面
         registry.addInterceptor(corsInterceptor).addPathPatterns("/**");
         // Token拦截器
-        registry.addInterceptor(tokenInterceptor).addPathPatterns("/api/v1/**").excludePathPatterns("/api/v1/login");
+        registry.addInterceptor(tokenInterceptor).addPathPatterns("/api/v1/**")
+                .excludePathPatterns("/api/v1/login", "/api/v1/file");
     }
 }

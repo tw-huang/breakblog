@@ -7,8 +7,8 @@ package me.breakblog.util;
  */
 public enum ResultEnum {
 
-    SUCCESS(1, "成功"),
-    FAILURE(0, "失败");
+    SUCCESS(1, "success"),
+    FAILURE(0, "failure");
 
     private Integer code;
 

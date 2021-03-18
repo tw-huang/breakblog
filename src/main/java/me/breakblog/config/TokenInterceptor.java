@@ -20,7 +20,7 @@ import java.util.Map;
 public class TokenInterceptor implements HandlerInterceptor {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String token = request.getHeader("Token");
         if (token == null) {
             throw new RuntimeException("无Token，请登录");
