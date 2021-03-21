@@ -9,9 +9,11 @@ import me.breakblog.entity.Admin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @Author: tw.huang
@@ -70,6 +72,16 @@ public class JwtUtil {
             //解码异常则抛出异常
             return null;
         }
+    }
+
+
+    public static String getUserName(HttpServletRequest request) {
+        String token = request.getHeader("Token");
+        Map<String, Claim> map = verifyToken(token);
+        if (!Objects.isNull(map)) {
+            return map.get("userName").asString();
+        }
+        return null;
     }
 
 }

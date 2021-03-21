@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 public class CorsInterceptor implements HandlerInterceptor {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         // 此处配置的是允许任意域名跨域请求，可根据需求指定
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("origin"));
         response.setHeader("Access-Control-Allow-Credentials", "true");

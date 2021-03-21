@@ -6,13 +6,12 @@ import me.breakblog.entity.Admin;
 import me.breakblog.service.AdminService;
 import me.breakblog.util.JwtUtil;
 import me.breakblog.util.Result;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,7 +27,7 @@ public class LoginApiController {
     @Autowired
     private AdminService adminService;
 
-    @PostMapping("/login")
+    @PostMapping("/login/account")
     public Result login(@RequestBody @Validated LoginDTO loginDTO) {
         Map<String, Object> map = new HashMap<>();
         QueryWrapper<Admin> qw = new QueryWrapper<>();
@@ -40,6 +39,22 @@ public class LoginApiController {
             return Result.success(map, "登录成功");
         }
         return Result.failure("用户名或密码不正确");
+    }
+
+    @GetMapping("/login/currentUser")
+    public Result currentUser(HttpServletRequest request) {
+        String userName = JwtUtil.getUserName(request);
+        if (StringUtils.isNotEmpty(userName)) {
+            Admin admin = adminService.getOne(new QueryWrapper<Admin>().lambda()
+                    .eq(Admin::getUsername, userName));
+            return Result.success(admin, "当前用户！");
+        }
+        return Result.failure("获取当前用户失败！");
+    }
+
+    @GetMapping("/login/outLogin")
+    public Result logout(HttpServletRequest request) {
+        return Result.success();
     }
 
 }

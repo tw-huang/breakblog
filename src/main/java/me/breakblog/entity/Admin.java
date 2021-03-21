@@ -9,6 +9,8 @@ import lombok.EqualsAndHashCode;
 @TableName(value = "admin")
 public class Admin extends BaseEntity {
 
+    private String avatar;
+
     private String username;
 
     private String password;
@@ -19,7 +21,9 @@ public class Admin extends BaseEntity {
 
     private String name;
 
+    private String email;
+
     private String about;
 
-    private String email;
+    private String phone;
 }

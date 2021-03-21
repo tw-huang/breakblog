@@ -20,6 +20,6 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(corsInterceptor).addPathPatterns("/**");
         // Token拦截器
         registry.addInterceptor(tokenInterceptor).addPathPatterns("/api/v1/**")
-                .excludePathPatterns("/api/v1/login", "/api/v1/file");
+                .excludePathPatterns("/api/v1/login/account", "/api/v1/file");
     }
 }
