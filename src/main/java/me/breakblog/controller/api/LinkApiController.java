@@ -22,7 +22,6 @@ public class LinkApiController {
     @Autowired
     private LinkService linkService;
 
-
     @GetMapping("/links")
     public Result links(PageDTO pageDTO) {
         QueryWrapper<Link> qw = new QueryWrapper<>();

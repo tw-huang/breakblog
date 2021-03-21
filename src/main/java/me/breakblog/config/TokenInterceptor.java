@@ -1,14 +1,14 @@
 package me.breakblog.config;
 
 import com.auth0.jwt.interfaces.Claim;
+import me.breakblog.config.exception.CommonException;
+import me.breakblog.config.exception.TokenException;
 import me.breakblog.util.JwtUtil;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.lang.reflect.Method;
 import java.util.Map;
 
 /**
@@ -23,11 +23,11 @@ public class TokenInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String token = request.getHeader("Token");
         if (token == null) {
-            throw new RuntimeException("无Token，请登录");
+            throw new TokenException("Token is null");
         }
         Map<String, Claim> stringClaimMap = JwtUtil.verifyToken(token);
         if (stringClaimMap == null) {
-            throw new RuntimeException("Token不正确");
+            throw new CommonException("Token error");
         }
         return true;
     }

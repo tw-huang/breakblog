@@ -5,7 +5,6 @@ import me.breakblog.entity.Link;
 import me.breakblog.service.CategoryService;
 import me.breakblog.service.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
