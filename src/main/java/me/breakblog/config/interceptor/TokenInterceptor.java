@@ -1,4 +1,4 @@
-package me.breakblog.config;
+package me.breakblog.config.interceptor;
 
 import com.auth0.jwt.interfaces.Claim;
 import me.breakblog.config.exception.CommonException;

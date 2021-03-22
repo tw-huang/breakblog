@@ -15,7 +15,7 @@ import java.util.Map;
  * @Description: Api控制器
  */
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api")
 public class CommentApiController {
     @Autowired
     private CommentService commentService;

@@ -1,4 +1,4 @@
-package me.breakblog.config;
+package me.breakblog.config.interceptor;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

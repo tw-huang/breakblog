@@ -24,7 +24,7 @@ import java.util.UUID;
  * @Description: 文件上传
  */
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api")
 @Slf4j
 public class UploadApiController {
 

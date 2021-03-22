@@ -1,12 +1,13 @@
 package me.breakblog.controller.api;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import me.breakblog.dto.LoginDTO;
 import me.breakblog.entity.Admin;
 import me.breakblog.service.AdminService;
 import me.breakblog.util.JwtUtil;
 import me.breakblog.util.Result;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @Author: tw.huang
@@ -21,13 +23,13 @@ import java.util.Map;
  * @Description: TODO
  */
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api")
 public class LoginApiController {
 
     @Autowired
     private AdminService adminService;
 
-    @PostMapping("/login/account")
+    @PostMapping("/login")
     public Result login(@RequestBody @Validated LoginDTO loginDTO) {
         Map<String, Object> map = new HashMap<>();
         QueryWrapper<Admin> qw = new QueryWrapper<>();
@@ -41,20 +43,25 @@ public class LoginApiController {
         return Result.failure("用户名或密码不正确");
     }
 
-    @GetMapping("/login/currentUser")
+    @GetMapping("/currentUser")
     public Result currentUser(HttpServletRequest request) {
         String userName = JwtUtil.getUserName(request);
-        if (StringUtils.isNotEmpty(userName)) {
-            Admin admin = adminService.getOne(new QueryWrapper<Admin>().lambda()
-                    .eq(Admin::getUsername, userName));
-            return Result.success(admin, "当前用户！");
-        }
-        return Result.failure("获取当前用户失败！");
+        Admin admin = adminService.getAdminByUsername(userName);
+        return Objects.isNull(admin) ? Result.failure("获取当前用户失败") : Result.success(admin, "当前用户");
     }
 
-    @GetMapping("/login/outLogin")
+    @GetMapping("/logout")
     public Result logout(HttpServletRequest request) {
         return Result.success();
     }
+
+    @GetMapping("/menu")
+    public Result menu(HttpServletRequest request) {
+        //模拟菜单数据
+        JSONArray jsonArray = new JSONArray();
+        JSONObject categoryObj = new JSONObject();
+        return null;
+    }
+
 
 }

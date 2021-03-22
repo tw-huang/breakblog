@@ -9,8 +9,8 @@ public enum ResultEnum {
 
     UNKNOWN_ERROR(-1,"unknownError"),
     SUCCESS(1, "success"),
-    FAILURE(0, "FAILURE"),
-    UNAUTHORIZED(403, "unauthorized");
+    FAILURE(0, "failure"),
+    UNAUTHORIZED(403, "unAuthorized");
 
     private Integer code;
 

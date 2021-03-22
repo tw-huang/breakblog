@@ -18,7 +18,7 @@ import java.util.*;
  * @Description: Api控制器
  */
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api")
 public class PostApiController {
 
     @Autowired

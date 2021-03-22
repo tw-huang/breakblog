@@ -7,7 +7,6 @@ import me.breakblog.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,7 +15,7 @@ import java.util.Map;
  * @Description: Api控制器
  */
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api")
 public class CategoryApiController {
 
     @Autowired

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * @Description: Api控制器
  */
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api")
 public class LinkApiController {
 
     @Autowired

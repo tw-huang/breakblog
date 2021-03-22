@@ -1,6 +1,5 @@
 package me.breakblog.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import me.breakblog.dto.PageDTO;
 import me.breakblog.entity.Category;
