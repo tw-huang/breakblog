@@ -2,6 +2,9 @@ server:
   port: 9000
 
 spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -26,13 +29,11 @@ spring:
         max-wait: -1
     database: 0
     timeout: 3000
-
   thymeleaf:
     cache: false
     encoding: utf-8
     servlet:
       content-type: text/html
-
   servlet:
     multipart:
       #开启文件上传
@@ -51,4 +52,3 @@ app:
     type: local
     path: /usr/local/nginx/html/file
     host: http://www.twhuang.me:9010
-
