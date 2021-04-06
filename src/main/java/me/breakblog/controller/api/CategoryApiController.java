@@ -21,7 +21,6 @@ public class CategoryApiController {
     @Autowired
     private CategoryService categoryService;
 
-
     @GetMapping("/categories")
     public Result categories(PageDTO pageDTO) {
         Map map = categoryService.getPage(pageDTO);

@@ -27,7 +27,6 @@ public class PostApiController {
     @Autowired
     private CategoryService categoryService;
 
-
     @GetMapping("/posts")
     public Result posts(PageDTO pageDTO) {
         Map map = postService.getPage(pageDTO);

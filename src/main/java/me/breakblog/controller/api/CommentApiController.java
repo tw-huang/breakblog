@@ -17,9 +17,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api")
 public class CommentApiController {
+
     @Autowired
     private CommentService commentService;
-
 
     @GetMapping("/comments")
     public Result comments(PageDTO pageDTO) {

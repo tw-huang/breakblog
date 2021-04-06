@@ -4,7 +4,8 @@
     <!-- Common styles -->
     <meta name="viewport" charset="UTF-8"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <link rel="icon" th:href="@{/static/favicon.ico}">
+    <link rel="shortcut icon" type="image/ico" th:href="@{/favicon.ico}"/>
+    <link rel="bookmark" th:href="@{/favicon.ico}"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
     <!--/* Per-page placeholder for additional links */-->
@@ -51,7 +52,7 @@
                 <div>
                     <a th:href="@{'/category/'+${category.id}}" th:text="${category.name}"></a>
                 </div>
-                <span class="badge bg-light badge-pill" th:text="${category.posts.size()}"></span>
+                <span class="badge bg-light badge-pill" th:text="${category.postCount}"></span>
             </li>
 
         </ul>

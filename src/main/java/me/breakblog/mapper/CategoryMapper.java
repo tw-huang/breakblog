@@ -16,4 +16,6 @@ import java.util.Map;
 public interface CategoryMapper extends BaseMapper<Category> {
     List<Map> categoryReport();
 
+    List<Category> getList();
+
 }

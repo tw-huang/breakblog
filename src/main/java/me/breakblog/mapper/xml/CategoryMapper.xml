@@ -13,4 +13,20 @@
           AND p.del_flag = 0
         GROUP BY c.id
     </select>
+
+    <select id="getList" resultType="me.breakblog.entity.Category">
+        SELECT
+            c.*,
+            COUNT( c.`name` ) as postCount
+        FROM
+            category c
+            LEFT JOIN post p ON p.category_id = c.id
+        WHERE
+            c.del_flag = 0
+            AND p.del_flag = 0
+        GROUP BY
+            c.`name`
+        ORDER BY
+            c.id
+    </select>
 </mapper>

@@ -11,6 +11,7 @@ import me.breakblog.mapper.PostMapper;
 import me.breakblog.service.CategoryService;
 import me.breakblog.service.PostService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -28,20 +29,12 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     private CategoryMapper categoryMapper;
 
     @Resource
-    private PostMapper postMapper;
-
-    @Resource
     private PostService postService;
 
     @Override
+    @Cacheable(cacheNames = "Category", key = "'categories'")
     public List<Category> getList() {
-        List<Category> categories = categoryMapper.selectList(null);
-        categories.forEach(x -> {
-            QueryWrapper<Post> qw = new QueryWrapper<>();
-            List<Post> postList = postMapper.selectList(qw.eq("category_id", x.getId()));
-            x.setPosts(postList);
-        });
-        return categories;
+        return categoryMapper.getList();
     }
 
     @Override

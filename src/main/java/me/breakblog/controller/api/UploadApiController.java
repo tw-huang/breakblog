@@ -30,6 +30,7 @@ public class UploadApiController {
 
     @Autowired
     private UploadConfig uploadConfig;
+
     @Autowired
     private FileDataService fileDataService;
 

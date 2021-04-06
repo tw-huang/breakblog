@@ -1,33 +1,28 @@
 package me.breakblog.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.AllArgsConstructor;
 import me.breakblog.entity.*;
 import me.breakblog.service.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @Controller
+@AllArgsConstructor
 public class BlogController {
 
-    @Autowired
     private LinkService linkService;
-    @Autowired
     private CategoryService categoryService;
-    @Autowired
     private PostService postService;
-    @Autowired
     private AdminService adminService;
-    @Autowired
     private CommentService commentService;
 
     @ModelAttribute
     public void baseModel(Model model) {
-        List<Link> links = linkService.list();
+        List<Link> links = linkService.getList();
         List<Category> categories = categoryService.getList();
         Admin admin = adminService.getById(1);
         model.addAttribute("links", links);
