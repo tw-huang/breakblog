@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class MenuVo {
+public class MenuVO {
 
     private Integer id;
 
@@ -15,5 +15,5 @@ public class MenuVo {
 
     private String icon;
 
-    private List<MenuVo> children;
+    private List<MenuVO> children;
 }

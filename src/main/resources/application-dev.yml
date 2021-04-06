@@ -44,6 +44,8 @@ spring:
 mybatis-plus:
   mapper-locations: classpath*:me/breakblog/mapper/xml/*Mapper.xml
   type-aliases-package: me.breakblog.entity
+  global-config:
+    banner: false
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
