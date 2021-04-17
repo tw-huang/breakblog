@@ -78,5 +78,10 @@ public class BlogController {
         model.addAttribute("categoryById", categoryById);
         return "blog/category";
     }
+
+    @RequestMapping(value = "/demo", method = RequestMethod.GET)
+    public String demo() {
+        return "blog/demo";
+    }
 }
 
