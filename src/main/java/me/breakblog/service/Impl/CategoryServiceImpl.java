@@ -11,6 +11,7 @@ import me.breakblog.mapper.PostMapper;
 import me.breakblog.service.CategoryService;
 import me.breakblog.service.PostService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     private PostService postService;
 
     @Override
-    @Cacheable(cacheNames = "Category", key = "'categories'")
+    @Cacheable(cacheNames = "category", key = "'categories'")
     public List<Category> getList() {
         return categoryMapper.getList();
     }
@@ -77,5 +78,11 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         map.put("name", names);
         map.put("click", clicks);
         return map;
+    }
+
+    @Override
+    @CacheEvict(cacheNames = "category", key = "'categories'")
+    public void cacheEvict() {
+        System.out.println("categories 缓存清空了");
     }
 }

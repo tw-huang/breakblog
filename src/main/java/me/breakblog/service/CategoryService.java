@@ -14,4 +14,6 @@ public interface CategoryService extends IService<Category> {
     Map getPage(PageDTO pageDTO);
 
     Map<String, Object> categoryReport();
+
+    void cacheEvict();
 }
