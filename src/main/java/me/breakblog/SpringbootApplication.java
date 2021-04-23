@@ -6,10 +6,10 @@ import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
 @EnableCaching
-public class BreakblogSpringbootApplication {
+public class SpringbootApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BreakblogSpringbootApplication.class, args);
+        SpringApplication.run(SpringbootApplication.class, args);
     }
 
 }

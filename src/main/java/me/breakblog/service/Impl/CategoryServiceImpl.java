@@ -3,11 +3,11 @@ package me.breakblog.service.Impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import me.breakblog.dto.PageDTO;
 import me.breakblog.entity.Category;
 import me.breakblog.entity.Post;
 import me.breakblog.mapper.CategoryMapper;
-import me.breakblog.mapper.PostMapper;
 import me.breakblog.service.CategoryService;
 import me.breakblog.service.PostService;
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +24,7 @@ import java.util.Map;
 
 
 @Service
+@Slf4j
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService {
 
     @Resource
@@ -83,6 +84,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     @Override
     @CacheEvict(cacheNames = "category", key = "'categories'")
     public void cacheEvict() {
-        System.out.println("categories 缓存清空了");
+        log.info("categories 缓存清空");
     }
 }

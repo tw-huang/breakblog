@@ -2,6 +2,7 @@ package me.breakblog.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import me.breakblog.entity.Link;
 import me.breakblog.mapper.LinkMapper;
 import me.breakblog.service.LinkService;
@@ -14,6 +15,7 @@ import java.util.List;
 
 
 @Service
+@Slf4j
 public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements LinkService {
 
     @Resource
@@ -28,7 +30,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
     @Override
     @CacheEvict(cacheNames = "link", key = "'links'")
     public void cacheEvict() {
-        System.out.println("links 缓存清空了");
+        log.info("links 缓存清空");
     }
 
 }

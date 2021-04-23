@@ -1,6 +1,7 @@
 package me.breakblog.config.interceptor;
 
 import com.auth0.jwt.interfaces.Claim;
+import lombok.extern.slf4j.Slf4j;
 import me.breakblog.config.exception.CommonException;
 import me.breakblog.config.exception.TokenException;
 import me.breakblog.util.JwtUtil;
@@ -17,16 +18,19 @@ import java.util.Map;
  * @Description: Token拦截器
  */
 @Configuration
+@Slf4j
 public class TokenInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String token = request.getHeader("Token");
         if (token == null) {
+            log.error("Token is null");
             throw new TokenException("Token is null");
         }
         Map<String, Claim> stringClaimMap = JwtUtil.verifyToken(token);
         if (stringClaimMap == null) {
+            log.error("Token error");
             throw new CommonException("Token error");
         }
         return true;

@@ -44,6 +44,7 @@ public class PostApiController {
         post.setTimestamp(new Date());
         boolean save = postService.save(post);
         if (save) {
+            categoryService.cacheEvict();
             return Result.success();
         }
         return Result.failure();
@@ -53,6 +54,7 @@ public class PostApiController {
     public Result putPost(@RequestBody Post post) {
         boolean update = postService.updateById(post);
         if (update) {
+            categoryService.cacheEvict();
             return Result.success();
         }
         return Result.failure();
@@ -62,6 +64,7 @@ public class PostApiController {
     public Result deletePost(@PathVariable Integer id) {
         boolean remove = postService.removeById(id);
         if (remove) {
+            categoryService.cacheEvict();
             return Result.success();
         }
         return Result.failure();
