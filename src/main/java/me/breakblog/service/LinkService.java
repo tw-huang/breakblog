@@ -9,4 +9,6 @@ public interface LinkService extends IService<Link> {
 
     List<Link> getList();
 
+    void cacheEvict();
+
 }

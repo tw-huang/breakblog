@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * @Description: TODO
+ * @Description: 上传配置
  * @Date: 2021-03-18 14:54
  * @Author: tw.huang
  * @Version: v1.0.0

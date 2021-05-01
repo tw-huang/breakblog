@@ -37,6 +37,7 @@ public class CategoryApiController {
     public Result postCategory(@RequestBody Category category) {
         boolean save = categoryService.save(category);
         if (save) {
+            categoryService.cacheEvict();
             return Result.success();
         }
         return Result.failure();
@@ -46,6 +47,7 @@ public class CategoryApiController {
     public Result putCategory(@RequestBody Category category) {
         boolean update = categoryService.updateById(category);
         if (update) {
+            categoryService.cacheEvict();
             return Result.success();
         }
         return Result.failure();
@@ -55,6 +57,7 @@ public class CategoryApiController {
     public Result deleteCategory(@PathVariable Integer id) {
         boolean remove = categoryService.removeById(id);
         if (remove) {
+            categoryService.cacheEvict();
             return Result.success();
         }
         return Result.failure();

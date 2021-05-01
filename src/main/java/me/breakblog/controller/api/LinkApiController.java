@@ -28,7 +28,7 @@ public class LinkApiController {
         if (StringUtils.isNotEmpty(pageDTO.getKeyword())) {
             qw.like("name", pageDTO.getKeyword());
         }
-        Page<Link> page = linkService.page(new Page<>(pageDTO.getPageNum(), pageDTO.getPageSize()),qw);
+        Page<Link> page = linkService.page(new Page<>(pageDTO.getPageNum(), pageDTO.getPageSize()), qw);
         return Result.success(page);
     }
 
@@ -42,6 +42,7 @@ public class LinkApiController {
     public Result postLink(@RequestBody Link link) {
         boolean save = linkService.save(link);
         if (save) {
+            linkService.cacheEvict();
             return Result.success();
         }
         return Result.failure();
@@ -51,6 +52,7 @@ public class LinkApiController {
     public Result putLink(@RequestBody Link link) {
         boolean update = linkService.updateById(link);
         if (update) {
+            linkService.cacheEvict();
             return Result.success();
         }
         return Result.failure();
@@ -60,6 +62,7 @@ public class LinkApiController {
     public Result deleteLink(@PathVariable Integer id) {
         boolean remove = linkService.removeById(id);
         if (remove) {
+            linkService.cacheEvict();
             return Result.success();
         }
         return Result.failure();

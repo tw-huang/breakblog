@@ -3,14 +3,15 @@ package me.breakblog.service.Impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import me.breakblog.dto.PageDTO;
 import me.breakblog.entity.Category;
 import me.breakblog.entity.Post;
 import me.breakblog.mapper.CategoryMapper;
-import me.breakblog.mapper.PostMapper;
 import me.breakblog.service.CategoryService;
 import me.breakblog.service.PostService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ import java.util.Map;
 
 
 @Service
+@Slf4j
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService {
 
     @Resource
@@ -32,7 +34,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     private PostService postService;
 
     @Override
-    @Cacheable(cacheNames = "Category", key = "'categories'")
+    @Cacheable(cacheNames = "category", key = "'categories'")
     public List<Category> getList() {
         return categoryMapper.getList();
     }
@@ -77,5 +79,11 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         map.put("name", names);
         map.put("click", clicks);
         return map;
+    }
+
+    @Override
+    @CacheEvict(cacheNames = "category", key = "'categories'")
+    public void cacheEvict() {
+        log.info("categories 缓存清空");
     }
 }

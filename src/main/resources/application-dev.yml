@@ -21,14 +21,15 @@ spring:
     host: 106.53.155.82
     password: breakblog
     port: 6379
-    jedis:
-      pool:
-        max-active: 10
-        min-idle: 0
-        max-idle: 10
-        max-wait: -1
     database: 0
-    timeout: 3000
+    timeout: 5000
+    lettuce:
+      pool:
+        min-idle: 1
+        max-idle: 5
+        max-wait: -1
+        max-active: 10
+
   thymeleaf:
     cache: false
     encoding: utf-8
