@@ -8,11 +8,11 @@
         <version>2.3.10.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>me.breakblog</groupId>
-    <artifactId>breakblog-springboot</artifactId>
+    <groupId>top.twhuang</groupId>
+    <artifactId>breakblog</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>breakblog-springboot</name>
-    <description>BreakBlog project for Spring Boot</description>
+    <name>breakblog</name>
+    <description>BreakBlog</description>
 
     <properties>
         <java.version>8</java.version>
@@ -56,7 +56,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.62</version>
+            <version>1.2.75</version>
         </dependency>
 
         <dependency>

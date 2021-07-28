@@ -10,7 +10,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: breakblog
-    url: jdbc:mysql://106.53.155.82:3306/breakblog-sb?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://106.53.155.82:3306/breakblog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
     platform: mysql
     druid:
       initial-size: 5
@@ -43,8 +43,8 @@ spring:
       max-request-size: 100MB
 
 mybatis-plus:
-  mapper-locations: classpath*:me/breakblog/mapper/xml/*Mapper.xml
-  type-aliases-package: me.breakblog.entity
+  mapper-locations: classpath*:top/twhuang/mapper/xml/*Mapper.xml
+  type-aliases-package: top.twhuang.entity
   global-config:
     banner: false
   configuration:
@@ -54,4 +54,4 @@ app:
   upload:
     type: local
     path: /usr/local/nginx/html/file
-    host: http://www.twhuang.me:9010
+    host: http://www.twhuang.top:9010
