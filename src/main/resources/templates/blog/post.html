@@ -38,11 +38,7 @@
                                         <div>
                                             <a th:href="${comment.site}"
                                                target="_blank" th:title="${comment.site}"
-                                               th:text="${comment.author}"></a>
-                                            <small class="badge badge-pill badge-info "
-                                                   th:if="${comment.fromAdmin == 1}"
-                                                   style="font-size: 10px">admin</small>
-                                            &nbsp;
+                                               th:text="${comment.author}"></a>&nbsp;
                                             <small class="moment text-muted font-weight-light"
                                                    style="font-size: 12px"
                                                    th:attr="data-timestamp=${comment.timestamp}"
@@ -85,7 +81,7 @@
                                     <a class="float-right" th:href="@{'/post/'+${post.id}}">Cancel</a>
                                 </div>
                                 <div id="comment-form">
-                                    <form th:action="${replyId!=null}?('/comment/new/'+${post.id}+'?reply='+${replyId}):('/comment/new/'+${post.id})"
+                                    <form th:action="${replyId!=null}?('/post/'+${post.id} +'/comment?replyId='+${replyId}):('/post/'+ ${post.id} + '/comment')"
                                           method="post" class="form" role="form">
                                         <div class="form-group required">
                                             <label class="form-control-label" for="author">Name</label>

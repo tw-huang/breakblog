@@ -25,8 +25,6 @@ public class Comment extends BaseEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date timestamp;
 
-    private Integer fromAdmin;
-
     private Integer reviewed;
 
     private Integer repliedId;

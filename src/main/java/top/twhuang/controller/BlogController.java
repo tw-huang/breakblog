@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -79,9 +80,19 @@ public class BlogController {
         return "blog/category";
     }
 
-    @RequestMapping(value = "/demo", method = RequestMethod.GET)
-    public String demo() {
-        return "blog/demo";
+    @RequestMapping(value = "/post/{id}/comment", method = RequestMethod.POST)
+    public String comment(@PathVariable("id") int id,
+                          @RequestParam(name = "replyId", required = false) Integer replyId,
+                          Comment comment) {
+        if (replyId != null) {
+            comment.setRepliedId(replyId);
+        }
+        comment.setTimestamp(new Date());
+        comment.setReviewed(0);
+        comment.setPostId(id);
+        commentService.save(comment);
+        // 重定向文章首页
+        return "redirect:/post/" + id;
     }
 }
 
