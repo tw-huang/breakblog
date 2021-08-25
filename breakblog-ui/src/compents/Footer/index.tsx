@@ -4,7 +4,7 @@ import Logo from '../../assets/logo.png'
 const Footer: React.FC = () => {
 
 	return (
-		<div className="flex justify-between items-center absolute bottom-0 left-0 md:h-20 h-12 md:px-8 px-2 w-full border-solid border-t-2 border-gary-50">
+		<div className="flex justify-between items-center md:h-20 h-12 md:px-8 px-2 border-solid border-t-2 border-gary-50">
 			<div className="">
 				<span className="text-sm">Copyright © tw-huang</span>
 			</div>
