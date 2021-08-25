@@ -10,7 +10,7 @@ const Home: React.FC = () => {
 		<div className='md:max-w-screen-lg w-full md:my-8 md:mx-auto bg-white '>
 			<Header />
 			<div className='flex flex-col md:flex-row'>
-				<div className='md:px-8 px-2 md:w-3/4 md:py-6'>
+				<div className='md:px-8 p-2 md:w-3/4 md:py-6'>
 					<div>
 						<img src={Banner} alt='banner' className='w-full' />
 					</div>
@@ -122,25 +122,25 @@ const Home: React.FC = () => {
 						<span className='text-lg'>热门文章:</span>
 						<div className='flex flex-col text-sm mt-1'>
 							<div className='flex flex-col pb-1'>
-								<a href='http://www.baidu.com'>Java性能测试世界</a>
+								<a href='http://www.baidu.com' className='pb-1'>Java性能测试世界</a>
 								<span className='text-xs text-gray-500'>
 									日期：2015-08-12 点击数：1120
 								</span>
 							</div>
 							<div className='flex flex-col pb-1'>
-								<a href='http://www.baidu.com'>Java性能测试世界</a>
+								<a href='http://www.baidu.com' className='pb-1'>Java性能测试世界</a>
 								<span className='text-xs text-gray-500'>
 									日期：2015-08-12 点击数：1120
 								</span>
 							</div>
 							<div className='flex flex-col pb-1'>
-								<a href='http://www.baidu.com'>Java性能测试世界</a>
+								<a href='http://www.baidu.com' className='pb-1'>Java性能测试世界</a>
 								<span className='text-xs text-gray-500'>
 									日期：2015-08-12 点击数：1120
 								</span>
 							</div>
 							<div className='flex flex-col pb-1'>
-								<a href='http://www.baidu.com'>Java性能测试世界</a>
+								<a href='http://www.baidu.com' className='pb-1'>Java性能测试世界</a>
 								<span className='text-xs text-gray-500'>
 									日期：2015-08-12 点击数：1120
 								</span>
