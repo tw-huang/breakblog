@@ -5,6 +5,7 @@ import Footer from '../../compents/Footer'
 
 const Post: React.FC = (props: any) => {
 	const postId = props.match.params.id
+	console.log(postId)
 	// @ts-ignore
 	return (
 		<div className='md:max-w-screen-lg w-full md:my-8 md:mx-auto bg-white '>
