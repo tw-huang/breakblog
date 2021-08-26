@@ -10,6 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @Author: tw.huang
  * @DateTime: 2020-08-02 10:37
@@ -21,6 +23,12 @@ public class LinkApiController {
 
     @Autowired
     private LinkService linkService;
+
+    @GetMapping("/blog/links")
+    public Result blogLinks() {
+        List<Link> list = linkService.getList();
+        return Result.success(list);
+    }
 
     @GetMapping("/links")
     public Result links(PageDTO pageDTO) {

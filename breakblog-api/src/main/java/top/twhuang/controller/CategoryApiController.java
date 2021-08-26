@@ -7,6 +7,7 @@ import top.twhuang.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,6 +21,12 @@ public class CategoryApiController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @GetMapping("/blog/categories")
+    public Result blogCategories() {
+        List<Category> list = categoryService.getList();
+        return Result.success(list);
+    }
 
     @GetMapping("/categories")
     public Result categories(PageDTO pageDTO) {

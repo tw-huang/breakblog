@@ -12,7 +12,6 @@ public class Category extends BaseEntity {
 
     private String name;
 
-    @JsonIgnore
     @TableField(exist = false)
     private Integer postCount;
 }

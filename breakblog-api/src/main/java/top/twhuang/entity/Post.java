@@ -23,13 +23,12 @@ public class Post extends BaseEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date timestamp;
 
-    private Integer canComment;
+    private Boolean canComment;
 
     private Integer categoryId;
 
     private Integer pageView;
 
-    @JsonIgnore
     @TableField(exist = false)
     private Category category;
 }
