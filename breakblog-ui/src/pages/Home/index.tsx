@@ -2,19 +2,20 @@ import React from 'react'
 import './index.css'
 import Header from '../../compents/Header'
 import Footer from '../../compents/Footer'
-import Banner from '../../assets/banner.jpg'
 import PostImg from '../../assets/post.jpg'
+import Banner from '../../compents/Banner'
 
 const Home: React.FC = () => {
 	return (
 		<div className='md:max-w-screen-lg w-full md:my-8 md:mx-auto bg-white '>
+			{/* 顶部 */}
 			<Header />
 			<div className='flex flex-col md:flex-row'>
 				<div className='md:px-8 p-2 md:w-3/4 md:py-6'>
+					{/* 轮播图 */}
+					<Banner/>
+					{/* 文章列表 */}
 					<div>
-						<img src={Banner} alt='banner' className='w-full' />
-					</div>
-					<div>
 						<div className='flex md:pt-4 pt-2'>
 							<div
 								className='pr-2 hidden md:block '
@@ -103,12 +104,14 @@ const Home: React.FC = () => {
 							</div>
 						</div>
 					</div>
+					{/* 分页 */}
 					<div className='flex justify-between md:pt-8 pt-4 underline'>
 						<a href='http://www.baidu.com'>←Prev</a>
 						<a href='http://www.baidu.com'>Next→</a>
 					</div>
 				</div>
 				<div className='md:pr-8 md:pl-0 px-2 md:w-1/4 md:py-6'>
+					{/* 搜索栏 */}
 					<div>
 						<label>
 							<input
@@ -118,6 +121,7 @@ const Home: React.FC = () => {
 							/>
 						</label>
 					</div>
+					{/* 热门文章 */}
 					<div className='md:mt-4 mt-2'>
 						<span className='text-lg'>热门文章:</span>
 						<div className='flex flex-col text-sm mt-1'>
@@ -147,6 +151,7 @@ const Home: React.FC = () => {
 							</div>
 						</div>
 					</div>
+					{/* 文章分类 */}
 					<div className='md:mt-4 mt-2'>
 						<span className='text-lg'>文章分类:</span>
 						<div className='flex flex-col text-sm mt-1'>
@@ -164,6 +169,7 @@ const Home: React.FC = () => {
 
 					</div>
 					</div>
+					{/* 友情链接 */}
 					<div className='md:mt-4 mt-2'>
 						<span className='text-lg'>友情链接:</span>
 						<div className='flex flex-col text-sm mt-1'>
@@ -180,6 +186,7 @@ const Home: React.FC = () => {
 					</div>
 				</div>
 			</div>
+			{/* 尾部 */}
 			<Footer />
 		</div>
 	)

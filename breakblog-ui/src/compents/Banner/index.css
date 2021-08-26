@@ -1,0 +1,8 @@
+/*隐藏左右切换按钮*/
+.awssld__controls button {
+	display: none;
+}
+/* 隐藏顶部切换进度条 */
+.awssld__timer {
+	height: 0;
+}
