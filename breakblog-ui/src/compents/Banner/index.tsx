@@ -19,7 +19,7 @@ const Banner: React.FC = () => {
 				organicArrows={false}
 				play={true}
 				cancelOnInteraction={false}
-				interval={10000}
+				interval={15000}
 				className='h-40 md:h-56 w-full'
 				media={[
 					{
