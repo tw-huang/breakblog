@@ -22,7 +22,7 @@ const Post: React.FC = (props: any) => {
 				<div className='flex flex-col mb-4'>
 					<span className='text-3xl mb-2'>Java性能测试世界</span>
 					<span className='text-sm mb-2'>
-						-- 分类：Java 日期：2015-08-12 点击数：1120
+						分类：Java 日期：2015-08-12 点击数：1120
 					</span>
 					<div className='p-4 bg-gray-50'>
 						<span>

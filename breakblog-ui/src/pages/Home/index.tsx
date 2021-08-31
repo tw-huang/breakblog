@@ -106,11 +106,9 @@ const Home: React.FC = () => {
 					<div>
 						{posts.map((post: Post) => {
 							return (
-								<div className='flex md:pt-4 pt-2' key={post.id}>
-									<div
-										className='pr-2 hidden md:block md:w-1/3'
-									>
-										<img src={PostImg} alt='jpg'/>
+								<div className='flex md:my-4 my-2' key={post.id}>
+									<div className='pr-2 hidden md:block md:w-1/3'>
+										<img src={PostImg} alt='jpg' />
 									</div>
 									<div className='flex flex-col md:w-2/3 w-full'>
 										<a
@@ -124,9 +122,7 @@ const Home: React.FC = () => {
 											{dayjs(post.timestamp).format('YYYY-MM-DD')} 点击数：
 											{post.pageView}
 										</span>
-										<span className='text-sm pb-2'>
-											{post.subtitle}
-										</span>
+										<span className='text-sm pb-2'>{post.subtitle}</span>
 										<a
 											href='http://www.baidu.com'
 											className='text-sm text-gray-500'
