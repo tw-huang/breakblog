@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
+// @ts-ignore
+import { Link as LinkTo } from 'react-router-dom'
 import dayjs from 'dayjs'
 import './index.css'
 import Header from '../../compents/Header'
@@ -54,6 +56,10 @@ const Home: React.FC = () => {
 	const [postsHot, setPostsHot] = useState<Array<Post>>([])
 	// 文章
 	const [posts, setPosts] = useState<Array<Post>>([])
+	// 分页
+	const [page, setPage] = useState<number>(1)
+	// 总页数
+	const [pages, setPages] = useState<number>(0)
 
 	// 监听搜索回车按键事件
 	useEffect(() => {
@@ -70,29 +76,38 @@ const Home: React.FC = () => {
 		}
 	})
 
-	const fetchData = async () => {
-		const links = await fetchLinks()
-		if (links?.success && links.code === 1) {
-			setLinks(links.data)
-		}
-		const categories = await fetchCategories()
-		if (categories?.success && categories.code === 1) {
-			setCategories(categories.data)
-		}
-		const postsHot = await fetchPostsHot()
-		if (postsHot?.success && postsHot.code === 1) {
-			setPostsHot(postsHot.data)
-		}
-		const posts = await fetchPosts('', null, 1, 10)
-		if (posts?.success && posts.code === 1) {
-			setPosts(posts.data.records)
-		}
-	}
-
+	// 侧边栏数据
 	useEffect(() => {
+		const fetchData = async () => {
+			const links = await fetchLinks()
+			if (links?.success && links.code === 1) {
+				setLinks(links.data)
+			}
+			const categories = await fetchCategories()
+			if (categories?.success && categories.code === 1) {
+				setCategories(categories.data)
+			}
+			const postsHot = await fetchPostsHot()
+			if (postsHot?.success && postsHot.code === 1) {
+				setPostsHot(postsHot.data)
+			}
+		}
 		//获取初始数据
 		fetchData()
 	}, [])
+
+	// 文章分页数据
+	useEffect(() => {
+		console.log('page: ' + page)
+		const fetchData = async () => {
+			const posts = await fetchPosts('', null, page, 5)
+			if (posts?.success && posts.code === 1) {
+				setPosts(posts.data.records)
+				setPages(posts.data.pages)
+			}
+		}
+		fetchData()
+	}, [page])
 
 	return (
 		<div className='md:max-w-screen-lg w-full md:my-8 md:mx-auto bg-white '>
@@ -111,34 +126,46 @@ const Home: React.FC = () => {
 										<img src={PostImg} alt='jpg' />
 									</div>
 									<div className='flex flex-col md:w-2/3 w-full'>
-										<a
-											href='http://www.baidu.com'
+										<LinkTo
+											to={'/post/' + post.id}
 											className='text-xl md:text-2xl pb-2'
 										>
 											{post.title}
-										</a>
+										</LinkTo>
 										<span className='text-xs pb-2 text-gray-500'>
 											分类：{post.category.name} 日期：
 											{dayjs(post.timestamp).format('YYYY-MM-DD')} 点击数：
 											{post.pageView}
 										</span>
 										<span className='text-sm pb-2'>{post.subtitle}</span>
-										<a
-											href='http://www.baidu.com'
+										<LinkTo
+											to={'/post/' + post.id}
 											className='text-sm text-gray-500'
 											style={{ alignSelf: 'flex-end' }}
 										>
 											阅读正文-&gt;
-										</a>
+										</LinkTo>
 									</div>
 								</div>
 							)
 						})}
 					</div>
 					{/* 分页 */}
-					<div className='flex justify-between md:pt-8 pt-4 underline'>
-						<a href='http://www.baidu.com'>←Prev</a>
-						<a href='http://www.baidu.com'>Next→</a>
+					<div className='flex justify-between md:pt-8 pt-4'>
+						<button
+							className='p-2'
+							onClick={() => setPage(page - 1)}
+							disabled={page <= 1}
+						>
+							←Prev
+						</button>
+						<button
+							className='p-2'
+							onClick={() => setPage(page + 1)}
+							disabled={page >= pages}
+						>
+							Next→
+						</button>
 					</div>
 				</div>
 				<div className='md:pr-8 md:pl-0 px-2 md:w-1/4 md:py-6'>
