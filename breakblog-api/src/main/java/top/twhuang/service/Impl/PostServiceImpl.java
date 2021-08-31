@@ -33,35 +33,6 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     private CommentService commentService;
 
     @Override
-    public Page getPage(int page, int size) {
-        QueryWrapper<Post> qw = new QueryWrapper<>();
-        Page<Post> postPage = postMapper.selectPage(new Page<>(page, size), qw.orderByDesc("id"));
-        for (Post p : postPage.getRecords()) {
-            Category category = categoryService.getById(p.getCategoryId());
-            p.setCategory(category);
-        }
-        return postPage;
-    }
-
-    @Override
-    public Page getPageByCategoryId(int id, int page, int size) {
-        QueryWrapper<Post> qw = new QueryWrapper<>();
-        Page<Post> postPage = postMapper.selectPage(new Page<>(page, size), qw.eq("category_id", id).orderByDesc("id"));
-        for (Post p : postPage.getRecords()) {
-            Category category = categoryService.getById(p.getCategoryId());
-            p.setCategory(category);
-        }
-        return postPage;
-    }
-
-    @Override
-    public Post getPostById(int id) {
-        Post post = postMapper.selectById(id);
-        post.setCategory(categoryService.getById(post.getCategoryId()));
-        return post;
-    }
-
-    @Override
     public Map getPage(PageDTO pageDTO) {
         ArrayList<Map<String, Object>> list = new ArrayList<>();
         Map<String, Object> map = new HashMap<>();
@@ -89,7 +60,17 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     }
 
     @Override
-    public void updatePageView(int id) {
+    public void updatePageView(Integer id) {
         postMapper.updatePageView(id);
+    }
+
+    @Override
+    public Post getPrevPost(Integer id) {
+        return postMapper.selectPrevPost(id);
+    }
+
+    @Override
+    public Post getNextPost(Integer id) {
+        return postMapper.selectNextPost(id);
     }
 }

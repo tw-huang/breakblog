@@ -13,5 +13,9 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface PostMapper extends BaseMapper<Post> {
 
-    void updatePageView(@Param("id") int id);
+    void updatePageView(@Param("id") Integer id);
+
+    Post selectPrevPost(@Param("id") Integer id);
+
+    Post selectNextPost(@Param("id") Integer id);
 }

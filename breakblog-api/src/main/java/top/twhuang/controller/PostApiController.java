@@ -3,7 +3,9 @@ package top.twhuang.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import top.twhuang.dto.PageDTO;
 import top.twhuang.entity.Category;
 import top.twhuang.entity.Post;
@@ -13,6 +15,7 @@ import top.twhuang.util.Result;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import top.twhuang.vo.PostVO;
 
 import java.util.*;
 
@@ -23,12 +26,10 @@ import java.util.*;
  */
 @RestController
 @RequestMapping("/api")
+@AllArgsConstructor
 public class PostApiController {
 
-    @Autowired
     private PostService postService;
-
-    @Autowired
     private CategoryService categoryService;
 
     @GetMapping("/blog/posts/hot")
@@ -50,10 +51,31 @@ public class PostApiController {
         if (!Objects.isNull(categoryId)) {
             qw.eq(Post::getCategoryId, categoryId);
         }
+        qw.orderByDesc(Post::getTimestamp);
         Page<Post> page = postService.page(new Page<>(pageNum, pageSize), qw);
         page.getRecords().forEach(post -> post.setCategory(categoryService.getById(post.getCategoryId())));
         return Result.success(page);
     }
+
+    @GetMapping("/blog/post/{id}")
+    public Result blogPost(@PathVariable Integer id) {
+        PostVO postVO = new PostVO();
+        Post post = postService.getById(id);
+        if (!Objects.isNull(post)) {
+            Category category = categoryService.getById(post.getCategoryId());
+            post.setCategory(category);
+        }
+        BeanUtils.copyProperties(post, postVO);
+
+        Post prevPost = postService.getPrevPost(id);
+        Post nextPost = postService.getNextPost(id);
+        postVO.setPrevPostId(Objects.isNull(prevPost) ? null : prevPost.getId());
+        postVO.setPrevPostTitle(Objects.isNull(prevPost) ? null : prevPost.getTitle());
+        postVO.setNextPostId(Objects.isNull(nextPost) ? null : nextPost.getId());
+        postVO.setNextPostTitle(Objects.isNull(nextPost) ? null : nextPost.getTitle());
+        return Result.success(postVO);
+    }
+
 
     @GetMapping("/posts")
     public Result posts(PageDTO pageDTO) {
