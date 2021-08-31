@@ -60,6 +60,8 @@ const Home: React.FC = () => {
 	const [page, setPage] = useState<number>(1)
 	// 总页数
 	const [pages, setPages] = useState<number>(0)
+	// 分类 ID
+	const [categoryId, setCategoryId] = useState<any>(null)
 
 	// 监听搜索回车按键事件
 	useEffect(() => {
@@ -67,7 +69,22 @@ const Home: React.FC = () => {
 			const { keyCode } = event
 			if (keyCode === 13) {
 				// 键盘回车键
-				console.log(searchText)
+				const text = searchText.replace(/(^\s*)|(\s*$)/g, '')
+				if (
+					text !== undefined &&
+					text !== null &&
+					text !== ''
+				) {
+					const fetchData = async () => {
+						const posts = await fetchPosts(searchText, null, 1, 5)
+						if (posts?.success && posts.code === 1) {
+							setPosts(posts.data.records)
+							setPages(posts.data.pages)
+						}
+					}
+					fetchData()
+					setSearchText('')
+				}
 			}
 		}
 		document.addEventListener('keyup', handleSearchEvent)
@@ -98,16 +115,20 @@ const Home: React.FC = () => {
 
 	// 文章分页数据
 	useEffect(() => {
-		console.log('page: ' + page)
 		const fetchData = async () => {
-			const posts = await fetchPosts('', null, page, 5)
+			const posts = await fetchPosts('', categoryId, page, 5)
 			if (posts?.success && posts.code === 1) {
 				setPosts(posts.data.records)
 				setPages(posts.data.pages)
 			}
 		}
 		fetchData()
-	}, [page])
+	}, [page, categoryId])
+
+	// 回到首页初始状态
+	const indexClick = () => {
+		console.log('indexClick')
+	}
 
 	return (
 		<div className='md:max-w-screen-lg w-full md:my-8 md:mx-auto bg-white '>
@@ -151,22 +172,26 @@ const Home: React.FC = () => {
 						})}
 					</div>
 					{/* 分页 */}
-					<div className='flex justify-between md:pt-8 pt-4'>
-						<button
-							className='p-2'
-							onClick={() => setPage(page - 1)}
-							disabled={page <= 1}
-						>
-							←Prev
-						</button>
-						<button
-							className='p-2'
-							onClick={() => setPage(page + 1)}
-							disabled={page >= pages}
-						>
-							Next→
-						</button>
-					</div>
+					{pages === 1 ? (
+						''
+					) : (
+						<div className='flex justify-between md:pt-8 pt-4'>
+							<button
+								className='p-2'
+								onClick={() => setPage(page - 1)}
+								disabled={page <= 1}
+							>
+								←Prev
+							</button>
+							<button
+								className='p-2'
+								onClick={() => setPage(page + 1)}
+								disabled={page >= pages}
+							>
+								Next→
+							</button>
+						</div>
+					)}
 				</div>
 				<div className='md:pr-8 md:pl-0 px-2 md:w-1/4 md:py-6'>
 					{/* 搜索栏 */}
@@ -204,14 +229,29 @@ const Home: React.FC = () => {
 					{/* 文章分类 */}
 					<div className='md:mt-4 mt-2'>
 						<span className='text-lg'>文章分类:</span>
-						<div className='flex flex-col text-sm mt-1'>
+						<div className='text-sm mt-1'>
+							<div
+								className='pb-1 cursor-pointer'
+								onClick={() => {
+									setCategoryId(null)
+								}}
+							>
+								<span>All</span>
+							</div>
 							{categories.map((category: Category) => {
 								return (
-									<span className='pb-1' key={category.id}>
-										<a href='http://www.baidu.com'>
+									<div
+										className='pb-1 cursor-pointer'
+										key={category.id}
+										onClick={() => {
+											setCategoryId(category.id)
+											setPage(1)
+										}}
+									>
+										<span>
 											{category.name}({category.postCount})
-										</a>
-									</span>
+										</span>
+									</div>
 								)
 							})}
 						</div>
