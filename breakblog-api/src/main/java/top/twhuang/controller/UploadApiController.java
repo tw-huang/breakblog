@@ -1,5 +1,6 @@
 package top.twhuang.controller;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import top.twhuang.config.UploadConfig;
 import top.twhuang.entity.FileData;
@@ -26,12 +27,11 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api")
 @Slf4j
+@AllArgsConstructor
 public class UploadApiController {
 
-    @Autowired
     private UploadConfig uploadConfig;
 
-    @Autowired
     private FileDataService fileDataService;
 
     @PostMapping("/file")

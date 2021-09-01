@@ -1,5 +1,8 @@
 package top.twhuang.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.AllArgsConstructor;
 import top.twhuang.dto.PageDTO;
 import top.twhuang.entity.Comment;
 import top.twhuang.service.CommentService;
@@ -7,7 +10,9 @@ import top.twhuang.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @Author: tw.huang
@@ -16,10 +21,38 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api")
+@AllArgsConstructor
 public class CommentApiController {
 
-    @Autowired
     private CommentService commentService;
+
+    @GetMapping("/blog/comments")
+    public Result blogComments(@RequestParam(name = "postId") Integer postId,
+                               @RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum,
+                               @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
+        QueryWrapper<Comment> qw = new QueryWrapper<>();
+        qw.lambda().eq(Comment::getPostId, postId).orderByDesc(Comment::getTimestamp);
+        Page<Comment> page = commentService.page(new Page<>(pageNum, pageSize), qw);
+        page.getRecords().forEach(x -> {
+            if (!Objects.isNull(x.getRepliedId())) {
+                Comment replyComment = commentService.getById(x.getRepliedId());
+                x.setComment(replyComment);
+            }
+        });
+        return Result.success(page);
+    }
+
+    @PostMapping("/blog/comment")
+    public Result blogComment(@RequestBody Comment comment) {
+        comment.setTimestamp(new Date());
+        comment.setReviewed(false);
+        boolean save = commentService.save(comment);
+        if (save) {
+            return Result.success();
+        }
+        return Result.failure();
+    }
+
 
     @GetMapping("/comments")
     public Result comments(PageDTO pageDTO) {

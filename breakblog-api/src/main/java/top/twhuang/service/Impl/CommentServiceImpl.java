@@ -29,15 +29,6 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     @Autowired
     private PostService postService;
 
-    @Override
-    public Page getPageByPostId(int id, int page, int size) {
-        QueryWrapper<Comment> qw = new QueryWrapper<>();
-        Page<Comment> commentPage = commentMapper.selectPage(new Page<>(page, size), qw.eq("post_id", id));
-        for (Comment c : commentPage.getRecords()) {
-            c.setComment(commentMapper.selectById(c.getRepliedId()));
-        }
-        return commentPage;
-    }
 
     @Override
     public Map getPage(PageDTO pageDTO) {
@@ -58,7 +49,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
             hashMap.put("site", c.getSite());
             hashMap.put("postTitle", post.getTitle());
             hashMap.put("body", c.getBody());
-            hashMap.put("reviewed", c.getReviewed() == 1);
+            hashMap.put("reviewed", c.getReviewed());
             list.add(hashMap);
         }
         map.put("list", list);

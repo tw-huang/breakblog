@@ -1,5 +1,6 @@
 package top.twhuang.controller;
 
+import lombok.AllArgsConstructor;
 import top.twhuang.dto.PageDTO;
 import top.twhuang.entity.Category;
 import top.twhuang.service.CategoryService;
@@ -17,9 +18,9 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api")
+@AllArgsConstructor
 public class CategoryApiController {
 
-    @Autowired
     private CategoryService categoryService;
 
     @GetMapping("/blog/categories")

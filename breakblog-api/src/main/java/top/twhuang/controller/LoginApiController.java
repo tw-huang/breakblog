@@ -2,6 +2,7 @@ package top.twhuang.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import lombok.AllArgsConstructor;
 import top.twhuang.dto.LoginDTO;
 import top.twhuang.entity.Admin;
 import top.twhuang.service.AdminService;
@@ -25,9 +26,9 @@ import java.util.Objects;
  */
 @RestController
 @RequestMapping("/api")
+@AllArgsConstructor
 public class LoginApiController {
 
-    @Autowired
     private AdminService adminService;
 
     @PostMapping("/login")

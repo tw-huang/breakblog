@@ -2,6 +2,7 @@ package top.twhuang.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.AllArgsConstructor;
 import top.twhuang.dto.PageDTO;
 import top.twhuang.entity.Link;
 import top.twhuang.service.LinkService;
@@ -19,9 +20,9 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api")
+@AllArgsConstructor
 public class LinkApiController {
 
-    @Autowired
     private LinkService linkService;
 
     @GetMapping("/blog/links")
