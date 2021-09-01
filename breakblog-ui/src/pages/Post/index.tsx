@@ -75,10 +75,11 @@ const PostPage: React.FC = (props: any) => {
 			const post = await getPost(postId)
 			if (post?.success && post.code === 1) {
 				setPost(post.data)
+				setPage(1)
 			}
 		}
 		fetchData()
-	}, [])
+	}, [postId])
 
 	// 评论分页数据
 	useEffect(() => {
