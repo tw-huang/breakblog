@@ -8,10 +8,10 @@ import Footer from '../../compents/Footer'
 import PostImg from '../../assets/post.jpg'
 import Banner from '../../compents/Banner'
 import {
-	fetchLinks,
-	fetchCategories,
-	fetchPostsHot,
-	fetchPosts,
+	getLinks,
+	getCategories,
+	getPostsHot,
+	getPosts,
 } from '../../services'
 
 interface Link {
@@ -76,7 +76,7 @@ const Home: React.FC = () => {
 					text !== ''
 				) {
 					const fetchData = async () => {
-						const posts = await fetchPosts(searchText, null, 1, 5)
+						const posts = await getPosts(searchText, null, 1, 5)
 						if (posts?.success && posts.code === 1) {
 							setPosts(posts.data.records)
 							setPages(posts.data.pages)
@@ -96,15 +96,15 @@ const Home: React.FC = () => {
 	// 侧边栏数据
 	useEffect(() => {
 		const fetchData = async () => {
-			const links = await fetchLinks()
+			const links = await getLinks()
 			if (links?.success && links.code === 1) {
 				setLinks(links.data)
 			}
-			const categories = await fetchCategories()
+			const categories = await getCategories()
 			if (categories?.success && categories.code === 1) {
 				setCategories(categories.data)
 			}
-			const postsHot = await fetchPostsHot()
+			const postsHot = await getPostsHot()
 			if (postsHot?.success && postsHot.code === 1) {
 				setPostsHot(postsHot.data)
 			}
@@ -116,7 +116,7 @@ const Home: React.FC = () => {
 	// 文章分页数据
 	useEffect(() => {
 		const fetchData = async () => {
-			const posts = await fetchPosts('', categoryId, page, 5)
+			const posts = await getPosts('', categoryId, page, 5)
 			if (posts?.success && posts.code === 1) {
 				setPosts(posts.data.records)
 				setPages(posts.data.pages)
