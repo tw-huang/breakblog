@@ -135,11 +135,7 @@ const Home: React.FC = () => {
 					<div>
 						{posts.map((post: Post) => {
 							return (
-								<div
-									className='flex md:my-4 my-2'
-									key={post.id}
-									style={{ backgroundColor: '#ffffff' }}
-								>
+								<div className='flex md:my-4 my-2 bg-white' key={post.id}>
 									<div className='pr-2 hidden md:block md:w-1/3'>
 										<img src={PostImg} alt='jpg' />
 									</div>
@@ -209,10 +205,7 @@ const Home: React.FC = () => {
 					{/* 热门文章 */}
 					<div className='md:mt-4 mt-2'>
 						<span className='text-lg'>热门文章:</span>
-						<div
-							className='flex flex-col text-sm mt-1 p-2'
-							style={{ backgroundColor: '#ffffff' }}
-						>
+						<div className='flex flex-col text-sm mt-1 p-2 bg-white'>
 							{postsHot.map((post: Post) => {
 								return (
 									<div className='flex flex-col mb-2' key={post.id}>
@@ -231,10 +224,7 @@ const Home: React.FC = () => {
 					{/* 文章分类 */}
 					<div className='md:mt-4 mt-2'>
 						<span className='text-lg'>文章分类:</span>
-						<div
-							className='text-sm mt-1 p-2'
-							style={{ backgroundColor: '#ffffff' }}
-						>
+						<div className='text-sm mt-1 p-2 bg-white'>
 							<div
 								className='mb-2 cursor-pointer'
 								onClick={() => {
@@ -264,10 +254,7 @@ const Home: React.FC = () => {
 					{/* 友情链接 */}
 					<div className='md:mt-4 mt-2'>
 						<span className='text-lg'>友情链接:</span>
-						<div
-							className='flex flex-col text-sm mt-1 p-2'
-							style={{ backgroundColor: '#ffffff' }}
-						>
+						<div className='flex flex-col text-sm mt-1 p-2 bg-white'>
 							{links.map((link: Link) => {
 								return (
 									<span className='mb-2' key={link.id}>

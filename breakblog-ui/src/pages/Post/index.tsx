@@ -122,7 +122,7 @@ const PostPage: React.FC = (props: any) => {
 				}
 				fetchData()
 				// 清空内容
-				setReplyComment(null);
+				setReplyComment(null)
 				setAuthor('')
 				setEmail('')
 				setBody('')
@@ -134,7 +134,13 @@ const PostPage: React.FC = (props: any) => {
 
 	// @ts-ignore
 	return (
-		<div className='md:max-w-screen-lg w-full md:my-8 md:mx-auto bg-white '>
+		<div
+			className='md:max-w-screen-lg w-full md:my-8 md:mx-auto bg-white '
+			style={{
+				boxShadow: '0 0 4px 3px rgb(0 0 0 / 5%)',
+				backgroundColor: '#f9f9f9',
+			}}
+		>
 			<Header />
 			<div className='md:px-8 p-2 md:py-6'>
 				<div className='flex justify-between text-xs mb-4'>
@@ -150,7 +156,7 @@ const PostPage: React.FC = (props: any) => {
 						{dayjs(post?.timestamp).format('YYYY-MM-DD HH:mm:ss')} 点击数：
 						{post?.pageView}
 					</span>
-					<div className='p-4 bg-gray-50'>
+					<div className='p-4'>
 						<span className='text-sm'>{post?.subtitle}</span>
 					</div>
 				</div>
@@ -241,7 +247,7 @@ const PostPage: React.FC = (props: any) => {
 					{pages <= 1 ? (
 						''
 					) : (
-						<div className='flex justify-between md:pt-8 pt-4'>
+						<div className='flex justify-between pt-4'>
 							<button
 								className='p-2'
 								onClick={() => setPage(page - 1)}
