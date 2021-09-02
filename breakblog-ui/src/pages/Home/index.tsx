@@ -7,12 +7,7 @@ import Header from '../../compents/Header'
 import Footer from '../../compents/Footer'
 import PostImg from '../../assets/post.jpg'
 import Banner from '../../compents/Banner'
-import {
-	getLinks,
-	getCategories,
-	getPostsHot,
-	getPosts,
-} from '../../services'
+import { getLinks, getCategories, getPostsHot, getPosts } from '../../services'
 
 interface Link {
 	id: number
@@ -70,11 +65,7 @@ const Home: React.FC = () => {
 			if (keyCode === 13) {
 				// 键盘回车键
 				const text = searchText.replace(/(^\s*)|(\s*$)/g, '')
-				if (
-					text !== undefined &&
-					text !== null &&
-					text !== ''
-				) {
+				if (text !== undefined && text !== null && text !== '') {
 					const fetchData = async () => {
 						const posts = await getPosts(searchText, null, 1, 5)
 						if (posts?.success && posts.code === 1) {
@@ -125,15 +116,17 @@ const Home: React.FC = () => {
 		fetchData()
 	}, [page, categoryId])
 
-	// 回到首页初始状态
-	const indexClick = () => {
-		console.log('indexClick')
-	}
-
 	return (
-		<div className='md:max-w-screen-lg w-full md:my-8 md:mx-auto bg-white '>
+		<div
+			className='md:max-w-screen-lg w-full md:my-8 md:mx-auto'
+			style={{
+				boxShadow: '0 0 4px 3px rgb(0 0 0 / 5%)',
+				backgroundColor: '#f9f9f9',
+			}}
+		>
 			{/* 顶部 */}
 			<Header />
+			{/* 内容 */}
 			<div className='flex flex-col md:flex-row'>
 				<div className='md:px-8 p-2 md:w-3/4 md:py-6'>
 					{/* 轮播图 */}
@@ -142,14 +135,18 @@ const Home: React.FC = () => {
 					<div>
 						{posts.map((post: Post) => {
 							return (
-								<div className='flex md:my-4 my-2' key={post.id}>
+								<div
+									className='flex md:my-4 my-2'
+									key={post.id}
+									style={{ backgroundColor: '#ffffff' }}
+								>
 									<div className='pr-2 hidden md:block md:w-1/3'>
 										<img src={PostImg} alt='jpg' />
 									</div>
-									<div className='flex flex-col md:w-2/3 w-full'>
+									<div className='flex flex-col md:w-2/3 w-full md:p-4 p-2 '>
 										<LinkTo
 											to={'/post/' + post.id}
-											className='text-xl md:text-2xl pb-2'
+											className='text-lg md:text-xl pb-2 truncate'
 										>
 											{post.title}
 										</LinkTo>
@@ -158,7 +155,9 @@ const Home: React.FC = () => {
 											{dayjs(post.timestamp).format('YYYY-MM-DD')} 点击数：
 											{post.pageView}
 										</span>
-										<span className='text-sm pb-2'>{post.subtitle}</span>
+										<span className='text-sm pb-2 text-gray-500'>
+											{post.subtitle}
+										</span>
 										<LinkTo
 											to={'/post/' + post.id}
 											className='text-sm text-gray-500'
@@ -175,7 +174,7 @@ const Home: React.FC = () => {
 					{pages === 1 ? (
 						''
 					) : (
-						<div className='flex justify-between md:pt-8 pt-4'>
+						<div className='flex justify-between pt-4'>
 							<button
 								className='p-2'
 								onClick={() => setPage(page - 1)}
@@ -210,13 +209,16 @@ const Home: React.FC = () => {
 					{/* 热门文章 */}
 					<div className='md:mt-4 mt-2'>
 						<span className='text-lg'>热门文章:</span>
-						<div className='flex flex-col text-sm mt-1'>
+						<div
+							className='flex flex-col text-sm mt-1 p-2'
+							style={{ backgroundColor: '#ffffff' }}
+						>
 							{postsHot.map((post: Post) => {
 								return (
-									<div className='flex flex-col pb-1' key={post.id}>
-										<a href='http://www.baidu.com' className='pb-1'>
+									<div className='flex flex-col mb-2' key={post.id}>
+										<LinkTo to={'/post/' + post.id} className='mb-1 truncate'>
 											{post.title}
-										</a>
+										</LinkTo>
 										<span className='text-xs text-gray-500'>
 											日期：{dayjs(post.timestamp).format('YYYY-MM-DD')}{' '}
 											点击数：{post.pageView}
@@ -229,19 +231,22 @@ const Home: React.FC = () => {
 					{/* 文章分类 */}
 					<div className='md:mt-4 mt-2'>
 						<span className='text-lg'>文章分类:</span>
-						<div className='text-sm mt-1'>
+						<div
+							className='text-sm mt-1 p-2'
+							style={{ backgroundColor: '#ffffff' }}
+						>
 							<div
-								className='pb-1 cursor-pointer'
+								className='mb-2 cursor-pointer'
 								onClick={() => {
 									setCategoryId(null)
 								}}
 							>
-								<span>All</span>
+								<span>全部All</span>
 							</div>
 							{categories.map((category: Category) => {
 								return (
 									<div
-										className='pb-1 cursor-pointer'
+										className='mb-2 cursor-pointer'
 										key={category.id}
 										onClick={() => {
 											setCategoryId(category.id)
@@ -259,10 +264,13 @@ const Home: React.FC = () => {
 					{/* 友情链接 */}
 					<div className='md:mt-4 mt-2'>
 						<span className='text-lg'>友情链接:</span>
-						<div className='flex flex-col text-sm mt-1'>
+						<div
+							className='flex flex-col text-sm mt-1 p-2'
+							style={{ backgroundColor: '#ffffff' }}
+						>
 							{links.map((link: Link) => {
 								return (
-									<span className='pb-1' key={link.id}>
+									<span className='mb-2' key={link.id}>
 										<a href={link.url}>{link.name}</a>
 									</span>
 								)

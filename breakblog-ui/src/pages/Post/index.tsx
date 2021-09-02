@@ -144,14 +144,14 @@ const PostPage: React.FC = (props: any) => {
 					</span>
 				</div>
 				<div className='flex flex-col mb-4'>
-					<span className='text-3xl mb-2'>{post?.title}</span>
-					<span className='text-sm mb-2'>
+					<span className='text-2xl mb-2 font-semibold'>{post?.title}</span>
+					<span className='text-xs mb-2'>
 						分类：{post?.category?.name} 日期：
 						{dayjs(post?.timestamp).format('YYYY-MM-DD HH:mm:ss')} 点击数：
 						{post?.pageView}
 					</span>
 					<div className='p-4 bg-gray-50'>
-						<span>{post?.subtitle}</span>
+						<span className='text-sm'>{post?.subtitle}</span>
 					</div>
 				</div>
 				<article>{post?.body}</article>
@@ -177,7 +177,7 @@ const PostPage: React.FC = (props: any) => {
 				</div>
 				<hr className='my-4' />
 				<div>
-					<span className='text-2xl'>评论:</span>
+					<span className='text-xl font-semibold'>评论:</span>
 					<div className='py-4'>
 						{/* 评论列表 */}
 						{comments.length === 0 ? (
