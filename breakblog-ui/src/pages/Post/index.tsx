@@ -135,43 +135,46 @@ const PostPage: React.FC = (props: any) => {
 
 	// @ts-ignore
 	return (
-		<div
-			className='md:max-w-screen-lg w-full md:my-8 md:mx-auto bg-white '
-			style={{
-				boxShadow: '0 0 4px 3px rgb(0 0 0 / 5%)',
-				backgroundColor: '#f9f9f9',
-			}}
-		>
+		<div className='md:max-w-screen-lg w-full md:my-8 md:mx-auto bg-gray-100 shadow rounded'>
 			<Header />
 			<div className='md:px-8 p-2 md:py-6'>
-				<div className='flex flex-col mb-4'>
-					<span className='text-2xl mb-2 font-semibold'>{post?.title}</span>
-					<span className='text-xs mb-2'>
+				<div className='flex flex-col mb-4 p-2 md:p-4 bg-white rounded'>
+					<span className='text-2xl mb-2'>{post?.title}</span>
+					<span className='text-xs mb-2 text-gray-400'>
 						分类：{post?.category?.name} 日期：
 						{dayjs(post?.timestamp).format('YYYY-MM-DD HH:mm:ss')} 点击数：
 						{post?.pageView}
 					</span>
-					<div className='p-4'>
+					<div className='p-4 bg-gray-50'>
 						<span className='text-sm'>{post?.subtitle}</span>
 					</div>
 				</div>
-				<article className='leading-relaxed' dangerouslySetInnerHTML={{ __html: post?.body || '' }} />
-				<div className='flex justify-between py-8 text-sm'>
-					<span style={{ borderBottom: '1px dashed #e5e5e5' }}>
+				<article
+					className='leading-relaxed p-2 md:p-4 bg-white rounded'
+					dangerouslySetInnerHTML={{ __html: post?.body || '' }}
+				/>
+				<div className='flex flex-nowrap justify-between py-8 text-sm'>
+					<span className='w-1/2 flex flex-row pr-2 md:pr-4'>
 						{post?.nextPostId === null ? (
 							''
 						) : (
-							<LinkTo to={'/post/' + post?.nextPostId}>
-								← {post?.nextPostTitle}
+							<LinkTo
+								to={'/post/' + post?.nextPostId}
+								className='truncate hover:text-gray-400 hover:underline'
+							>
+								上一篇：{post?.nextPostTitle}
 							</LinkTo>
 						)}
 					</span>
-					<span style={{ borderBottom: '1px dashed #e5e5e5' }}>
+					<span className='w-1/2 flex flex-row-reverse pl-2 md:pl-4'>
 						{post?.prevPostId === null ? (
 							''
 						) : (
-							<LinkTo to={'/post/' + post?.prevPostId}>
-								{post?.prevPostTitle} →
+							<LinkTo
+								to={'/post/' + post?.prevPostId}
+								className='truncate hover:text-gray-400 hover:underline'
+							>
+								下一篇：{post?.prevPostTitle}
 							</LinkTo>
 						)}
 					</span>
@@ -179,8 +182,8 @@ const PostPage: React.FC = (props: any) => {
 				{post?.canComment ? (
 					<div>
 						<hr className='my-4' />
-						<div>
-							<span className='text-xl font-semibold'>评论:</span>
+						<div className='p-2 md:p-4 bg-white rounded'>
+							<span className='text-xl'>评论</span>
 							<div className='py-4'>
 								{/* 评论列表 */}
 								{comments.length === 0 ? (
@@ -189,56 +192,82 @@ const PostPage: React.FC = (props: any) => {
 									comments.map((comment: Comment) => {
 										return comment.repliedId === null ? (
 											<div
-												className='flex flex-col py-2'
-												style={{ borderBottom: '1px dashed #e5e5e5' }}
+												className='flex flex-col py-2 border-b border-dashed'
 												key={comment.id}
 											>
-												<span>{comment.author} 说:</span>
-												<span className='p-3'>{comment.body}</span>
-												<div
-													className='text-sm text-gary-500'
-													style={{ alignSelf: 'flex-end' }}
-												>
-													{dayjs(comment.timestamp).format(
-														'YYYY-MM-DD HH:mm:ss'
-													)}{' '}
-													|&nbsp;
-													<button
-														onClick={() => {
-															setReplyComment(comment)
-														}}
+												<div className='flex justify-between items-center'>
+													<div className='flex items-center'>
+														<span className='text-gray-600'>
+															{comment.author}
+														</span>
+														<span className='text-gray-400 text-sm mx-4 '>
+															|
+														</span>
+														<span className='text-sm text-gray-400'>
+															{dayjs(comment.timestamp).format(
+																'YYYY-MM-DD HH:mm:ss'
+															)}{' '}
+														</span>
+													</div>
+													<div
+														className='flex items-center text-sm text-gray-500'
+														style={{ alignSelf: 'flex-end' }}
 													>
-														回复
-													</button>
+														<span className='rounded-full h-6 w-6 flex items-center justify-center bg-gray-100 mr-2 text-xs'>
+															{comment.id}
+														</span>
+														<button
+															className='focus:outline-none hover:text-gray-400 hover:underline'
+															onClick={() => {
+																setReplyComment(comment)
+															}}
+														>
+															回复
+														</button>
+													</div>
 												</div>
+												<span className='py-3 px-4'>{comment.body}</span>
 											</div>
 										) : (
 											<div
-												className='flex flex-col py-2'
-												style={{ borderBottom: '1px dashed #e5e5e5' }}
+												className='flex flex-col py-2 border-b border-dashed'
 												key={comment.id}
 											>
-												<span>{comment.author} 说:</span>
-												<span className='pt-3 pl-6'>
-													@{comment.comment?.author} 说: {comment.comment?.body}
-												</span>
-												<span className='p-3'>{comment.body}</span>
-												<div
-													className='text-sm text-gary-500'
-													style={{ alignSelf: 'flex-end' }}
-												>
-													{dayjs(comment.timestamp).format(
-														'YYYY-MM-DD HH:mm:ss'
-													)}{' '}
-													|&nbsp;
-													<button
-														onClick={() => {
-															setReplyComment(comment)
-														}}
+												<div className='flex justify-between items-center'>
+													<div className='flex items-center'>
+														<span className='text-gray-600'>
+															{comment.author}
+														</span>
+														<span className='text-gray-400 text-sm mx-4 '>
+															|
+														</span>
+														<span className='text-sm text-gray-400'>
+															{dayjs(comment.timestamp).format(
+																'YYYY-MM-DD HH:mm:ss'
+															)}{' '}
+														</span>
+													</div>
+													<div
+														className='flex items-center text-sm text-gray-500'
+														style={{ alignSelf: 'flex-end' }}
 													>
-														回复
-													</button>
+														<span className='rounded-full h-6 w-6 flex items-center justify-center bg-gray-100 mr-2 text-xs'>
+															{comment.id}
+														</span>
+														<button
+															className='focus:outline-none hover:text-gray-400 hover:underline'
+															onClick={() => {
+																setReplyComment(comment)
+															}}
+														>
+															回复
+														</button>
+													</div>
 												</div>
+												<span className='mt-3 mx-8'>
+													@{comment.comment?.author} : {comment.comment?.body}
+												</span>
+												<span className='py-3 px-4'>{comment.body}</span>
 											</div>
 										)
 									})
@@ -250,14 +279,22 @@ const PostPage: React.FC = (props: any) => {
 							) : (
 								<div className='flex justify-between pt-4'>
 									<button
-										className='p-2 font-medium disabled:opacity-50'
+										className={`p-2 font-medium focus:outline-none ${
+											page <= 1
+												? 'disabled:opacity-50'
+												: 'hover:text-gray-400 hover:underline'
+										}`}
 										onClick={() => setPage(page - 1)}
 										disabled={page <= 1}
 									>
 										←Prev
 									</button>
 									<button
-										className='p-2 font-medium disabled:opacity-50'
+										className={`p-2 font-medium focus:outline-none ${
+											page >= pages
+												? 'disabled:opacity-50'
+												: 'hover:text-gray-400 hover:underline'
+										}`}
 										onClick={() => setPage(page + 1)}
 										disabled={page >= pages}
 									>
@@ -267,14 +304,14 @@ const PostPage: React.FC = (props: any) => {
 							)}
 						</div>
 						<hr className='my-4' />
-						<div>
-							<div className='flex flex-col bg-gray-50'>
+						<div className='p-2 md:p-4 bg-white rounded'>
+							<div className='flex flex-col'>
 								<span className='mb-4 text-lg'>
 									{replyComment === null
 										? '发表评论'
 										: '回复 ' +
 										  replyComment?.author +
-										  ': ' +
+										  ' : ' +
 										  replyComment?.body}
 								</span>
 								<div className='mb-4'>
@@ -282,7 +319,8 @@ const PostPage: React.FC = (props: any) => {
 									<textarea
 										name='body'
 										id='body'
-										className='md:w-56 sm:w-50 w-60 h-16'
+										className='md:w-56 sm:w-50 w-60 h-16 placeholder-gray-300 border border-gray-300 focus:outline-none focus:ring-1 ring-gray-400 rounded px-2 py-1'
+										placeholder='写得不错，学习了！'
 										value={body}
 										onChange={(event) => setBody(event.target.value)}
 									/>
@@ -292,7 +330,8 @@ const PostPage: React.FC = (props: any) => {
 										<label className='pr-2 text-sm'>昵称:</label>
 										<input
 											type='text'
-											className='md:w-56 sm:w-50 w-60'
+											className='md:w-56 sm:w-50 w-60 placeholder-gray-300 border border-gray-300 focus:outline-none focus:ring-1 ring-gray-400 rounded px-2 py-1'
+											placeholder='twhuang'
 											value={author}
 											onChange={(event) => setAuthor(event.target.value)}
 										/>
@@ -301,7 +340,8 @@ const PostPage: React.FC = (props: any) => {
 										<label className='pr-2 text-sm'>邮箱:</label>
 										<input
 											type='text'
-											className='md:w-56 sm:w-50 w-60'
+											className='md:w-56 sm:w-50 w-60 placeholder-gray-300 border border-gray-300 focus:outline-none focus:ring-1 ring-gray-400 rounded px-2 py-1'
+											placeholder='tw.huang@foxmail.com'
 											value={email}
 											onChange={(event) => setEmail(event.target.value)}
 										/>
@@ -310,7 +350,8 @@ const PostPage: React.FC = (props: any) => {
 										<label className='pr-2 text-sm'>站点:</label>
 										<input
 											type='text'
-											className='md:w-56 sm:w-50 w-60'
+											className='md:w-56 sm:w-50 w-60 placeholder-gray-300 border border-gray-300 focus:outline-none focus:ring-1 ring-gray-400 rounded px-2 py-1'
+											placeholder='http://twhuang.top'
 											value={site}
 											onChange={(event) => setSite(event.target.value)}
 										/>
@@ -319,10 +360,10 @@ const PostPage: React.FC = (props: any) => {
 								<div>
 									<button
 										type='submit'
-										className='bg-gray-800 text-white rounded py-1 px-2 hover:bg-gray-900'
+										className='bg-gray-600 text-white rounded py-1 px-2 hover:bg-gray-400'
 										onClick={handleSubmit}
 									>
-										提 交
+										发 表
 									</button>
 								</div>
 							</div>

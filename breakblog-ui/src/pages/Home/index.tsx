@@ -164,12 +164,14 @@ const Home: React.FC = () => {
 											post.image ? 'md:w-2/3' : ''
 										}`}
 									>
-										<LinkTo
-											to={'/post/' + post.id}
-											className='text-lg md:text-xl font-medium pb-2 truncate hover:text-gray-400 hover:underline'
-										>
-											{post.title}
-										</LinkTo>
+										<div className='pb-2 flex'>
+											<LinkTo
+												to={'/post/' + post.id}
+												className='text-lg md:text-xl font-medium truncate hover:text-gray-400 hover:underline'
+											>
+												{post.title}
+											</LinkTo>
+										</div>
 										<span className='text-xs pb-2 text-gray-400'>
 											分类：{post.category.name} 日期：
 											{dayjs(post.timestamp).format('YYYY-MM-DD')} 点击数：
@@ -291,26 +293,26 @@ const Home: React.FC = () => {
 						</div>
 						<div className='text-sm text-gray-600 p-4'>
 							<div
-								className='mb-2 cursor-pointer hover:text-gray-400 hover:underline'
+								className='flex justify-between mb-2 cursor-pointer border-b hover:text-gray-400 hover:underline'
 								onClick={() => {
 									setCategoryId(null)
 								}}
 							>
-								<span>全部All</span>
+								<span>全部(All)</span>
+								<span className='rounded-full h-6 w-6 flex items-center justify-center bg-gray-50'>{categories.length || 0}</span>
 							</div>
 							{categories.map((category: Category) => {
 								return (
 									<div
-										className='mb-2 cursor-pointer hover:text-gray-400 hover:underline'
+										className='flex justify-between mb-2 cursor-pointer border-b hover:text-gray-400 hover:underline'
 										key={category.id}
 										onClick={() => {
 											setCategoryId(category.id)
 											setPage(1)
 										}}
 									>
-										<span>
-											{category.name}({category.postCount})
-										</span>
+										<span>{category.name}</span>
+										<span className='rounded-full h-6 w-6 flex items-center justify-center bg-gray-50'>{category.postCount}</span>
 									</div>
 								)
 							})}
@@ -328,6 +330,7 @@ const Home: React.FC = () => {
 										className='mb-2 hover:text-gray-400 hover:underline'
 										key={link.id}
 									>
+										<span>-&gt;&nbsp;</span>
 										<a
 											href={link.url}
 											target='_blank'
