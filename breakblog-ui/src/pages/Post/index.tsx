@@ -21,6 +21,7 @@ interface Post {
 	updateTime: string
 	title: string
 	subtitle: string
+	image: string
 	body: string
 	timestamp: string
 	canComment: boolean
@@ -154,7 +155,7 @@ const PostPage: React.FC = (props: any) => {
 						<span className='text-sm'>{post?.subtitle}</span>
 					</div>
 				</div>
-				<article dangerouslySetInnerHTML={{ __html: post?.body || '' }} />
+				<article className='leading-relaxed' dangerouslySetInnerHTML={{ __html: post?.body || '' }} />
 				<div className='flex justify-between py-8 text-sm'>
 					<span style={{ borderBottom: '1px dashed #e5e5e5' }}>
 						{post?.nextPostId === null ? (
@@ -249,14 +250,14 @@ const PostPage: React.FC = (props: any) => {
 							) : (
 								<div className='flex justify-between pt-4'>
 									<button
-										className='p-2'
+										className='p-2 font-medium disabled:opacity-50'
 										onClick={() => setPage(page - 1)}
 										disabled={page <= 1}
 									>
 										←Prev
 									</button>
 									<button
-										className='p-2'
+										className='p-2 font-medium disabled:opacity-50'
 										onClick={() => setPage(page + 1)}
 										disabled={page >= pages}
 									>

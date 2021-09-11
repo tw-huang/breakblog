@@ -3,11 +3,17 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Link as LinkTo } from 'react-router-dom'
 import dayjs from 'dayjs'
 import './index.css'
+import AvatarImg from '../../assets/avatar.png'
 import Header from '../../compents/Header'
 import Footer from '../../compents/Footer'
-import PostImg from '../../assets/post.jpg'
 import Banner from '../../compents/Banner'
-import { getLinks, getCategories, getPostsHot, getPosts } from '../../services'
+import {
+	getBlogInfo,
+	getLinks,
+	getCategories,
+	getPostsHot,
+	getPosts,
+} from '../../services'
 
 interface Link {
 	id: number
@@ -31,6 +37,7 @@ interface Post {
 	updateTime: string
 	title: string
 	subtitle: string
+	image: string
 	body: string
 	timestamp: string
 	canComment: boolean
@@ -38,11 +45,19 @@ interface Post {
 	category: Category
 }
 
+interface BlogInfo {
+	posts: number
+	pageviews: number
+	categories: number
+}
+
 const Home: React.FC = () => {
 	// 搜索文本
 	const [searchText, setSearchText] = useState<string>('')
 	// 搜索文本 ref
 	const searchEl = useRef(null)
+	// 博客信息
+	const [blogInfo, setBlogInfo] = useState<BlogInfo>()
 	// 友链
 	const [links, setLinks] = useState<Array<Link>>([])
 	// 分类
@@ -74,7 +89,7 @@ const Home: React.FC = () => {
 						}
 					}
 					fetchData()
-					setSearchText('')
+					// setSearchText('')
 				}
 			}
 		}
@@ -87,17 +102,21 @@ const Home: React.FC = () => {
 	// 侧边栏数据
 	useEffect(() => {
 		const fetchData = async () => {
-			const links = await getLinks()
-			if (links?.success && links.code === 1) {
-				setLinks(links.data)
+			const blogInfo = await getBlogInfo()
+			if (blogInfo?.success && blogInfo.code === 1) {
+				setBlogInfo(blogInfo.data)
+			}
+			const postsHot = await getPostsHot()
+			if (postsHot?.success && postsHot.code === 1) {
+				setPostsHot(postsHot.data)
 			}
 			const categories = await getCategories()
 			if (categories?.success && categories.code === 1) {
 				setCategories(categories.data)
 			}
-			const postsHot = await getPostsHot()
-			if (postsHot?.success && postsHot.code === 1) {
-				setPostsHot(postsHot.data)
+			const links = await getLinks()
+			if (links?.success && links.code === 1) {
+				setLinks(links.data)
 			}
 		}
 		//获取初始数据
@@ -136,10 +155,18 @@ const Home: React.FC = () => {
 						{posts.map((post: Post) => {
 							return (
 								<div className='flex md:my-4 my-2 bg-white' key={post.id}>
-									<div className='pr-2 hidden md:block md:w-1/3'>
-										<img src={PostImg} alt='jpg' />
+									<div
+										className={`pr-2 hidden md:w-1/3 ${
+											post.image ? 'md:block' : ''
+										}`}
+									>
+										<img src={post.image} alt='文章配图' />
 									</div>
-									<div className='flex flex-col md:w-2/3 w-full md:p-4 p-2 '>
+									<div
+										className={`flex flex-col w-full md:p-4 p-2 ${
+											post.image ? 'md:w-2/3' : ''
+										}`}
+									>
 										<LinkTo
 											to={'/post/' + post.id}
 											className='text-lg md:text-xl pb-2 truncate'
@@ -167,19 +194,19 @@ const Home: React.FC = () => {
 						})}
 					</div>
 					{/* 分页 */}
-					{pages === 1 ? (
+					{pages <= 1 ? (
 						''
 					) : (
 						<div className='flex justify-between pt-4'>
 							<button
-								className='p-2'
+								className='p-2 font-medium disabled:opacity-50'
 								onClick={() => setPage(page - 1)}
 								disabled={page <= 1}
 							>
 								←Prev
 							</button>
 							<button
-								className='p-2'
+								className='p-2 font-medium disabled:opacity-50'
 								onClick={() => setPage(page + 1)}
 								disabled={page >= pages}
 							>
@@ -194,16 +221,44 @@ const Home: React.FC = () => {
 						<label>
 							<input
 								type='text'
-								className='w-full border-2 border-back'
-								placeholder='请输入搜索的关键词'
+								className='w-full placeholder-gray-300 border-2 border-gray-400 px-2 py-1'
+								placeholder='输入文章标题搜索'
 								value={searchText}
 								onChange={(event) => setSearchText(event.target.value)}
 								ref={searchEl}
 							/>
 						</label>
 					</div>
+					{/* 网站信息 */}
+					<div className='w-full mt-6'>
+						<div className='text-center text-sm'>
+							<div
+								className='flex justify-center items-center w-32 h-32 bg-white '
+								style={{ margin: '0 auto', borderRadius: '50%' }}
+							>
+								<img
+									src={AvatarImg}
+									alt='avatar'
+									className='w-28 h-28 '
+									style={{ borderRadius: '50%' }}
+								/>
+							</div>
+							<div className='mt-2'>最难的是控制自己</div>
+						</div>
+						<div className='flex md:mt-4 mt-2 py-2 justify-between text-center text-xs bg-white'>
+							<span className='w-1/3'>
+								文章 <br /> {blogInfo?.posts}
+							</span>
+							<span className='w-1/3'>
+								分类 <br /> {blogInfo?.categories}
+							</span>
+							<span className='w-1/3'>
+								浏览量 <br /> {blogInfo?.pageviews}
+							</span>
+						</div>
+					</div>
 					{/* 热门文章 */}
-					<div className='md:mt-4 mt-2'>
+					<div className='mt-6'>
 						<span className='text-lg'>热门文章:</span>
 						<div className='flex flex-col text-sm mt-1 p-2 bg-white'>
 							{postsHot.map((post: Post) => {
@@ -222,7 +277,7 @@ const Home: React.FC = () => {
 						</div>
 					</div>
 					{/* 文章分类 */}
-					<div className='md:mt-4 mt-2'>
+					<div className='mt-6'>
 						<span className='text-lg'>文章分类:</span>
 						<div className='text-sm mt-1 p-2 bg-white'>
 							<div
@@ -252,7 +307,7 @@ const Home: React.FC = () => {
 						</div>
 					</div>
 					{/* 友情链接 */}
-					<div className='md:mt-4 mt-2'>
+					<div className='mt-6'>
 						<span className='text-lg'>友情链接:</span>
 						<div className='flex flex-col text-sm mt-1 p-2 bg-white'>
 							{links.map((link: Link) => {
