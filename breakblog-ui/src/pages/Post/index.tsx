@@ -268,7 +268,7 @@ const PostPage: React.FC = (props: any) => {
 						</div>
 						<hr className='my-4' />
 						<div>
-							<div className='flex flex-col bg-gray-50 p-6'>
+							<div className='flex flex-col bg-gray-50'>
 								<span className='mb-4 text-lg'>
 									{replyComment === null
 										? '发表评论'
