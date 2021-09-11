@@ -8,7 +8,7 @@ const Header: React.FC = () => {
 		<div className='flex justify-between items-center md:h-20 h-12 md:px-8 px-2 border-solid border-b-2 border-gary-50'>
 			<div className='flex items-center'>
 				<img src={Logo} alt='logo' className='md:w-12 w-8' />
-				<span className='font-bold text-2xl pl-2'>BreakBlog</span>
+				<span className='font-bold text-2xl pl-2'>随笔记录</span>
 			</div>
 			<div>
 				<LinkTo to={"/"}>首页</LinkTo>

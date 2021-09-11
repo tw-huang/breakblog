@@ -143,12 +143,6 @@ const PostPage: React.FC = (props: any) => {
 		>
 			<Header />
 			<div className='md:px-8 p-2 md:py-6'>
-				<div className='flex justify-between text-xs mb-4'>
-					<span>首页 / 文章</span>
-					<span style={{ borderBottom: '1px dashed #e5e5e5' }}>
-						<LinkTo to='/'>返回首页</LinkTo>
-					</span>
-				</div>
 				<div className='flex flex-col mb-4'>
 					<span className='text-2xl mb-2 font-semibold'>{post?.title}</span>
 					<span className='text-xs mb-2'>
@@ -160,7 +154,7 @@ const PostPage: React.FC = (props: any) => {
 						<span className='text-sm'>{post?.subtitle}</span>
 					</div>
 				</div>
-				<article>{post?.body}</article>
+				<article dangerouslySetInnerHTML={{ __html: post?.body || '' }} />
 				<div className='flex justify-between py-8 text-sm'>
 					<span style={{ borderBottom: '1px dashed #e5e5e5' }}>
 						{post?.nextPostId === null ? (
@@ -181,148 +175,161 @@ const PostPage: React.FC = (props: any) => {
 						)}
 					</span>
 				</div>
-				<hr className='my-4' />
-				<div>
-					<span className='text-xl font-semibold'>评论:</span>
-					<div className='py-4'>
-						{/* 评论列表 */}
-						{comments.length === 0 ? (
-							<span>暂无评论，尝试发表你的意见？</span>
-						) : (
-							comments.map((comment: Comment) => {
-								return comment.repliedId === null ? (
-									<div
-										className='flex flex-col py-2'
-										style={{ borderBottom: '1px dashed #e5e5e5' }}
-										key={comment.id}
-									>
-										<span>{comment.author} 说:</span>
-										<span className='p-3'>{comment.body}</span>
-										<div
-											className='text-sm text-gary-500'
-											style={{ alignSelf: 'flex-end' }}
-										>
-											{dayjs(comment.timestamp).format('YYYY-MM-DD HH:mm:ss')}{' '}
-											|&nbsp;
-											<button
-												onClick={() => {
-													setReplyComment(comment)
-												}}
-											>
-												回复
-											</button>
-										</div>
-									</div>
-								) : (
-									<div
-										className='flex flex-col py-2'
-										style={{ borderBottom: '1px dashed #e5e5e5' }}
-										key={comment.id}
-									>
-										<span>{comment.author} 说:</span>
-										<span className='pt-3 pl-6'>
-											@{comment.comment?.author} 说: {comment.comment?.body}
-										</span>
-										<span className='p-3'>{comment.body}</span>
-										<div
-											className='text-sm text-gary-500'
-											style={{ alignSelf: 'flex-end' }}
-										>
-											{dayjs(comment.timestamp).format('YYYY-MM-DD HH:mm:ss')}{' '}
-											|&nbsp;
-											<button
-												onClick={() => {
-													setReplyComment(comment)
-												}}
-											>
-												回复
-											</button>
-										</div>
-									</div>
-								)
-							})
-						)}
-					</div>
-					{/* 分页 */}
-					{pages <= 1 ? (
-						''
-					) : (
-						<div className='flex justify-between pt-4'>
-							<button
-								className='p-2'
-								onClick={() => setPage(page - 1)}
-								disabled={page <= 1}
-							>
-								←Prev
-							</button>
-							<button
-								className='p-2'
-								onClick={() => setPage(page + 1)}
-								disabled={page >= pages}
-							>
-								Next→
-							</button>
-						</div>
-					)}
-				</div>
-				<hr className='my-4' />
-				<div>
-					<div className='flex flex-col bg-gray-50 p-6'>
-						<span className='mb-4 text-lg'>
-							{replyComment === null
-								? '发表评论'
-								: '回复 ' + replyComment?.author + ': ' + replyComment?.body}
-						</span>
-						<div className='mb-4'>
-							<label className='pr-2 text-sm'>评论:</label>
-							<textarea
-								name='body'
-								id='body'
-								className='md:w-56 sm:w-50 w-60 h-16'
-								value={body}
-								onChange={(event) => setBody(event.target.value)}
-							/>
-						</div>
-						<div className='flex flex-col md:flex-row md:justify-between'>
-							<div className='mb-4 md:w-1/3'>
-								<label className='pr-2 text-sm'>昵称:</label>
-								<input
-									type='text'
-									className='md:w-56 sm:w-50 w-60'
-									value={author}
-									onChange={(event) => setAuthor(event.target.value)}
-								/>
-							</div>
-							<div className='mb-4 md:w-1/3'>
-								<label className='pr-2 text-sm'>邮箱:</label>
-								<input
-									type='text'
-									className='md:w-56 sm:w-50 w-60'
-									value={email}
-									onChange={(event) => setEmail(event.target.value)}
-								/>
-							</div>
-							<div className='mb-4 md:w-1/3'>
-								<label className='pr-2 text-sm'>站点:</label>
-								<input
-									type='text'
-									className='md:w-56 sm:w-50 w-60'
-									value={site}
-									onChange={(event) => setSite(event.target.value)}
-								/>
-							</div>
-						</div>
+				{post?.canComment ? (
+					<div>
+						<hr className='my-4' />
 						<div>
-							<button
-								type='submit'
-								className='bg-gray-800 text-white rounded py-1 px-2 hover:bg-gray-900'
-								onClick={handleSubmit}
-							>
-								提 交
-							</button>
+							<span className='text-xl font-semibold'>评论:</span>
+							<div className='py-4'>
+								{/* 评论列表 */}
+								{comments.length === 0 ? (
+									<span>暂无评论，尝试发表你的意见？</span>
+								) : (
+									comments.map((comment: Comment) => {
+										return comment.repliedId === null ? (
+											<div
+												className='flex flex-col py-2'
+												style={{ borderBottom: '1px dashed #e5e5e5' }}
+												key={comment.id}
+											>
+												<span>{comment.author} 说:</span>
+												<span className='p-3'>{comment.body}</span>
+												<div
+													className='text-sm text-gary-500'
+													style={{ alignSelf: 'flex-end' }}
+												>
+													{dayjs(comment.timestamp).format(
+														'YYYY-MM-DD HH:mm:ss'
+													)}{' '}
+													|&nbsp;
+													<button
+														onClick={() => {
+															setReplyComment(comment)
+														}}
+													>
+														回复
+													</button>
+												</div>
+											</div>
+										) : (
+											<div
+												className='flex flex-col py-2'
+												style={{ borderBottom: '1px dashed #e5e5e5' }}
+												key={comment.id}
+											>
+												<span>{comment.author} 说:</span>
+												<span className='pt-3 pl-6'>
+													@{comment.comment?.author} 说: {comment.comment?.body}
+												</span>
+												<span className='p-3'>{comment.body}</span>
+												<div
+													className='text-sm text-gary-500'
+													style={{ alignSelf: 'flex-end' }}
+												>
+													{dayjs(comment.timestamp).format(
+														'YYYY-MM-DD HH:mm:ss'
+													)}{' '}
+													|&nbsp;
+													<button
+														onClick={() => {
+															setReplyComment(comment)
+														}}
+													>
+														回复
+													</button>
+												</div>
+											</div>
+										)
+									})
+								)}
+							</div>
+							{/* 分页 */}
+							{pages <= 1 ? (
+								''
+							) : (
+								<div className='flex justify-between pt-4'>
+									<button
+										className='p-2'
+										onClick={() => setPage(page - 1)}
+										disabled={page <= 1}
+									>
+										←Prev
+									</button>
+									<button
+										className='p-2'
+										onClick={() => setPage(page + 1)}
+										disabled={page >= pages}
+									>
+										Next→
+									</button>
+								</div>
+							)}
+						</div>
+						<hr className='my-4' />
+						<div>
+							<div className='flex flex-col bg-gray-50 p-6'>
+								<span className='mb-4 text-lg'>
+									{replyComment === null
+										? '发表评论'
+										: '回复 ' +
+										  replyComment?.author +
+										  ': ' +
+										  replyComment?.body}
+								</span>
+								<div className='mb-4'>
+									<label className='pr-2 text-sm'>评论:</label>
+									<textarea
+										name='body'
+										id='body'
+										className='md:w-56 sm:w-50 w-60 h-16'
+										value={body}
+										onChange={(event) => setBody(event.target.value)}
+									/>
+								</div>
+								<div className='flex flex-col md:flex-row md:justify-between'>
+									<div className='mb-4 md:w-1/3'>
+										<label className='pr-2 text-sm'>昵称:</label>
+										<input
+											type='text'
+											className='md:w-56 sm:w-50 w-60'
+											value={author}
+											onChange={(event) => setAuthor(event.target.value)}
+										/>
+									</div>
+									<div className='mb-4 md:w-1/3'>
+										<label className='pr-2 text-sm'>邮箱:</label>
+										<input
+											type='text'
+											className='md:w-56 sm:w-50 w-60'
+											value={email}
+											onChange={(event) => setEmail(event.target.value)}
+										/>
+									</div>
+									<div className='mb-4 md:w-1/3'>
+										<label className='pr-2 text-sm'>站点:</label>
+										<input
+											type='text'
+											className='md:w-56 sm:w-50 w-60'
+											value={site}
+											onChange={(event) => setSite(event.target.value)}
+										/>
+									</div>
+								</div>
+								<div>
+									<button
+										type='submit'
+										className='bg-gray-800 text-white rounded py-1 px-2 hover:bg-gray-900'
+										onClick={handleSubmit}
+									>
+										提 交
+									</button>
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
+				) : (
+					''
+				)}
 			</div>
 			<Footer />
 		</div>
