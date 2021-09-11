@@ -3,7 +3,6 @@ package top.twhuang.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -16,6 +15,8 @@ public class Post extends BaseEntity {
     private String title;
 
     private String subtitle;
+
+    private String image;
 
     private String body;
 

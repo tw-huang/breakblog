@@ -13,6 +13,7 @@ import top.twhuang.service.CommentService;
 import top.twhuang.service.PostService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import top.twhuang.vo.InfoVO;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -50,13 +51,22 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
             hashMap.put("title", p.getTitle());
             hashMap.put("categoryName", category.getName());
             hashMap.put("views", p.getPageView());
-            hashMap.put("counts",counts);
+            hashMap.put("counts", counts);
             list.add(hashMap);
         }
         map.put("list", list);
         map.put("total", page.getTotal());
         map.put("size", page.getSize());
         return map;
+    }
+
+    @Override
+    public InfoVO getBlogInfo() {
+        InfoVO infoVO = new InfoVO();
+        infoVO.setPosts(postMapper.selectCountPages());
+        infoVO.setPageviews(postMapper.selectSumPageViews());
+        infoVO.setCategories(categoryService.getCategories());
+        return infoVO;
     }
 
     @Override

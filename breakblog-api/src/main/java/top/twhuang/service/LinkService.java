@@ -7,6 +7,11 @@ import java.util.List;
 
 public interface LinkService extends IService<Link> {
 
+    /**
+     * 获取友链
+     *
+     * @return List
+     */
     List<Link> getList();
 
     void cacheEvict();

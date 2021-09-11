@@ -14,8 +14,19 @@ import java.util.Map;
  */
 @Mapper
 public interface CategoryMapper extends BaseMapper<Category> {
+
     List<Map> categoryReport();
 
+    /**
+     * 获取文章分类
+     *
+     * @return List
+     */
     List<Category> getList();
+
+    /**
+     * 分类数量
+     */
+    Integer getCategories();
 
 }

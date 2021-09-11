@@ -29,4 +29,22 @@
             id = ( SELECT id FROM post WHERE id &gt; #{id} AND del_flag = 0 ORDER BY id ASC LIMIT 1 )
             AND del_flag = 0
     </select>
+
+    <select id="selectSumPageViews" resultType="java.lang.Integer">
+        SELECT
+            SUM( page_view ) AS clicks
+        FROM
+            post
+        WHERE
+            del_flag = 0
+    </select>
+
+    <select id="selectCountPages" resultType="java.lang.Integer">
+        SELECT
+            COUNT(*) AS posts
+        FROM
+            post
+        WHERE
+            del_flag = 0
+    </select>
 </mapper>

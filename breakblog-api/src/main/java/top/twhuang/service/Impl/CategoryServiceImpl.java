@@ -40,6 +40,11 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     }
 
     @Override
+    public Integer getCategories() {
+        return categoryMapper.getCategories();
+    }
+
+    @Override
     public Map getPage(PageDTO pageDTO) {
         ArrayList<Map<String, Object>> list = new ArrayList<>();
         Map<String, Object> map = new HashMap<>();

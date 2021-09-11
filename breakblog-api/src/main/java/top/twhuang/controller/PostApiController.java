@@ -13,7 +13,6 @@ import top.twhuang.service.CategoryService;
 import top.twhuang.service.PostService;
 import top.twhuang.util.Result;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import top.twhuang.vo.PostVO;
 
@@ -31,6 +30,11 @@ public class PostApiController {
 
     private PostService postService;
     private CategoryService categoryService;
+
+    @GetMapping("/blog/info")
+    public Result blogInfo() {
+        return Result.success(postService.getBlogInfo());
+    }
 
     @GetMapping("/blog/posts/hot")
     public Result blogPostsHot() {
@@ -73,9 +77,10 @@ public class PostApiController {
         postVO.setPrevPostTitle(Objects.isNull(prevPost) ? null : prevPost.getTitle());
         postVO.setNextPostId(Objects.isNull(nextPost) ? null : nextPost.getId());
         postVO.setNextPostTitle(Objects.isNull(nextPost) ? null : nextPost.getTitle());
+        // 增加文章浏览量
+        postService.updatePageView(id);
         return Result.success(postVO);
     }
-
 
     @GetMapping("/posts")
     public Result posts(PageDTO pageDTO) {

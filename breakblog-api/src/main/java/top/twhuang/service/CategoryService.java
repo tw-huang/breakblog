@@ -9,7 +9,17 @@ import java.util.Map;
 
 public interface CategoryService extends IService<Category> {
 
+    /**
+     * 获取文章分类
+     *
+     * @return List
+     */
     List<Category> getList();
+
+    /**
+     * 分类数量
+     */
+    Integer getCategories();
 
     Map getPage(PageDTO pageDTO);
 
