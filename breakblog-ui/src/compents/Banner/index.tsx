@@ -13,7 +13,7 @@ const AutoplaySlider = withAutoplay(AwesomeSlider);
 
 const Banner: React.FC = () => {
 	return (
-		<div>
+		<div className='rounded'>
 			<AutoplaySlider
 				bullets={false}
 				organicArrows={false}
@@ -33,7 +33,6 @@ const Banner: React.FC = () => {
 					},
 				]}
 			/>
-			{/*<img src={Banner1Img} alt="logo"/>*/}
 		</div>
 	)
 }

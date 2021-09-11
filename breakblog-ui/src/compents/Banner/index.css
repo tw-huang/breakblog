@@ -6,3 +6,8 @@
 .awssld__timer {
 	height: 0;
 }
+
+/* 边框圆角 */
+.awssld__wrapper{
+	border-radius: 0.25rem;
+}

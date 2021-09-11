@@ -136,13 +136,7 @@ const Home: React.FC = () => {
 	}, [page, categoryId])
 
 	return (
-		<div
-			className='md:max-w-screen-lg w-full md:my-8 md:mx-auto'
-			style={{
-				boxShadow: '0 0 4px 3px rgb(0 0 0 / 5%)',
-				backgroundColor: '#f9f9f9',
-			}}
-		>
+		<div className='md:max-w-screen-lg w-full md:my-8 md:mx-auto bg-gray-100 shadow rounded'>
 			{/* 顶部 */}
 			<Header />
 			{/* 内容 */}
@@ -154,13 +148,16 @@ const Home: React.FC = () => {
 					<div>
 						{posts.map((post: Post) => {
 							return (
-								<div className='flex md:my-4 my-2 bg-white' key={post.id}>
+								<div
+									className='flex md:my-4 my-2 bg-white rounded'
+									key={post.id}
+								>
 									<div
 										className={`pr-2 hidden md:w-1/3 ${
 											post.image ? 'md:block' : ''
 										}`}
 									>
-										<img src={post.image} alt='文章配图' />
+										<img src={post.image} className='rounded' alt='文章配图' />
 									</div>
 									<div
 										className={`flex flex-col w-full md:p-4 p-2 ${
@@ -169,21 +166,21 @@ const Home: React.FC = () => {
 									>
 										<LinkTo
 											to={'/post/' + post.id}
-											className='text-lg md:text-xl pb-2 truncate'
+											className='text-lg md:text-xl font-medium pb-2 truncate hover:text-gray-400 hover:underline'
 										>
 											{post.title}
 										</LinkTo>
-										<span className='text-xs pb-2 text-gray-500'>
+										<span className='text-xs pb-2 text-gray-400'>
 											分类：{post.category.name} 日期：
 											{dayjs(post.timestamp).format('YYYY-MM-DD')} 点击数：
 											{post.pageView}
 										</span>
-										<span className='text-sm pb-2 text-gray-500'>
+										<span className='text-sm pb-2 text-gray-600'>
 											{post.subtitle}
 										</span>
 										<LinkTo
 											to={'/post/' + post.id}
-											className='text-sm text-gray-500'
+											className='text-sm text-gray-400'
 											style={{ alignSelf: 'flex-end' }}
 										>
 											阅读正文-&gt;
@@ -199,14 +196,22 @@ const Home: React.FC = () => {
 					) : (
 						<div className='flex justify-between pt-4'>
 							<button
-								className='p-2 font-medium disabled:opacity-50'
+								className={`p-2 font-medium focus:outline-none ${
+									page <= 1
+										? 'disabled:opacity-50'
+										: 'hover:text-gray-400 hover:underline'
+								}`}
 								onClick={() => setPage(page - 1)}
 								disabled={page <= 1}
 							>
 								←Prev
 							</button>
 							<button
-								className='p-2 font-medium disabled:opacity-50'
+								className={`p-2 font-medium focus:outline-none ${
+									page >= pages
+										? 'disabled:opacity-50'
+										: 'hover:text-gray-400 hover:underline'
+								}`}
 								onClick={() => setPage(page + 1)}
 								disabled={page >= pages}
 							>
@@ -214,6 +219,7 @@ const Home: React.FC = () => {
 							</button>
 						</div>
 					)}
+					<hr className='my-6 md:hidden' />
 				</div>
 				<div className='md:pr-8 md:pl-0 px-2 md:w-1/4 md:py-6'>
 					{/* 搜索栏 */}
@@ -221,8 +227,8 @@ const Home: React.FC = () => {
 						<label>
 							<input
 								type='text'
-								className='w-full placeholder-gray-300 border-2 border-gray-400 px-2 py-1'
-								placeholder='输入文章标题搜索'
+								className='w-full placeholder-gray-300 border border-gray-300 focus:outline-none focus:ring-1 ring-gray-400 rounded px-2 py-1'
+								placeholder='tips: 输入文章标题搜索'
 								value={searchText}
 								onChange={(event) => setSearchText(event.target.value)}
 								ref={searchEl}
@@ -232,10 +238,7 @@ const Home: React.FC = () => {
 					{/* 网站信息 */}
 					<div className='w-full mt-6'>
 						<div className='text-center text-sm'>
-							<div
-								className='flex justify-center items-center w-32 h-32 bg-white '
-								style={{ margin: '0 auto', borderRadius: '50%' }}
-							>
+							<div className='flex justify-center items-center w-32 h-32 mx-auto bg-white rounded-full'>
 								<img
 									src={AvatarImg}
 									alt='avatar'
@@ -245,7 +248,7 @@ const Home: React.FC = () => {
 							</div>
 							<div className='mt-2'>最难的是控制自己</div>
 						</div>
-						<div className='flex md:mt-4 mt-2 py-2 justify-between text-center text-xs bg-white'>
+						<div className='flex md:mt-4 mt-2 py-2 justify-between text-center text-gray-600 text-xs bg-white rounded'>
 							<span className='w-1/3'>
 								文章 <br /> {blogInfo?.posts}
 							</span>
@@ -258,16 +261,21 @@ const Home: React.FC = () => {
 						</div>
 					</div>
 					{/* 热门文章 */}
-					<div className='mt-6'>
-						<span className='text-lg'>热门文章:</span>
-						<div className='flex flex-col text-sm mt-1 p-2 bg-white'>
+					<div className='mt-6 bg-white rounded'>
+						<div className='font-medium bg-gray-200 opacity-75 px-2 py-1 rounded-t'>
+							热门文章:
+						</div>
+						<div className='text-sm p-4'>
 							{postsHot.map((post: Post) => {
 								return (
 									<div className='flex flex-col mb-2' key={post.id}>
-										<LinkTo to={'/post/' + post.id} className='mb-1 truncate'>
+										<LinkTo
+											to={'/post/' + post.id}
+											className='text-gray-600 mb-1 truncate hover:text-gray-400 hover:underline'
+										>
 											{post.title}
 										</LinkTo>
-										<span className='text-xs text-gray-500'>
+										<span className='text-xs text-gray-400'>
 											日期：{dayjs(post.timestamp).format('YYYY-MM-DD')}{' '}
 											点击数：{post.pageView}
 										</span>
@@ -277,11 +285,13 @@ const Home: React.FC = () => {
 						</div>
 					</div>
 					{/* 文章分类 */}
-					<div className='mt-6'>
-						<span className='text-lg'>文章分类:</span>
-						<div className='text-sm mt-1 p-2 bg-white'>
+					<div className='mt-6 bg-white rounded'>
+						<div className='font-medium bg-gray-200 opacity-75 px-2 py-1 rounded-t'>
+							文章分类:
+						</div>
+						<div className='text-sm text-gray-600 p-4'>
 							<div
-								className='mb-2 cursor-pointer'
+								className='mb-2 cursor-pointer hover:text-gray-400 hover:underline'
 								onClick={() => {
 									setCategoryId(null)
 								}}
@@ -291,7 +301,7 @@ const Home: React.FC = () => {
 							{categories.map((category: Category) => {
 								return (
 									<div
-										className='mb-2 cursor-pointer'
+										className='mb-2 cursor-pointer hover:text-gray-400 hover:underline'
 										key={category.id}
 										onClick={() => {
 											setCategoryId(category.id)
@@ -307,13 +317,24 @@ const Home: React.FC = () => {
 						</div>
 					</div>
 					{/* 友情链接 */}
-					<div className='mt-6'>
-						<span className='text-lg'>友情链接:</span>
-						<div className='flex flex-col text-sm mt-1 p-2 bg-white'>
+					<div className='mt-6 bg-white rounded'>
+						<div className='font-medium bg-gray-200 opacity-75 px-2 py-1 rounded-t'>
+							友情链接:
+						</div>
+						<div className='flex flex-col text-sm text-gray-600 p-4'>
 							{links.map((link: Link) => {
 								return (
-									<span className='mb-2' key={link.id}>
-										<a href={link.url}>{link.name}</a>
+									<span
+										className='mb-2 hover:text-gray-400 hover:underline'
+										key={link.id}
+									>
+										<a
+											href={link.url}
+											target='_blank'
+											rel='noopener noreferrer'
+										>
+											{link.name}
+										</a>
 									</span>
 								)
 							})}

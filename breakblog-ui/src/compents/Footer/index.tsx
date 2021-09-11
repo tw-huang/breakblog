@@ -1,15 +1,26 @@
 import React from 'react'
 
 const Footer: React.FC = () => {
-
 	return (
-		<div className="flex justify-between items-center md:h-20 h-12 md:px-8 px-2 border-solid border-t-2 border-gary-50">
-			<div className="">
-				<span className="text-sm">Copyright © tw-huang</span>
-			</div>
-			<div>
-				<a href="https://beian.miit.gov.cn" className="text-sm">粤ICP备2021107751号</a>
-			</div>
+		<div className='flex justify-between items-center md:h-20 h-12 md:px-8 px-2 border-solid border-t-2 border-gray-200'>
+			<span className='text-sm hover:text-gray-400 hover:underline'>
+				<a
+					href='https://github.com/tw-huang/breakblog'
+					target='_blank'
+					rel='noopener noreferrer'
+				>
+					Copyright © tw-huang
+				</a>
+			</span>
+			<span className='text-sm hover:text-gray-400 hover:underline'>
+				<a
+					href='https://beian.miit.gov.cn'
+					target='_blank'
+					rel='noopener noreferrer'
+				>
+					粤ICP备2021107751号
+				</a>
+			</span>
 		</div>
 	)
 }
