@@ -92,6 +92,8 @@ public class PostApiController {
     @PostMapping("/post")
     public Result postPost(@RequestBody Post post) {
         post.setTimestamp(new Date());
+        // 默认关闭评论
+        post.setCanComment(false);
         boolean save = postService.save(post);
         if (save) {
             categoryService.cacheEvict();

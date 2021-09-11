@@ -8,7 +8,6 @@ import top.twhuang.entity.Link;
 import top.twhuang.service.LinkService;
 import top.twhuang.util.Result;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
