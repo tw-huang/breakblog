@@ -48,4 +48,4 @@ app:
   upload:
     type: local
     path: /usr/local/nginx/html/file
-    host: http://www.twhuang.top:9010
+    host: https://twhuang.top/file

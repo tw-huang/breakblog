@@ -9,7 +9,6 @@ import top.twhuang.service.AdminService;
 import top.twhuang.util.JwtUtil;
 import top.twhuang.util.Result;
 import top.twhuang.vo.MenuVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

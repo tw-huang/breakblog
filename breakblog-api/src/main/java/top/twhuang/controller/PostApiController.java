@@ -88,6 +88,19 @@ public class PostApiController {
         return Result.success(map);
     }
 
+    @GetMapping("/posts/list")
+    public Result posts() {
+        List<Post> postList = postService.list();
+        ArrayList<Map> list = new ArrayList<>();
+        postList.forEach(x -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", x.getId());
+            map.put("title", x.getTitle());
+            list.add(map);
+        });
+        return Result.success(list);
+    }
+
     @GetMapping("/post/{id}")
     public Result getPost(@PathVariable Integer id) {
         Post post = postService.getById(id);
@@ -126,18 +139,4 @@ public class PostApiController {
         }
         return Result.failure();
     }
-
-    @GetMapping("/post/new/categories")
-    public Result categories() {
-        List<Category> categoryList = categoryService.list();
-        ArrayList<Map> list = new ArrayList<>();
-        categoryList.forEach(x -> {
-            Map<String, Object> map = new HashMap<>();
-            map.put("id", x.getId());
-            map.put("name", x.getName());
-            list.add(map);
-        });
-        return Result.success(list);
-    }
-
 }

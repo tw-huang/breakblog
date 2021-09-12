@@ -63,8 +63,8 @@ public class CommentApiController {
 
 
     @GetMapping("/comments")
-    public Result comments(PageDTO pageDTO) {
-        Map map = commentService.getPage(pageDTO);
+    public Result comments(PageDTO pageDTO, @RequestParam(value = "postId") Integer postId) {
+        Map map = commentService.getPage(pageDTO, postId);
         return Result.success(map);
     }
 

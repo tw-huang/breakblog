@@ -5,9 +5,10 @@ import top.twhuang.dto.PageDTO;
 import top.twhuang.entity.Category;
 import top.twhuang.service.CategoryService;
 import top.twhuang.util.Result;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,19 @@ public class CategoryApiController {
     public Result categories(PageDTO pageDTO) {
         Map map = categoryService.getPage(pageDTO);
         return Result.success(map);
+    }
+
+    @GetMapping("/categories/list")
+    public Result categories() {
+        List<Category> categoryList = categoryService.list();
+        ArrayList<Map> list = new ArrayList<>();
+        categoryList.forEach(x -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", x.getId());
+            map.put("name", x.getName());
+            list.add(map);
+        });
+        return Result.success(list);
     }
 
     @GetMapping("/category/{id}")

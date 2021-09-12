@@ -49,9 +49,12 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
             int counts = commentService.count(new QueryWrapper<Comment>().eq("post_id", p.getId()));
             hashMap.put("id", p.getId());
             hashMap.put("title", p.getTitle());
-            hashMap.put("categoryName", category.getName());
             hashMap.put("views", p.getPageView());
+            hashMap.put("timestamp", p.getTimestamp());
+            hashMap.put("canComment", p.getCanComment());
+            hashMap.put("image", p.getImage());
             hashMap.put("counts", counts);
+            hashMap.put("categoryName", category.getName());
             list.add(hashMap);
         }
         map.put("list", list);

@@ -8,5 +8,5 @@ import java.util.Map;
 
 public interface CommentService extends IService<Comment> {
 
-    Map getPage(PageDTO pageDTO);
+    Map getPage(PageDTO pageDTO, Integer postId);
 }
