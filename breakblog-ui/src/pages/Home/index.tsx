@@ -51,6 +51,9 @@ interface BlogInfo {
 	categories: number
 }
 
+/** 默认每页文章数量 */
+const defaultPageSize: number = 6
+
 const Home: React.FC = () => {
 	// 搜索文本
 	const [searchText, setSearchText] = useState<string>('')
@@ -82,7 +85,7 @@ const Home: React.FC = () => {
 				const text = searchText.replace(/(^\s*)|(\s*$)/g, '')
 				if (text !== undefined && text !== null && text !== '') {
 					const fetchData = async () => {
-						const posts = await getPosts(searchText, null, 1, 5)
+						const posts = await getPosts(searchText, null, 1, defaultPageSize)
 						if (posts?.success && posts.code === 1) {
 							setPosts(posts.data.records)
 							setPages(posts.data.pages)
@@ -126,7 +129,7 @@ const Home: React.FC = () => {
 	// 文章分页数据
 	useEffect(() => {
 		const fetchData = async () => {
-			const posts = await getPosts('', categoryId, page, 5)
+			const posts = await getPosts('', categoryId, page, defaultPageSize)
 			if (posts?.success && posts.code === 1) {
 				setPosts(posts.data.records)
 				setPages(posts.data.pages)
@@ -181,11 +184,7 @@ const Home: React.FC = () => {
 											{post.subtitle}
 										</span>
 										<span className='text-xs text-gray-400 hover:underline self-end'>
-											<LinkTo
-												to={'/post/' + post.id}
-											>
-											阅读正文-&gt;
-										</LinkTo>
+											<LinkTo to={'/post/' + post.id}>阅读正文-&gt;</LinkTo>
 										</span>
 									</div>
 								</div>
@@ -270,7 +269,10 @@ const Home: React.FC = () => {
 						<div className='text-sm p-4'>
 							{postsHot.map((post: Post) => {
 								return (
-									<div className='flex flex-col border-b border-dashed pb-1 mb-2' key={post.id}>
+									<div
+										className='flex flex-col border-b border-dashed pb-1 mb-2'
+										key={post.id}
+									>
 										<LinkTo
 											to={'/post/' + post.id}
 											className='text-gray-600 mb-1 truncate hover:text-gray-400 hover:underline'
@@ -299,7 +301,9 @@ const Home: React.FC = () => {
 								}}
 							>
 								<span>全部(All)</span>
-								<span className='rounded-full h-6 w-6 flex items-center justify-center bg-gray-50'>{categories.length || 0}</span>
+								<span className='rounded-full h-6 w-6 flex items-center justify-center bg-gray-50'>
+									{categories.length || 0}
+								</span>
 							</div>
 							{categories.map((category: Category) => {
 								return (
@@ -312,7 +316,9 @@ const Home: React.FC = () => {
 										}}
 									>
 										<span>{category.name}</span>
-										<span className='rounded-full h-6 w-6 flex items-center justify-center bg-gray-50'>{category.postCount}</span>
+										<span className='rounded-full h-6 w-6 flex items-center justify-center bg-gray-50'>
+											{category.postCount}
+										</span>
 									</div>
 								)
 							})}
