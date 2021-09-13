@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { Link as LinkTo } from 'react-router-dom'
 import dayjs from 'dayjs'
 import './index.css'
-import './wysiwyg.css'
 import Header from '../../compents/Header'
 import Footer from '../../compents/Footer'
 import { getPost, getComments, postComment } from '../../services'
@@ -149,11 +148,13 @@ const PostPage: React.FC = (props: any) => {
 					<div className='p-4 bg-gray-50'>
 						<span className='text-sm'>{post?.subtitle}</span>
 					</div>
+					<hr className='my-2 md:my-4' />
+					<article
+						className='leading-relaxed  max-w-none prose-sm md:prose md:max-w-none'
+						dangerouslySetInnerHTML={{ __html: post?.body || '' }}
+					/>
 				</div>
-				<article
-					className='leading-relaxed p-2 md:p-4 bg-white rounded max-w-none prose-sm md:prose md:max-w-none'
-					dangerouslySetInnerHTML={{ __html: post?.body || '' }}
-				/>
+				<hr className='my-2 md:my-4' />
 				<div className='flex flex-nowrap justify-between py-8 text-sm'>
 					<span className='w-1/2 flex flex-row pr-2 md:pr-4'>
 						{post?.nextPostId === null ? (
@@ -181,8 +182,8 @@ const PostPage: React.FC = (props: any) => {
 					</span>
 				</div>
 				{post?.canComment ? (
-					<div>
-						<hr className='my-4' />
+					<div className='flex flex-col'>
+						<hr className='my-2 md:my-4' />
 						<div className='p-2 md:p-4 bg-white rounded'>
 							<span className='text-xl'>评论</span>
 							<div className='py-4'>
@@ -304,7 +305,7 @@ const PostPage: React.FC = (props: any) => {
 								</div>
 							)}
 						</div>
-						<hr className='my-4' />
+						<hr className='my-2 md:my-4' />
 						<div className='p-2 md:p-4 bg-white rounded'>
 							<span className='text-lg'>
 								{replyComment === null
