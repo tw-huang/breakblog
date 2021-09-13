@@ -1,5 +1,6 @@
 package top.twhuang.controller;
 
+import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import top.twhuang.vo.PostVO;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Author: tw.huang
@@ -59,6 +61,28 @@ public class PostApiController {
         Page<Post> page = postService.page(new Page<>(pageNum, pageSize), qw);
         page.getRecords().forEach(post -> post.setCategory(categoryService.getById(post.getCategoryId())));
         return Result.success(page);
+    }
+
+    @GetMapping("/blog/posts/archive")
+    public Result blogPostsArchive(@RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum,
+                                   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
+        LambdaQueryWrapper<Post> qw = new QueryWrapper<Post>().lambda().orderByDesc(Post::getTimestamp);
+        Page<Post> page = postService.page(new Page<>(pageNum, pageSize), qw);
+
+        ArrayList<HashMap<String, Object>> archivesMap = new ArrayList<>();
+        // 分组并按月份排序
+        page.getRecords().stream().collect(Collectors.groupingBy(
+                x -> DateUtil.format(x.getTimestamp(), "yyyy-MM"), LinkedHashMap::new, Collectors.toList())).forEach((k, v) -> {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("date", k);
+            map.put("posts", v);
+            archivesMap.add(map);
+        });
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("records", archivesMap);
+        map.put("pages", page.getPages());
+        map.put("total", page.getTotal());
+        return Result.success(map);
     }
 
     @GetMapping("/blog/post/{id}")
