@@ -151,7 +151,7 @@ const PostPage: React.FC = (props: any) => {
 					</div>
 				</div>
 				<article
-					className='leading-relaxed p-2 md:p-4 bg-white rounded wysiwyg'
+					className='leading-relaxed p-2 md:p-4 bg-white rounded max-w-none prose-sm md:prose md:max-w-none'
 					dangerouslySetInnerHTML={{ __html: post?.body || '' }}
 				/>
 				<div className='flex flex-nowrap justify-between py-8 text-sm'>
