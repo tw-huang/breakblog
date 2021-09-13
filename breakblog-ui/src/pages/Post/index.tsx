@@ -228,7 +228,7 @@ const PostPage: React.FC = (props: any) => {
 														</button>
 													</div>
 												</div>
-												<span className='py-3 px-4'>{comment.body}</span>
+												<span className='py-3 px-4 text-gray-600'>{comment.body}</span>
 											</div>
 										) : (
 											<div
@@ -266,10 +266,10 @@ const PostPage: React.FC = (props: any) => {
 														</button>
 													</div>
 												</div>
-												<span className='mt-3 mx-8'>
+												<span className='mt-3 mx-8 text-gray-600'>
 													@{comment.comment?.author} : {comment.comment?.body}
 												</span>
-												<span className='py-3 px-4'>{comment.body}</span>
+												<span className='py-3 px-4 text-gray-600'>{comment.body}</span>
 											</div>
 										)
 									})

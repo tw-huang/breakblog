@@ -240,11 +240,11 @@ const Home: React.FC = () => {
 					{/* 网站信息 */}
 					<div className='w-full mt-6'>
 						<div className='text-center text-sm'>
-							<div className='flex justify-center items-center w-32 h-32 mx-auto bg-white rounded-full'>
+							<div className='flex justify-center items-center w-32 h-32 mx-auto bg-white rounded-full transition duration-1000 ease-in-out hover:bg-gray-100  transform hover:rotate-180 '>
 								<img
 									src={AvatarImg}
 									alt='avatar'
-									className='w-28 h-28 '
+									className='w-28 h-28'
 									style={{ borderRadius: '50%' }}
 								/>
 							</div>
@@ -270,7 +270,7 @@ const Home: React.FC = () => {
 						<div className='text-sm p-4'>
 							{postsHot.map((post: Post) => {
 								return (
-									<div className='flex flex-col mb-2' key={post.id}>
+									<div className='flex flex-col border-b border-dashed pb-1 mb-2' key={post.id}>
 										<LinkTo
 											to={'/post/' + post.id}
 											className='text-gray-600 mb-1 truncate hover:text-gray-400 hover:underline'
@@ -293,7 +293,7 @@ const Home: React.FC = () => {
 						</div>
 						<div className='text-sm text-gray-600 p-4'>
 							<div
-								className='flex justify-between mb-2 cursor-pointer border-b hover:text-gray-400 hover:underline'
+								className='flex justify-between mb-2 cursor-pointer border-b border-dashed hover:text-gray-400 hover:underline'
 								onClick={() => {
 									setCategoryId(null)
 								}}
@@ -304,7 +304,7 @@ const Home: React.FC = () => {
 							{categories.map((category: Category) => {
 								return (
 									<div
-										className='flex justify-between mb-2 cursor-pointer border-b hover:text-gray-400 hover:underline'
+										className='flex justify-between mb-2 cursor-pointer border-b border-dashed hover:text-gray-400 hover:underline'
 										key={category.id}
 										onClick={() => {
 											setCategoryId(category.id)
@@ -327,7 +327,7 @@ const Home: React.FC = () => {
 							{links.map((link: Link) => {
 								return (
 									<span
-										className='mb-2 hover:text-gray-400 hover:underline'
+										className='pb-1 mb-2 border-b border-dashed hover:text-gray-400 hover:underline'
 										key={link.id}
 									>
 										<span>-&gt;&nbsp;</span>
