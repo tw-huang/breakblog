@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Link as LinkTo } from 'react-router-dom'
 import dayjs from 'dayjs'
 import './index.css'
+import './wysiwyg.css'
 import Header from '../../compents/Header'
 import Footer from '../../compents/Footer'
 import { getPost, getComments, postComment } from '../../services'
@@ -150,7 +151,7 @@ const PostPage: React.FC = (props: any) => {
 					</div>
 				</div>
 				<article
-					className='leading-relaxed p-2 md:p-4 bg-white rounded'
+					className='leading-relaxed p-2 md:p-4 bg-white rounded wysiwyg'
 					dangerouslySetInnerHTML={{ __html: post?.body || '' }}
 				/>
 				<div className='flex flex-nowrap justify-between py-8 text-sm'>
