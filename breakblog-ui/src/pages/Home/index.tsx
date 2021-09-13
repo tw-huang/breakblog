@@ -180,13 +180,13 @@ const Home: React.FC = () => {
 										<span className='text-sm pb-2 text-gray-600'>
 											{post.subtitle}
 										</span>
-										<LinkTo
-											to={'/post/' + post.id}
-											className='text-sm text-gray-400'
-											style={{ alignSelf: 'flex-end' }}
-										>
+										<span className='text-xs text-gray-400 hover:underline self-end'>
+											<LinkTo
+												to={'/post/' + post.id}
+											>
 											阅读正文-&gt;
 										</LinkTo>
+										</span>
 									</div>
 								</div>
 							)
