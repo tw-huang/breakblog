@@ -64,15 +64,6 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     }
 
     @Override
-    public InfoVO getBlogInfo() {
-        InfoVO infoVO = new InfoVO();
-        infoVO.setPosts(postMapper.selectCountPages());
-        infoVO.setPageviews(postMapper.selectSumPageViews());
-        infoVO.setCategories(categoryService.getCategories());
-        return infoVO;
-    }
-
-    @Override
     public void updatePageView(Integer id) {
         postMapper.updatePageView(id);
     }
@@ -85,5 +76,15 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     @Override
     public Post getNextPost(Integer id) {
         return postMapper.selectNextPost(id);
+    }
+
+    @Override
+    public Integer getCountPages() {
+        return postMapper.selectCountPages();
+    }
+
+    @Override
+    public Integer getSumPageViews() {
+        return postMapper.selectSumPageViews();
     }
 }

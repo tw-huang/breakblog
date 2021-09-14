@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { Link as LinkTo } from 'react-router-dom'
 import dayjs from 'dayjs'
 import './index.css'
-import Header from '../../compents/Header'
-import Footer from '../../compents/Footer'
 import { getPostsArchive } from '../../services'
 
 interface Category {
@@ -62,77 +60,73 @@ const PostPage: React.FC = () => {
 	}, [page])
 
 	return (
-		<div className='md:max-w-screen-lg w-full md:my-8 md:mx-auto bg-gray-100 shadow rounded'>
-			<Header />
-			<div className='md:px-8 p-2 md:py-6'>
-				<div className='mb-4 p-2 md:p-4 bg-white rounded'>
-					<div className='archive-list relative'>
-						{archives.map((archive: Archive) => {
-							return (
-								<div className='my-8 md:my-12' key={archive.date}>
-									<div className='flex items-center archive-date'>
-										<span className='flex-none text-2xl font-medium'>
-											{archive.date}
-										</span>
-									</div>
-									<hr className='mt-4 md:mt-6' />
-									{archive.posts.map((post: Post) => {
-										return (
-											<div
-												className='flex justify-between items-center border-b border-dashed py-6 archive-post-item'
-												key={post.id}
-											>
-												<span className='flex-none text-gray-400'>
-													{dayjs(post.timestamp).format('MM-DD')}
-												</span>
-												<LinkTo
-													to={'/post/' + post.id}
-													className='flex flex-grow px-4 md:px-12 font-medium hover:text-gray-400 hover:underline'
-												>
-													{post.title}
-												</LinkTo>
-												<span className='flex justify-end flex-none text-sm text-gray-400'>
-													{post.pageView}
-												</span>
-											</div>
-										)
-									})}
+		<div className='md:px-8 p-2 md:py-6'>
+			<div className='mb-4 p-2 md:p-4 bg-white rounded'>
+				<div className='archive-list relative'>
+					{archives.map((archive: Archive) => {
+						return (
+							<div className='my-8 md:my-12' key={archive.date}>
+								<div className='flex items-center archive-date'>
+									<span className='flex-none text-2xl font-medium'>
+										{archive.date}
+									</span>
 								</div>
-							)
-						})}
-					</div>
+								<hr className='mt-4 md:mt-6' />
+								{archive.posts.map((post: Post) => {
+									return (
+										<div
+											className='flex justify-between items-center border-b border-dashed py-6 archive-post-item'
+											key={post.id}
+										>
+											<span className='flex-none text-gray-400'>
+												{dayjs(post.timestamp).format('MM-DD')}
+											</span>
+											<LinkTo
+												to={'/post/' + post.id}
+												className='flex flex-grow px-4 md:px-12 font-medium hover:text-gray-400 hover:underline'
+											>
+												{post.title}
+											</LinkTo>
+											<span className='flex justify-end flex-none text-sm text-gray-400'>
+												{post.pageView}
+											</span>
+										</div>
+									)
+								})}
+							</div>
+						)
+					})}
 				</div>
-				{/* 分页 */}
-				{pages <= 1 ? (
-					''
-				) : (
-					<div className='flex justify-between pt-4'>
-						<button
-							className={`p-2 font-medium focus:outline-none ${
-								page <= 1
-									? 'disabled:opacity-50'
-									: 'hover:text-gray-400 hover:underline'
-							}`}
-							onClick={() => setPage(page - 1)}
-							disabled={page <= 1}
-						>
-							←Prev
-						</button>
-						<button
-							className={`p-2 font-medium focus:outline-none ${
-								page >= pages
-									? 'disabled:opacity-50'
-									: 'hover:text-gray-400 hover:underline'
-							}`}
-							onClick={() => setPage(page + 1)}
-							disabled={page >= pages}
-						>
-							Next→
-						</button>
-					</div>
-				)}
 			</div>
-			<Footer />
+			{/* 分页 */}
+			{pages <= 1 ? (
+				''
+			) : (
+				<div className='flex justify-between pt-4'>
+					<button
+						className={`p-2 font-medium focus:outline-none ${
+							page <= 1
+								? 'disabled:opacity-50'
+								: 'hover:text-gray-400 hover:underline'
+						}`}
+						onClick={() => setPage(page - 1)}
+						disabled={page <= 1}
+					>
+						←Prev
+					</button>
+					<button
+						className={`p-2 font-medium focus:outline-none ${
+							page >= pages
+								? 'disabled:opacity-50'
+								: 'hover:text-gray-400 hover:underline'
+						}`}
+						onClick={() => setPage(page + 1)}
+						disabled={page >= pages}
+					>
+						Next→
+					</button>
+				</div>
+			)}
 		</div>
 	)
 }

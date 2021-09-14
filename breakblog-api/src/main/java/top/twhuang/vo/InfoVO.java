@@ -5,10 +5,14 @@ import lombok.Data;
 @Data
 public class InfoVO {
 
-    private Integer posts;
+    private String avatar;
 
-    private Integer categories;
+    private String blogTitle;
 
-    private Integer pageviews;
+    private String blogSubTitle;
+
+    private String name;
+
+    private String email;
 
 }

@@ -3,16 +3,15 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Link as LinkTo } from 'react-router-dom'
 import dayjs from 'dayjs'
 import './index.css'
-import AvatarImg from '../../assets/avatar.png'
-import Header from '../../compents/Header'
-import Footer from '../../compents/Footer'
+import Avatar from '../../assets/avatar.png'
 import Banner from '../../compents/Banner'
 import {
-	getBlogInfo,
+	getBlogStatistic,
 	getLinks,
 	getCategories,
 	getPostsHot,
 	getPosts,
+	getBlogInfo,
 } from '../../services'
 
 interface Link {
@@ -45,10 +44,18 @@ interface Post {
 	category: Category
 }
 
-interface BlogInfo {
+interface BlogStatistic {
 	posts: number
 	pageviews: number
 	categories: number
+}
+
+interface BlogInfo {
+	name: string
+	avatar: string
+	email: string
+	blogTitle: string
+	blogSubTitle: string
 }
 
 /** 默认每页文章数量 */
@@ -61,6 +68,8 @@ const Home: React.FC = () => {
 	const searchEl = useRef(null)
 	// 博客信息
 	const [blogInfo, setBlogInfo] = useState<BlogInfo>()
+	// 博客统计
+	const [blogStatistic, setBlogStatistic] = useState<BlogStatistic>()
 	// 友链
 	const [links, setLinks] = useState<Array<Link>>([])
 	// 分类
@@ -109,6 +118,10 @@ const Home: React.FC = () => {
 			if (blogInfo?.success && blogInfo.code === 1) {
 				setBlogInfo(blogInfo.data)
 			}
+			const blogStatistic = await getBlogStatistic()
+			if (blogStatistic?.success && blogStatistic.code === 1) {
+				setBlogStatistic(blogStatistic.data)
+			}
 			const postsHot = await getPostsHot()
 			if (postsHot?.success && postsHot.code === 1) {
 				setPostsHot(postsHot.data)
@@ -139,220 +152,213 @@ const Home: React.FC = () => {
 	}, [page, categoryId])
 
 	return (
-		<div className='md:max-w-screen-lg w-full md:my-8 md:mx-auto bg-gray-100 shadow rounded'>
-			{/* 顶部 */}
-			<Header />
-			{/* 内容 */}
-			<div className='flex flex-col md:flex-row'>
-				<div className='md:px-8 p-2 md:w-3/4 md:py-6'>
-					{/* 轮播图 */}
-					<Banner />
-					{/* 文章列表 */}
-					<div>
-						{posts.map((post: Post) => {
+		<div className='flex flex-col md:flex-row'>
+			<div className='md:px-8 p-2 md:w-3/4 md:py-6'>
+				{/* 轮播图 */}
+				<Banner />
+				{/* 文章列表 */}
+				<div>
+					{posts.map((post: Post) => {
+						return (
+							<div className='flex md:my-4 my-2 bg-white rounded' key={post.id}>
+								<div
+									className={`pr-2 hidden md:w-1/3 ${
+										post.image ? 'md:block' : ''
+									}`}
+								>
+									<img src={post.image} className='rounded' alt='文章配图' />
+								</div>
+								<div
+									className={`flex flex-col w-full md:p-4 p-2 ${
+										post.image ? 'md:w-2/3' : ''
+									}`}
+								>
+									<div className='pb-2 flex'>
+										<LinkTo
+											to={'/post/' + post.id}
+											className='text-lg md:text-xl font-medium truncate hover:text-gray-400 hover:underline'
+										>
+											{post.title}
+										</LinkTo>
+									</div>
+									<span className='text-xs pb-2 text-gray-400'>
+										分类：{post.category.name} 日期：
+										{dayjs(post.timestamp).format('YYYY-MM-DD')} 点击数：
+										{post.pageView}
+									</span>
+									<span className='text-sm pb-2 text-gray-600'>
+										{post.subtitle}
+									</span>
+									<span className='text-xs text-gray-400 hover:underline self-end'>
+										<LinkTo to={'/post/' + post.id}>阅读正文-&gt;</LinkTo>
+									</span>
+								</div>
+							</div>
+						)
+					})}
+				</div>
+				{/* 分页 */}
+				{pages <= 1 ? (
+					''
+				) : (
+					<div className='flex justify-between pt-4'>
+						<button
+							className={`p-2 font-medium focus:outline-none ${
+								page <= 1
+									? 'disabled:opacity-50'
+									: 'hover:text-gray-400 hover:underline'
+							}`}
+							onClick={() => setPage(page - 1)}
+							disabled={page <= 1}
+						>
+							←Prev
+						</button>
+						<button
+							className={`p-2 font-medium focus:outline-none ${
+								page >= pages
+									? 'disabled:opacity-50'
+									: 'hover:text-gray-400 hover:underline'
+							}`}
+							onClick={() => setPage(page + 1)}
+							disabled={page >= pages}
+						>
+							Next→
+						</button>
+					</div>
+				)}
+				<hr className='my-6 md:hidden' />
+			</div>
+			<div className='md:pr-8 md:pl-0 px-2 md:w-1/4 md:py-6'>
+				{/* 搜索栏 */}
+				<div>
+					<label>
+						<input
+							type='text'
+							className='w-full placeholder-gray-300 border border-gray-300 focus:outline-none focus:ring-1 ring-gray-400 rounded px-2 py-1'
+							placeholder='tips: 输入文章标题搜索'
+							value={searchText}
+							onChange={(event) => setSearchText(event.target.value)}
+							ref={searchEl}
+						/>
+					</label>
+				</div>
+				{/* 网站信息 */}
+				<div className='w-full mt-6'>
+					<div className='text-center text-sm'>
+						<div className='flex justify-center items-center w-32 h-32 mx-auto bg-white rounded-full transition duration-1000 ease-in-out hover:bg-gray-100  transform hover:rotate-180 '>
+							<img
+								src={blogInfo?.avatar || Avatar}
+								alt=''
+								className='w-28 h-28'
+								style={{ borderRadius: '50%' }}
+							/>
+						</div>
+						<div className='mt-2'>
+							<span className='text-sm'>{blogInfo?.name || 'twhuang'}</span>
+							<br />
+							<span className='text-xs'>
+								{blogInfo?.blogSubTitle ||
+									'You still have lots more to work on!'}
+							</span>
+						</div>
+					</div>
+					<div className='flex md:mt-4 mt-2 py-2 justify-between text-center text-gray-600 text-xs bg-white rounded'>
+						<span className='w-1/3'>
+							文章 <br /> {blogStatistic?.posts}
+						</span>
+						<span className='w-1/3'>
+							分类 <br /> {blogStatistic?.categories}
+						</span>
+						<span className='w-1/3'>
+							浏览量 <br /> {blogStatistic?.pageviews}
+						</span>
+					</div>
+				</div>
+				{/* 热门文章 */}
+				<div className='mt-6 bg-white rounded'>
+					<div className='font-medium bg-gray-200 opacity-75 px-2 py-1 rounded-t'>
+						热门文章:
+					</div>
+					<div className='text-sm p-4'>
+						{postsHot.map((post: Post) => {
 							return (
 								<div
-									className='flex md:my-4 my-2 bg-white rounded'
+									className='flex flex-col border-b border-dashed pb-1 mb-2'
 									key={post.id}
 								>
-									<div
-										className={`pr-2 hidden md:w-1/3 ${
-											post.image ? 'md:block' : ''
-										}`}
+									<LinkTo
+										to={'/post/' + post.id}
+										className='text-gray-600 mb-1 truncate hover:text-gray-400 hover:underline'
 									>
-										<img src={post.image} className='rounded' alt='文章配图' />
-									</div>
-									<div
-										className={`flex flex-col w-full md:p-4 p-2 ${
-											post.image ? 'md:w-2/3' : ''
-										}`}
-									>
-										<div className='pb-2 flex'>
-											<LinkTo
-												to={'/post/' + post.id}
-												className='text-lg md:text-xl font-medium truncate hover:text-gray-400 hover:underline'
-											>
-												{post.title}
-											</LinkTo>
-										</div>
-										<span className='text-xs pb-2 text-gray-400'>
-											分类：{post.category.name} 日期：
-											{dayjs(post.timestamp).format('YYYY-MM-DD')} 点击数：
-											{post.pageView}
-										</span>
-										<span className='text-sm pb-2 text-gray-600'>
-											{post.subtitle}
-										</span>
-										<span className='text-xs text-gray-400 hover:underline self-end'>
-											<LinkTo to={'/post/' + post.id}>阅读正文-&gt;</LinkTo>
-										</span>
-									</div>
+										{post.title}
+									</LinkTo>
+									<span className='text-xs text-gray-400'>
+										日期：{dayjs(post.timestamp).format('YYYY-MM-DD')} 点击数：
+										{post.pageView}
+									</span>
 								</div>
 							)
 						})}
 					</div>
-					{/* 分页 */}
-					{pages <= 1 ? (
-						''
-					) : (
-						<div className='flex justify-between pt-4'>
-							<button
-								className={`p-2 font-medium focus:outline-none ${
-									page <= 1
-										? 'disabled:opacity-50'
-										: 'hover:text-gray-400 hover:underline'
-								}`}
-								onClick={() => setPage(page - 1)}
-								disabled={page <= 1}
-							>
-								←Prev
-							</button>
-							<button
-								className={`p-2 font-medium focus:outline-none ${
-									page >= pages
-										? 'disabled:opacity-50'
-										: 'hover:text-gray-400 hover:underline'
-								}`}
-								onClick={() => setPage(page + 1)}
-								disabled={page >= pages}
-							>
-								Next→
-							</button>
-						</div>
-					)}
-					<hr className='my-6 md:hidden' />
 				</div>
-				<div className='md:pr-8 md:pl-0 px-2 md:w-1/4 md:py-6'>
-					{/* 搜索栏 */}
-					<div>
-						<label>
-							<input
-								type='text'
-								className='w-full placeholder-gray-300 border border-gray-300 focus:outline-none focus:ring-1 ring-gray-400 rounded px-2 py-1'
-								placeholder='tips: 输入文章标题搜索'
-								value={searchText}
-								onChange={(event) => setSearchText(event.target.value)}
-								ref={searchEl}
-							/>
-						</label>
+				{/* 文章分类 */}
+				<div className='mt-6 bg-white rounded'>
+					<div className='font-medium bg-gray-200 opacity-75 px-2 py-1 rounded-t'>
+						文章分类:
 					</div>
-					{/* 网站信息 */}
-					<div className='w-full mt-6'>
-						<div className='text-center text-sm'>
-							<div className='flex justify-center items-center w-32 h-32 mx-auto bg-white rounded-full transition duration-1000 ease-in-out hover:bg-gray-100  transform hover:rotate-180 '>
-								<img
-									src={AvatarImg}
-									alt='avatar'
-									className='w-28 h-28'
-									style={{ borderRadius: '50%' }}
-								/>
-							</div>
-							<div className='mt-2'>最难的是控制自己</div>
-						</div>
-						<div className='flex md:mt-4 mt-2 py-2 justify-between text-center text-gray-600 text-xs bg-white rounded'>
-							<span className='w-1/3'>
-								文章 <br /> {blogInfo?.posts}
-							</span>
-							<span className='w-1/3'>
-								分类 <br /> {blogInfo?.categories}
-							</span>
-							<span className='w-1/3'>
-								浏览量 <br /> {blogInfo?.pageviews}
+					<div className='text-sm text-gray-600 p-4'>
+						<div
+							className='flex justify-between mb-2 cursor-pointer border-b border-dashed hover:text-gray-400 hover:underline'
+							onClick={() => {
+								setCategoryId(null)
+							}}
+						>
+							<span>全部(All)</span>
+							<span className='rounded-full h-6 w-6 flex items-center justify-center bg-gray-50'>
+								{categories.length || 0}
 							</span>
 						</div>
-					</div>
-					{/* 热门文章 */}
-					<div className='mt-6 bg-white rounded'>
-						<div className='font-medium bg-gray-200 opacity-75 px-2 py-1 rounded-t'>
-							热门文章:
-						</div>
-						<div className='text-sm p-4'>
-							{postsHot.map((post: Post) => {
-								return (
-									<div
-										className='flex flex-col border-b border-dashed pb-1 mb-2'
-										key={post.id}
-									>
-										<LinkTo
-											to={'/post/' + post.id}
-											className='text-gray-600 mb-1 truncate hover:text-gray-400 hover:underline'
-										>
-											{post.title}
-										</LinkTo>
-										<span className='text-xs text-gray-400'>
-											日期：{dayjs(post.timestamp).format('YYYY-MM-DD')}{' '}
-											点击数：{post.pageView}
-										</span>
-									</div>
-								)
-							})}
-						</div>
-					</div>
-					{/* 文章分类 */}
-					<div className='mt-6 bg-white rounded'>
-						<div className='font-medium bg-gray-200 opacity-75 px-2 py-1 rounded-t'>
-							文章分类:
-						</div>
-						<div className='text-sm text-gray-600 p-4'>
-							<div
-								className='flex justify-between mb-2 cursor-pointer border-b border-dashed hover:text-gray-400 hover:underline'
-								onClick={() => {
-									setCategoryId(null)
-								}}
-							>
-								<span>全部(All)</span>
-								<span className='rounded-full h-6 w-6 flex items-center justify-center bg-gray-50'>
-									{categories.length || 0}
-								</span>
-							</div>
-							{categories.map((category: Category) => {
-								return (
-									<div
-										className='flex justify-between mb-2 cursor-pointer border-b border-dashed hover:text-gray-400 hover:underline'
-										key={category.id}
-										onClick={() => {
-											setCategoryId(category.id)
-											setPage(1)
-										}}
-									>
-										<span>{category.name}</span>
-										<span className='rounded-full h-6 w-6 flex items-center justify-center bg-gray-50'>
-											{category.postCount}
-										</span>
-									</div>
-								)
-							})}
-						</div>
-					</div>
-					{/* 友情链接 */}
-					<div className='mt-6 bg-white rounded'>
-						<div className='font-medium bg-gray-200 opacity-75 px-2 py-1 rounded-t'>
-							友情链接:
-						</div>
-						<div className='flex flex-col text-sm text-gray-600 p-4'>
-							{links.map((link: Link) => {
-								return (
-									<span
-										className='pb-1 mb-2 border-b border-dashed hover:text-gray-400 hover:underline'
-										key={link.id}
-									>
-										<span>-&gt;&nbsp;</span>
-										<a
-											href={link.url}
-											target='_blank'
-											rel='noopener noreferrer'
-										>
-											{link.name}
-										</a>
+						{categories.map((category: Category) => {
+							return (
+								<div
+									className='flex justify-between mb-2 cursor-pointer border-b border-dashed hover:text-gray-400 hover:underline'
+									key={category.id}
+									onClick={() => {
+										setCategoryId(category.id)
+										setPage(1)
+									}}
+								>
+									<span>{category.name}</span>
+									<span className='rounded-full h-6 w-6 flex items-center justify-center bg-gray-50'>
+										{category.postCount}
 									</span>
-								)
-							})}
-						</div>
+								</div>
+							)
+						})}
+					</div>
+				</div>
+				{/* 友情链接 */}
+				<div className='mt-6 bg-white rounded'>
+					<div className='font-medium bg-gray-200 opacity-75 px-2 py-1 rounded-t'>
+						友情链接:
+					</div>
+					<div className='flex flex-col text-sm text-gray-600 p-4'>
+						{links.map((link: Link) => {
+							return (
+								<span
+									className='pb-1 mb-2 border-b border-dashed hover:text-gray-400 hover:underline'
+									key={link.id}
+								>
+									<span>-&gt;&nbsp;</span>
+									<a href={link.url} target='_blank' rel='noopener noreferrer'>
+										{link.name}
+									</a>
+								</span>
+							)
+						})}
 					</div>
 				</div>
 			</div>
-			{/* 尾部 */}
-			<Footer />
 		</div>
 	)
 }

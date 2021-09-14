@@ -1,6 +1,12 @@
 import React from 'react'
 
-const Footer: React.FC = () => {
+interface Props {
+	name: string
+}
+
+const Footer: React.FC<Props> = (props) => {
+	const name = props.name
+
 	return (
 		<div className='flex justify-between items-center md:h-20 h-12 md:px-8 px-2 border-solid border-t-2 border-gray-200'>
 			<span className='text-sm hover:text-gray-400 hover:underline'>
@@ -9,7 +15,7 @@ const Footer: React.FC = () => {
 					target='_blank'
 					rel='noopener noreferrer'
 				>
-					Copyright © tw-huang
+					Copyright © {name}
 				</a>
 			</span>
 			<span className='text-sm hover:text-gray-400 hover:underline'>

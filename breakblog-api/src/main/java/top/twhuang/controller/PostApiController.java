@@ -33,11 +33,6 @@ public class PostApiController {
     private PostService postService;
     private CategoryService categoryService;
 
-    @GetMapping("/blog/info")
-    public Result blogInfo() {
-        return Result.success(postService.getBlogInfo());
-    }
-
     @GetMapping("/blog/posts/hot")
     public Result blogPostsHot() {
         List<Post> list = postService.list(new QueryWrapper<Post>().lambda().orderByDesc(Post::getPageView).last("LIMIT 5"));

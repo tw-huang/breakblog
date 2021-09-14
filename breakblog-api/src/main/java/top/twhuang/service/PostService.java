@@ -3,20 +3,12 @@ package top.twhuang.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.twhuang.dto.PageDTO;
 import top.twhuang.entity.Post;
-import top.twhuang.vo.InfoVO;
 
 import java.util.Map;
 
 public interface PostService extends IService<Post> {
 
     Map getPage(PageDTO pageDTO);
-
-    /**
-     * 获取博客（文章/分类/浏览量）信息
-     *
-     * @return InfoVO
-     */
-    InfoVO getBlogInfo();
 
     /**
      * 更新文章浏览量
@@ -41,4 +33,17 @@ public interface PostService extends IService<Post> {
      */
     Post getNextPost(Integer id);
 
+    /**
+     * 文章数量
+     *
+     * @return Integer
+     */
+    Integer getCountPages();
+
+    /**
+     * 文章总浏览量
+     *
+     * @return Integer
+     */
+    Integer getSumPageViews();
 }

@@ -3,12 +3,18 @@ import React from 'react'
 import { Link as LinkTo } from 'react-router-dom'
 import Logo from '../../assets/logo.png'
 
-const Header: React.FC = () => {
+interface Props {
+	blogTitle: string
+}
+
+const Header: React.FC<Props> = (props) => {
+	const blogTitle = props.blogTitle
+
 	return (
 		<div className='flex justify-between items-center md:h-20 h-12 md:px-8 px-2 border-solid border-b-2 border-gray-200'>
 			<LinkTo to={'/'} className='flex items-center'>
 				<img src={Logo} alt='logo' className='md:w-12 w-8' />
-				<span className='font-bold text-2xl pl-2'>随笔记录</span>
+				<span className='font-bold text-2xl pl-2'>{blogTitle}</span>
 			</LinkTo>
 			<div className='font-medium'>
 				<LinkTo to={'/'} className='hover:text-gray-400 hover:underline'>
@@ -20,7 +26,12 @@ const Header: React.FC = () => {
 				>
 					归档
 				</LinkTo>
-				<span className='ml-4 hover:text-gray-400 hover:underline'>关于</span>
+				<LinkTo
+					to={'/about'}
+					className='ml-4 hover:text-gray-400 hover:underline'
+				>
+					关于
+				</LinkTo>
 			</div>
 		</div>
 	)

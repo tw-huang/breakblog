@@ -1,6 +1,7 @@
 package top.twhuang.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -13,6 +14,7 @@ public class Admin extends BaseEntity {
 
     private String username;
 
+    @JsonIgnore
     private String password;
 
     private String blogTitle;
