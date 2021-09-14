@@ -14,6 +14,9 @@ public interface LinkService extends IService<Link> {
      */
     List<Link> getList();
 
+    /**
+     * 清空缓存
+     */
     void cacheEvict();
 
 }

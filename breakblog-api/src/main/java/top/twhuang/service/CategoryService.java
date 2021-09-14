@@ -25,5 +25,8 @@ public interface CategoryService extends IService<Category> {
 
     Map<String, Object> categoryReport();
 
+    /**
+     * 清空缓存
+     */
     void cacheEvict();
 }

@@ -23,4 +23,10 @@ public interface AdminService extends IService<Admin> {
      */
     InfoVO getBlogInfo();
 
+    /**
+     * 清空缓存
+     */
+    void cacheEvict();
+
+
 }
