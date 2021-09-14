@@ -3,6 +3,7 @@ package top.twhuang.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.ObjectUtils;
 import top.twhuang.dto.LoginDTO;
 import top.twhuang.entity.Admin;
 import top.twhuang.service.AdminService;
@@ -16,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @Author: tw.huang
@@ -48,7 +48,10 @@ public class LoginApiController {
     public Result currentUser(HttpServletRequest request) {
         String userName = JwtUtil.getUserName(request);
         Admin admin = adminService.getAdminByUsername(userName);
-        return Objects.isNull(admin) ? Result.failure("获取当前用户失败") : Result.success(admin, "当前用户");
+        if (ObjectUtils.isNotEmpty(admin)) {
+            return Result.success(admin, "当前用户");
+        }
+        return Result.failure("获取当前用户失败");
     }
 
     @GetMapping("/logout")
@@ -137,11 +140,32 @@ public class LoginApiController {
         reportList.add(reports);
         report.setChildren(reportList);
 
+        MenuVO admin = new MenuVO();
+        admin.setId(6);
+        admin.setName("博客管理");
+        admin.setPath("admin");
+        admin.setIcon("el-icon-data-analysis");
+        MenuVO admins = new MenuVO();
+        admins.setId(601);
+        admins.setName("管理博客");
+        admins.setPath("admin");
+        admins.setIcon("el-icon-arrow-right");
+        MenuVO about = new MenuVO();
+        about.setId(602);
+        about.setName("关于页面");
+        about.setPath("about");
+        about.setIcon("el-icon-arrow-right");
+        ArrayList<MenuVO> adminList = new ArrayList<>();
+        adminList.add(admins);
+        adminList.add(about);
+        admin.setChildren(adminList);
+
         jsonArray.add(category);
         jsonArray.add(post);
         jsonArray.add(comment);
         jsonArray.add(link);
         jsonArray.add(report);
+        jsonArray.add(admin);
 
         return Result.success(jsonArray, "用户菜单");
 
