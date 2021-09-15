@@ -141,7 +141,7 @@ const PostPage: React.FC = (props: any) => {
 					{dayjs(post?.timestamp).format('YYYY-MM-DD HH:mm:ss')} 点击数：
 					{post?.pageView}
 				</span>
-				<div className='p-4 bg-gray-50 dark:bg-gray-600 rounded'>
+				<div className='p-2 md:p-4  bg-gray-50 dark:bg-gray-600 rounded'>
 					<span className='text-sm dark:text-gray-500'>{post?.subtitle}</span>
 				</div>
 				<hr className='my-2 md:my-4' />
