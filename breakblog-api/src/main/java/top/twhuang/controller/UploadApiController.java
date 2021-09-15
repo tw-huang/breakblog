@@ -1,5 +1,7 @@
 package top.twhuang.controller;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.IdUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import top.twhuang.config.UploadConfig;
@@ -7,7 +9,6 @@ import top.twhuang.entity.FileData;
 import top.twhuang.service.FileDataService;
 import top.twhuang.util.Result;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
 /**
  * @Author: tw.huang
@@ -37,13 +37,11 @@ public class UploadApiController {
     @PostMapping("/file")
     public Result postFile(@RequestParam(required = false, defaultValue = "default") String path,
                            @RequestParam("file") MultipartFile uploadFile) {
-        log.info("path:" + path);
         String type = uploadConfig.getType();
         String uploadPath = uploadConfig.getPath();
         String host = uploadConfig.getHost();
-
-        String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
-        log.info("uuid:" + uuid);
+        // 生成唯一 uuid
+        String uuid = IdUtil.simpleUUID();
 
         String oldFileName = uploadFile.getOriginalFilename();
         if (StringUtils.isNotEmpty(oldFileName)) {
@@ -54,9 +52,9 @@ public class UploadApiController {
 
             if (type.equals(UploadConfig.TYPE_LOCAL)) {
                 //完整路径
-                String finalPath = uploadPath + File.separator + path + File.separator + newFileName;
+                String finalPath = uploadPath + File.separator + path + File.separator + DateUtil.today() + File.separator + newFileName;
                 //url
-                String urlPath = host + File.separator + path + File.separator + newFileName;
+                String urlPath = host + File.separator + path + File.separator + DateUtil.today() + File.separator + newFileName;
                 try {
                     File file = new File(finalPath);
                     // 检测是否存在目录
