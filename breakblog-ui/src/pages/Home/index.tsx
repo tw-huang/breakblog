@@ -164,7 +164,7 @@ const Home: React.FC = () => {
 								key={post.id}
 							>
 								<div
-									className={`pr-2 hidden md:w-1/3 ${
+									className={`hidden md:w-1/3 ${
 										post.image ? 'md:block' : ''
 									}`}
 								>
