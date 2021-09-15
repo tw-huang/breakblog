@@ -67,7 +67,7 @@ const Header: React.FC<Props> = (props) => {
 					关于
 				</LinkTo>
 				<div className='ml-4 cursor-pointer' onClick={handleClick}>
-					<span hidden={nightMode}>
+					<div hidden={nightMode} className='transition duration-500 ease-in-out transform hover:scale-110'>
 						<svg
 							d='1631717532983'
 							className='icon'
@@ -80,12 +80,12 @@ const Header: React.FC<Props> = (props) => {
 						>
 							<path
 								d='M513.173333 128A255.061333 255.061333 0 0 0 448 298.666667c0 141.376 114.624 256 256 256a255.36 255.36 0 0 0 189.802667-84.202667c1.450667 13.653333 2.197333 27.498667 2.197333 41.536 0 212.074667-171.925333 384-384 384S128 724.074667 128 512c0-209.706667 168.106667-380.16 376.96-383.936L513.152 128z m-117.824 85.930667l-3.52 1.408C274.645333 262.826667 192 377.770667 192 512c0 176.725333 143.274667 320 320 320 145.408 0 268.16-96.981333 307.114667-229.802667l1.536-5.504-1.6 0.64a319.509333 319.509333 0 0 1-106.496 21.226667L704 618.666667c-176.725333 0-320-143.274667-320-320 0-28.48 3.754667-56.405333 10.944-83.2l0.405333-1.536z'
-								fill='#9CA3AF'
+								fill='#4B5563'
 								p-id='5322'
 							/>
 						</svg>
-					</span>
-					<span hidden={!nightMode}>
+					</div>
+					<div hidden={!nightMode} className='transition duration-500 ease-in-out transform hover:scale-110'>
 						<svg
 							d='1631718043424'
 							className='icon'
@@ -102,7 +102,7 @@ const Header: React.FC<Props> = (props) => {
 								p-id='6580'
 							/>
 						</svg>
-					</span>
+					</div>
 					{/*<span className='h-4 w-2 rounded-l-lg bg-white dark:bg-gray-900' />*/}
 					{/*<span className='h-4 w-2 rounded-r-lg bg-gray-200 dark:bg-gray-600' />*/}
 				</div>

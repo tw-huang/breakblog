@@ -5,6 +5,8 @@ import dayjs from 'dayjs'
 import './index.css'
 import Avatar from '../../assets/avatar.png'
 import Banner from '../../compents/Banner'
+import SearchIcon from '../../assets/search.png'
+import ClearIcon from '../../assets/clear.png'
 import {
 	getBlogStatistic,
 	getLinks,
@@ -89,20 +91,19 @@ const Home: React.FC = () => {
 	useEffect(() => {
 		const handleSearchEvent = (event: { keyCode: number }) => {
 			const { keyCode } = event
-			if (keyCode === 13) {
+			// 仅当焦点在 searchInput 上，回车事件才执行查询
+			// @ts-ignore
+			if (keyCode === 13 && document.activeElement.id === 'searchInput') {
 				// 键盘回车键
 				const text = searchText.replace(/(^\s*)|(\s*$)/g, '')
-				if (text !== undefined && text !== null && text !== '') {
-					const fetchData = async () => {
-						const posts = await getPosts(searchText, null, 1, defaultPageSize)
-						if (posts?.success && posts.code === 1) {
-							setPosts(posts.data.records)
-							setPages(posts.data.pages)
-						}
+				const fetchData = async () => {
+					const posts = await getPosts(text, null, 1, defaultPageSize)
+					if (posts?.success && posts.code === 1) {
+						setPosts(posts.data.records)
+						setPages(posts.data.pages)
 					}
-					fetchData()
-					// setSearchText('')
 				}
+				fetchData()
 			}
 		}
 		document.addEventListener('keyup', handleSearchEvent)
@@ -233,22 +234,24 @@ const Home: React.FC = () => {
 			</div>
 			<div className='md:pr-8 md:pl-0 px-2 md:w-1/4 md:py-6'>
 				{/* 搜索栏 */}
-				<div>
-					<label>
-						<input
-							type='text'
-							className='w-full bg-gray-50 dark:bg-gray-700 placeholder-gray-300 dark:placeholder-gray-400 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-1 ring-gray-400 rounded px-2 py-1'
-							placeholder='tips: 输入文章标题搜索'
-							value={searchText}
-							onChange={(event) => setSearchText(event.target.value)}
-							ref={searchEl}
-						/>
-					</label>
+				<div className='relative'>
+					<input
+						id='searchInput'
+						type='text'
+						className='w-full h-8 bg-gray-50 dark:bg-gray-700 placeholder-gray-300 dark:placeholder-gray-400 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-1 ring-gray-400 rounded pl-8 pr-2 py-1'
+						placeholder='tips: 输入文章标题搜索'
+						value={searchText}
+						onChange={(event) => setSearchText(event.target.value)}
+						ref={searchEl}
+					/>
+					<span className='absolute bottom-1 left-1 focus:outline-none text-sm'>
+						<img src={SearchIcon} alt='' className='w-6 p-1' />
+					</span>
 				</div>
 				{/* 网站信息 */}
 				<div className='w-full mt-6'>
 					<div className='text-center text-sm'>
-						<div className='flex justify-center items-center w-32 h-32 mx-auto bg-white dark:bg-gray-700 rounded-full transition duration-1000 ease-in-out hover:bg-gray-100  dark:hover:bg-gray-800 transform hover:rotate-180 '>
+						<div className='flex justify-center items-center w-32 h-32 mx-auto bg-white dark:bg-gray-700 rounded-full transition duration-1000 ease-in-out hover:bg-gray-100  dark:hover:bg-gray-800 transform hover:rotate-180'>
 							<img
 								src={blogInfo?.avatar || Avatar}
 								alt=''
