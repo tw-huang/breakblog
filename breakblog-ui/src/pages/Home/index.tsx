@@ -201,7 +201,7 @@ const Home: React.FC = () => {
 				{pages <= 1 ? (
 					''
 				) : (
-					<div className='flex justify-between pt-4'>
+					<div className='flex justify-between items-center font-medium bg-gray-200 dark:bg-gray-700 dark:text-gray-400 opacity-75 mt-4 md:mt-6 rounded'>
 						<button
 							className={`p-2 font-medium dark:text-gray-400 focus:outline-none ${
 								page <= 1
@@ -213,6 +213,7 @@ const Home: React.FC = () => {
 						>
 							←Prev
 						</button>
+						<span className='text-gray-400 dark:text-gray-400 text-sm'> {page} / {pages} </span>
 						<button
 							className={`p-2 font-medium dark:text-gray-400 focus:outline-none ${
 								page >= pages
