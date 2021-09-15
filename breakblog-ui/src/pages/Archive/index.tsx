@@ -61,13 +61,13 @@ const PostPage: React.FC = () => {
 
 	return (
 		<div className='md:px-8 p-2 md:py-6'>
-			<div className='mb-4 p-2 md:p-4 bg-white rounded'>
+			<div className='mb-4 p-2 md:p-4 bg-white dark:bg-gray-700 rounded'>
 				<div className='archive-list relative'>
 					{archives.map((archive: Archive) => {
 						return (
 							<div className='my-8 md:my-12' key={archive.date}>
 								<div className='flex items-center archive-date'>
-									<span className='flex-none text-2xl font-medium'>
+									<span className='flex-none text-2xl dark:text-gray-400 font-medium'>
 										{archive.date}
 									</span>
 								</div>
@@ -75,19 +75,19 @@ const PostPage: React.FC = () => {
 								{archive.posts.map((post: Post) => {
 									return (
 										<div
-											className='flex justify-between items-center border-b border-dashed py-6 archive-post-item'
+											className='flex justify-between items-center border-b border-dashed dark:border-gray-800 py-6 archive-post-item'
 											key={post.id}
 										>
-											<span className='flex-none text-gray-400'>
+											<span className='flex-none text-gray-400 dark:text-gray-500'>
 												{dayjs(post.timestamp).format('MM-DD')}
 											</span>
 											<LinkTo
 												to={'/post/' + post.id}
-												className='flex flex-grow px-4 md:px-12 font-medium hover:text-gray-400 hover:underline'
+												className='flex flex-grow px-4 md:px-12 font-medium dark:text-gray-400 hover:text-gray-600 hover:underline'
 											>
 												{post.title}
 											</LinkTo>
-											<span className='flex justify-end flex-none text-sm text-gray-400'>
+											<span className='flex justify-end flex-none text-sm text-gray-400 dark:text-gray-500'>
 												{post.pageView}
 											</span>
 										</div>
@@ -104,10 +104,10 @@ const PostPage: React.FC = () => {
 			) : (
 				<div className='flex justify-between pt-4'>
 					<button
-						className={`p-2 font-medium focus:outline-none ${
+						className={`p-2 font-medium dark:text-gray-400 focus:outline-none ${
 							page <= 1
 								? 'disabled:opacity-50'
-								: 'hover:text-gray-400 hover:underline'
+								: 'hover:text-gray-600 hover:underline'
 						}`}
 						onClick={() => setPage(page - 1)}
 						disabled={page <= 1}
@@ -115,10 +115,10 @@ const PostPage: React.FC = () => {
 						←Prev
 					</button>
 					<button
-						className={`p-2 font-medium focus:outline-none ${
+						className={`p-2 font-medium dark:text-gray-400 focus:outline-none ${
 							page >= pages
 								? 'disabled:opacity-50'
-								: 'hover:text-gray-400 hover:underline'
+								: 'hover:text-gray-600 hover:underline'
 						}`}
 						onClick={() => setPage(page + 1)}
 						disabled={page >= pages}

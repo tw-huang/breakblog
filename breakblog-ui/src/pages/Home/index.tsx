@@ -160,7 +160,10 @@ const Home: React.FC = () => {
 				<div>
 					{posts.map((post: Post) => {
 						return (
-							<div className='flex md:my-4 my-2 bg-white rounded' key={post.id}>
+							<div
+								className='flex md:my-4 my-2 bg-white dark:bg-gray-700 rounded'
+								key={post.id}
+							>
 								<div
 									className={`pr-2 hidden md:w-1/3 ${
 										post.image ? 'md:block' : ''
@@ -176,20 +179,20 @@ const Home: React.FC = () => {
 									<div className='pb-2 flex'>
 										<LinkTo
 											to={'/post/' + post.id}
-											className='text-lg md:text-xl font-medium truncate hover:text-gray-400 hover:underline'
+											className='text-lg md:text-xl font-medium truncate dark:text-gray-400 hover:text-gray-600 hover:underline'
 										>
 											{post.title}
 										</LinkTo>
 									</div>
-									<span className='text-xs pb-2 text-gray-400'>
+									<span className='text-xs pb-2 text-gray-400 dark:text-gray-600'>
 										分类：{post.category.name} 日期：
 										{dayjs(post.timestamp).format('YYYY-MM-DD')} 点击数：
 										{post.pageView}
 									</span>
-									<span className='text-sm pb-2 text-gray-600'>
+									<span className='text-sm pb-2 text-gray-600 dark:text-gray-500'>
 										{post.subtitle}
 									</span>
-									<span className='text-xs text-gray-400 hover:underline self-end'>
+									<span className='text-xs text-gray-400 dark:text-gray-600 hover:underline self-end'>
 										<LinkTo to={'/post/' + post.id}>阅读正文-&gt;</LinkTo>
 									</span>
 								</div>
@@ -203,10 +206,10 @@ const Home: React.FC = () => {
 				) : (
 					<div className='flex justify-between pt-4'>
 						<button
-							className={`p-2 font-medium focus:outline-none ${
+							className={`p-2 font-medium dark:text-gray-400 focus:outline-none ${
 								page <= 1
 									? 'disabled:opacity-50'
-									: 'hover:text-gray-400 hover:underline'
+									: 'hover:text-gray-600 hover:underline'
 							}`}
 							onClick={() => setPage(page - 1)}
 							disabled={page <= 1}
@@ -214,10 +217,10 @@ const Home: React.FC = () => {
 							←Prev
 						</button>
 						<button
-							className={`p-2 font-medium focus:outline-none ${
+							className={`p-2 font-medium dark:text-gray-400 focus:outline-none ${
 								page >= pages
 									? 'disabled:opacity-50'
-									: 'hover:text-gray-400 hover:underline'
+									: 'hover:text-gray-600 hover:underline'
 							}`}
 							onClick={() => setPage(page + 1)}
 							disabled={page >= pages}
@@ -234,7 +237,7 @@ const Home: React.FC = () => {
 					<label>
 						<input
 							type='text'
-							className='w-full placeholder-gray-300 border border-gray-300 focus:outline-none focus:ring-1 ring-gray-400 rounded px-2 py-1'
+							className='w-full bg-gray-50 dark:bg-gray-700 placeholder-gray-300 dark:placeholder-gray-400 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-1 ring-gray-400 rounded px-2 py-1'
 							placeholder='tips: 输入文章标题搜索'
 							value={searchText}
 							onChange={(event) => setSearchText(event.target.value)}
@@ -245,7 +248,7 @@ const Home: React.FC = () => {
 				{/* 网站信息 */}
 				<div className='w-full mt-6'>
 					<div className='text-center text-sm'>
-						<div className='flex justify-center items-center w-32 h-32 mx-auto bg-white rounded-full transition duration-1000 ease-in-out hover:bg-gray-100  transform hover:rotate-180 '>
+						<div className='flex justify-center items-center w-32 h-32 mx-auto bg-white dark:bg-gray-700 rounded-full transition duration-1000 ease-in-out hover:bg-gray-100  dark:hover:bg-gray-800 transform hover:rotate-180 '>
 							<img
 								src={blogInfo?.avatar || Avatar}
 								alt=''
@@ -253,7 +256,7 @@ const Home: React.FC = () => {
 								style={{ borderRadius: '50%' }}
 							/>
 						</div>
-						<div className='mt-2'>
+						<div className='mt-2 dark:text-gray-400'>
 							<span className='text-sm'>{blogInfo?.name || 'twhuang'}</span>
 							<br />
 							<span className='text-xs'>
@@ -262,7 +265,7 @@ const Home: React.FC = () => {
 							</span>
 						</div>
 					</div>
-					<div className='flex md:mt-4 mt-2 py-2 justify-between text-center text-gray-600 text-xs bg-white rounded'>
+					<div className='flex md:mt-4 mt-2 py-2 justify-between text-center text-gray-600 dark:text-gray-500 text-xs bg-white dark:bg-gray-700 rounded'>
 						<span className='w-1/3'>
 							文章 <br /> {blogStatistic?.posts}
 						</span>
@@ -275,24 +278,24 @@ const Home: React.FC = () => {
 					</div>
 				</div>
 				{/* 热门文章 */}
-				<div className='mt-6 bg-white rounded'>
-					<div className='font-medium bg-gray-200 opacity-75 px-2 py-1 rounded-t'>
+				<div className='mt-6 bg-white dark:bg-gray-700 rounded'>
+					<div className='font-medium bg-gray-200 dark:bg-gray-800 dark:text-gray-400 opacity-75 px-2 py-1 rounded-t'>
 						热门文章:
 					</div>
 					<div className='text-sm p-4'>
 						{postsHot.map((post: Post) => {
 							return (
 								<div
-									className='flex flex-col border-b border-dashed pb-1 mb-2'
+									className='flex flex-col border-b border-dashed dark:border-gray-800 pb-1 mb-2'
 									key={post.id}
 								>
 									<LinkTo
 										to={'/post/' + post.id}
-										className='text-gray-600 mb-1 truncate hover:text-gray-400 hover:underline'
+										className='text-gray-600 dark:text-gray-500 mb-1 truncate hover:text-gray-600 hover:underline'
 									>
 										{post.title}
 									</LinkTo>
-									<span className='text-xs text-gray-400'>
+									<span className='text-xs text-gray-400 dark:text-gray-600'>
 										日期：{dayjs(post.timestamp).format('YYYY-MM-DD')} 点击数：
 										{post.pageView}
 									</span>
@@ -302,26 +305,26 @@ const Home: React.FC = () => {
 					</div>
 				</div>
 				{/* 文章分类 */}
-				<div className='mt-6 bg-white rounded'>
-					<div className='font-medium bg-gray-200 opacity-75 px-2 py-1 rounded-t'>
+				<div className='mt-6 bg-white dark:bg-gray-700 rounded'>
+					<div className='font-medium bg-gray-200 dark:bg-gray-800 dark:text-gray-400 opacity-75 px-2 py-1 rounded-t'>
 						文章分类:
 					</div>
-					<div className='text-sm text-gray-600 p-4'>
+					<div className='text-sm text-gray-600 dark:text-gray-500 p-4'>
 						<div
-							className='flex justify-between mb-2 cursor-pointer border-b border-dashed hover:text-gray-400 hover:underline'
+							className='flex justify-between mb-2 cursor-pointer border-b border-dashed dark:border-gray-800 hover:text-gray-600 hover:underline'
 							onClick={() => {
 								setCategoryId(null)
 							}}
 						>
 							<span>全部(All)</span>
-							<span className='rounded-full h-6 w-6 flex items-center justify-center bg-gray-50'>
+							<span className='rounded-full h-4 w-4 text-xs flex items-center justify-center bg-gray-50 dark:bg-gray-600 dark:text-gray-500'>
 								{categories.length || 0}
 							</span>
 						</div>
 						{categories.map((category: Category) => {
 							return (
 								<div
-									className='flex justify-between mb-2 cursor-pointer border-b border-dashed hover:text-gray-400 hover:underline'
+									className='flex justify-between mb-2 cursor-pointer border-b border-dashed dark:border-gray-800 hover:text-gray-600 hover:underline'
 									key={category.id}
 									onClick={() => {
 										setCategoryId(category.id)
@@ -329,7 +332,7 @@ const Home: React.FC = () => {
 									}}
 								>
 									<span>{category.name}</span>
-									<span className='rounded-full h-6 w-6 flex items-center justify-center bg-gray-50'>
+									<span className='rounded-full h-4 w-4 text-xs flex items-center justify-center bg-gray-50 dark:bg-gray-600 dark:text-gray-500'>
 										{category.postCount}
 									</span>
 								</div>
@@ -338,15 +341,15 @@ const Home: React.FC = () => {
 					</div>
 				</div>
 				{/* 友情链接 */}
-				<div className='mt-6 bg-white rounded'>
-					<div className='font-medium bg-gray-200 opacity-75 px-2 py-1 rounded-t'>
+				<div className='mt-6 bg-white dark:bg-gray-700 rounded'>
+					<div className='font-medium bg-gray-200 dark:bg-gray-800 dark:text-gray-400 opacity-75 px-2 py-1 rounded-t'>
 						友情链接:
 					</div>
-					<div className='flex flex-col text-sm text-gray-600 p-4'>
+					<div className='flex flex-col text-sm text-gray-600 dark:text-gray-500 p-4'>
 						{links.map((link: Link) => {
 							return (
 								<span
-									className='pb-1 mb-2 border-b border-dashed hover:text-gray-400 hover:underline'
+									className='pb-1 mb-2 border-b border-dashed dark:border-gray-800 hover:text-gray-600 hover:underline'
 									key={link.id}
 								>
 									<span>-&gt;&nbsp;</span>

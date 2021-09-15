@@ -32,7 +32,7 @@ const App: React.FC = () => {
 	}, [])
 
 	return (
-		<div className='md:max-w-screen-lg w-full md:my-8 md:mx-auto bg-gray-100 shadow rounded'>
+		<div className='md:max-w-screen-lg w-full md:my-8 md:mx-auto bg-gray-100 dark:bg-gray-800 shadow rounded'>
 			{/* 顶部 */}
 			<Header blogTitle={blogInfo?.blogTitle || 'breakblog'} />
 			{/* 内容 */}
