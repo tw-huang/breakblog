@@ -10,7 +10,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: breakblog
-    url: jdbc:mysql://106.53.155.82:3306/breakblog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://twhuang.top:3306/breakblog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
     platform: mysql
     druid:
       initial-size: 5
@@ -18,7 +18,7 @@ spring:
       max-active: 20
       max-wait: 60000
   redis:
-    host: 106.53.155.82
+    host: twhuang.top
     password: breakblog
     port: 6379
     database: 0
