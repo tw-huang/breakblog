@@ -5,8 +5,6 @@ import dayjs from 'dayjs'
 import './index.css'
 import Avatar from '../../assets/avatar.png'
 import Banner from '../../compents/Banner'
-import SearchIcon from '../../assets/search.png'
-import ClearIcon from '../../assets/clear.png'
 import {
 	getBlogStatistic,
 	getLinks,
@@ -238,14 +236,29 @@ const Home: React.FC = () => {
 					<input
 						id='searchInput'
 						type='text'
-						className='w-full h-8 bg-gray-50 dark:bg-gray-700 placeholder-gray-300 dark:placeholder-gray-400 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-1 ring-gray-400 rounded pl-8 pr-2 py-1'
-						placeholder='tips: 输入文章标题搜索'
+						className='w-full h-10 pl-8 pr-2 py-1 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 placeholder-gray-300 dark:placeholder-gray-400 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-1 ring-gray-400 rounded'
+						placeholder='tips: 文章标题回车搜索'
 						value={searchText}
 						onChange={(event) => setSearchText(event.target.value)}
 						ref={searchEl}
 					/>
-					<span className='absolute bottom-1 left-1 focus:outline-none text-sm'>
-						<img src={SearchIcon} alt='' className='w-6 p-1' />
+					<span className='absolute bottom-3 left-2 focus:outline-none text-sm'>
+						<svg
+							d='1631728156124'
+							className='icon'
+							viewBox='0 0 1024 1024'
+							version='1.1'
+							xmlns='http://www.w3.org/2000/svg'
+							p-id='7031'
+							width='16'
+							height='16'
+						>
+							<path
+								d='M928.256 879.232l-146.688-143.402667-3.413333-5.248a34.389333 34.389333 0 0 0-48.512 0c-124.672 114.346667-316.714667 120.576-448.810667 14.506667-132.096-106.026667-163.242667-291.413333-72.789333-433.194667 90.453333-141.781333 274.432-195.968 429.952-126.634666 155.52 69.333333 234.24 240.725333 184.064 400.469333a33.237333 33.237333 0 0 0 7.765333 32.896 35.072 35.072 0 0 0 33.024 9.898667 34.261333 34.261333 0 0 0 25.301333-23.04c59.989333-189.525333-30.634667-393.514667-213.333333-480C492.117333 39.04 272.256 96.042667 157.44 259.626667 42.538667 423.253333 67.2 644.352 215.466667 779.946667c148.224 135.552 375.466667 144.896 534.826666 21.973333l129.877334 126.976a34.944 34.944 0 0 0 48.469333 0 33.450667 33.450667 0 0 0 0-47.786667l-0.341333-1.877333z'
+								fill='#9CA3AF'
+								p-id='7032'
+							/>
+						</svg>
 					</span>
 				</div>
 				{/* 网站信息 */}
@@ -344,7 +357,7 @@ const Home: React.FC = () => {
 					</div>
 				</div>
 				{/* 友情链接 */}
-				<div className='mt-6 bg-white dark:bg-gray-700 rounded'>
+				<div className='my-6 bg-white dark:bg-gray-700 rounded'>
 					<div className='font-medium bg-gray-200 dark:bg-gray-800 dark:text-gray-400 opacity-75 px-2 py-1 rounded-t'>
 						友情链接:
 					</div>
