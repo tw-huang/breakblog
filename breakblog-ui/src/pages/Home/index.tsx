@@ -164,11 +164,9 @@ const Home: React.FC = () => {
 								key={post.id}
 							>
 								<div
-									className={`hidden md:w-1/3 ${
-										post.image ? 'md:block' : ''
-									}`}
+									className={`hidden md:w-1/3 ${post.image ? 'md:block' : ''}`}
 								>
-									<img src={post.image} className='rounded' alt='文章配图' />
+									<img src={post.image} className='rounded-l' alt='文章配图' />
 								</div>
 								<div
 									className={`flex flex-col w-full md:p-4 p-2 ${
@@ -364,15 +362,15 @@ const Home: React.FC = () => {
 					<div className='flex flex-col text-sm text-gray-600 dark:text-gray-500 p-4'>
 						{links.map((link: Link) => {
 							return (
-								<span
-									className='pb-1 mb-2 border-b border-dashed dark:border-gray-800 hover:text-gray-600 hover:underline'
+								<div
+									className='flex justify-between pb-1 mb-2 border-b border-dashed dark:border-gray-800 hover:text-gray-600 hover:underline'
 									key={link.id}
 								>
-									<span>-&gt;&nbsp;</span>
 									<a href={link.url} target='_blank' rel='noopener noreferrer'>
 										{link.name}
 									</a>
-								</span>
+									<span>-&gt;</span>
+								</div>
 							)
 						})}
 					</div>
