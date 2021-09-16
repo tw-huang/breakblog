@@ -323,7 +323,7 @@ const Home: React.FC = () => {
 								setCategoryId(null)
 							}}
 						>
-							<span>全部(All)</span>
+							<span>全部</span>
 							<span className='rounded-full h-4 w-4 text-xs flex items-center justify-center bg-gray-50 dark:bg-gray-600 dark:text-gray-500'>
 								{categories.length || 0}
 							</span>
