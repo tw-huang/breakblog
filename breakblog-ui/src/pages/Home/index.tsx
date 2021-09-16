@@ -355,15 +355,16 @@ const Home: React.FC = () => {
 					<div className='flex flex-col text-sm text-gray-600 dark:text-gray-500 p-4'>
 						{links.map((link: Link) => {
 							return (
-								<div
-									className='flex justify-between pb-1 mb-2 border-b border-dashed dark:border-gray-800 hover:text-gray-600 hover:underline'
+								<a
 									key={link.id}
+									href={link.url}
+									className='flex justify-between items-center mb-2 border-b border-dashed dark:border-gray-800 hover:text-gray-600 hover:underline'
+									target='_blank'
+									rel='noopener noreferrer'
 								>
-									<a href={link.url} target='_blank' rel='noopener noreferrer'>
-										{link.name}
-									</a>
+									<span>{link.name}</span>
 									<span>-&gt;</span>
-								</div>
+								</a>
 							)
 						})}
 					</div>
