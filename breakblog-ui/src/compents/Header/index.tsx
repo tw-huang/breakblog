@@ -1,17 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 // @ts-ignore
 import { Link as LinkTo } from 'react-router-dom'
+import AppContext from '../../store'
 import Logo from '../../assets/logo.png'
-import './index.css'
-interface Props {
+
+interface BlogInfo {
+	name: string
+	avatar: string
+	email: string
 	blogTitle: string
+	blogSubTitle: string
 }
 
-const Header: React.FC<Props> = (props) => {
-	const blogTitle = props.blogTitle
-
+const Header: React.FC = () => {
+	/** 上下文 */
+	// @ts-ignore
+	const context = useContext<BlogInfo>(AppContext)
+	/** 夜间模式 */
 	const [nightMode, setNightMode] = useState<boolean>(false)
 
+	/** 自适应系统夜间模式 或 用户是否开启夜间模式 */
 	useEffect(() => {
 		if (
 			localStorage.theme === 'dark' ||
@@ -44,7 +52,7 @@ const Header: React.FC<Props> = (props) => {
 			<LinkTo to={'/'} className='flex items-center'>
 				<img src={Logo} alt='logo' className='md:w-10 w-8' />
 				<span className='font-bold text-2xl pl-2 dark:text-gray-400'>
-					{blogTitle}
+					{context.blogTitle}
 				</span>
 			</LinkTo>
 			<div className='flex items-center font-medium'>
@@ -67,7 +75,10 @@ const Header: React.FC<Props> = (props) => {
 					关于
 				</LinkTo>
 				<div className='ml-4 cursor-pointer' onClick={handleClick}>
-					<div hidden={nightMode} className='transition duration-500 ease-in-out transform hover:scale-110'>
+					<div
+						hidden={nightMode}
+						className='transition duration-500 ease-in-out transform hover:scale-110'
+					>
 						<svg
 							d='1631717532983'
 							className='icon'
@@ -85,7 +96,10 @@ const Header: React.FC<Props> = (props) => {
 							/>
 						</svg>
 					</div>
-					<div hidden={!nightMode} className='transition duration-500 ease-in-out transform hover:scale-110'>
+					<div
+						hidden={!nightMode}
+						className='transition duration-500 ease-in-out transform hover:scale-110'
+					>
 						<svg
 							d='1631718043424'
 							className='icon'
@@ -103,8 +117,6 @@ const Header: React.FC<Props> = (props) => {
 							/>
 						</svg>
 					</div>
-					{/*<span className='h-4 w-2 rounded-l-lg bg-white dark:bg-gray-900' />*/}
-					{/*<span className='h-4 w-2 rounded-r-lg bg-gray-200 dark:bg-gray-600' />*/}
 				</div>
 			</div>
 		</div>

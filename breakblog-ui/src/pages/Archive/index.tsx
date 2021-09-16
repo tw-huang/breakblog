@@ -40,14 +40,14 @@ interface Archive {
 const defaultPageSize: number = 15
 
 const PostPage: React.FC = () => {
-	// 归档
+	/** 归档 */
 	const [archives, setArchives] = useState<Array<Archive>>([])
-	// 分页
+	/** 分页 */
 	const [page, setPage] = useState<number>(1)
-	// 总页数
+	/** 总页数 */
 	const [pages, setPages] = useState<number>(0)
 
-	// 初始数据
+	/** 归档数据 */
 	useEffect(() => {
 		const fetchData = async () => {
 			const posts = await getPostsArchive(page, defaultPageSize)

@@ -1,7 +1,7 @@
 import React from 'react'
 import AwesomeSlider from 'react-awesome-slider'
 // @ts-ignore
-import withAutoplay from 'react-awesome-slider/dist/autoplay';
+import withAutoplay from 'react-awesome-slider/dist/autoplay'
 import 'react-awesome-slider/dist/styles.css'
 import './index.css'
 // @ts-ignore
@@ -9,7 +9,7 @@ import Banner1Img from '../../assets/banner1.jpg'
 import Banner2Img from '../../assets/banner2.jpg'
 import Banner3Img from '../../assets/banner3.jpg'
 
-const AutoplaySlider = withAutoplay(AwesomeSlider);
+const AutoplaySlider = withAutoplay(AwesomeSlider)
 
 const Banner: React.FC = () => {
 	return (

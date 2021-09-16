@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 // @ts-ignore
 import { Link as LinkTo } from 'react-router-dom'
+import AppContext from '../../store'
 import dayjs from 'dayjs'
 import './index.css'
-import Avatar from '../../assets/avatar.png'
 import Banner from '../../compents/Banner'
 import {
 	getBlogStatistic,
@@ -11,7 +11,6 @@ import {
 	getCategories,
 	getPostsHot,
 	getPosts,
-	getBlogInfo,
 } from '../../services'
 
 interface Link {
@@ -62,37 +61,37 @@ interface BlogInfo {
 const defaultPageSize: number = 6
 
 const Home: React.FC = () => {
-	// 搜索文本
+	/** 上下文 */
+	// @ts-ignore
+	const context = useContext<BlogInfo>(AppContext)
+	/** 搜索文本 */
 	const [searchText, setSearchText] = useState<string>('')
-	// 搜索文本 ref
+	/** 搜索文本 ref */
 	const searchEl = useRef(null)
-	// 博客信息
-	const [blogInfo, setBlogInfo] = useState<BlogInfo>()
-	// 博客统计
+	/**博客统计 */
 	const [blogStatistic, setBlogStatistic] = useState<BlogStatistic>()
-	// 友链
+	/** 友链 */
 	const [links, setLinks] = useState<Array<Link>>([])
-	// 分类
+	/** 分类 */
 	const [categories, setCategories] = useState<Array<Category>>([])
-	// 热门文章
+	/** 热门文章 */
 	const [postsHot, setPostsHot] = useState<Array<Post>>([])
-	// 文章
+	/** 文章 */
 	const [posts, setPosts] = useState<Array<Post>>([])
-	// 分页
+	/** 分页 */
 	const [page, setPage] = useState<number>(1)
-	// 总页数
+	/** 总页数 */
 	const [pages, setPages] = useState<number>(0)
-	// 分类 ID
+	/** 分类 ID */
 	const [categoryId, setCategoryId] = useState<any>(null)
 
-	// 监听搜索回车按键事件
+	/** 监听搜索回车按键事件 */
 	useEffect(() => {
 		const handleSearchEvent = (event: { keyCode: number }) => {
 			const { keyCode } = event
 			// 仅当焦点在 searchInput 上，回车事件才执行查询
 			// @ts-ignore
 			if (keyCode === 13 && document.activeElement.id === 'searchInput') {
-				// 键盘回车键
 				const text = searchText.replace(/(^\s*)|(\s*$)/g, '')
 				const fetchData = async () => {
 					const posts = await getPosts(text, null, 1, defaultPageSize)
@@ -110,13 +109,9 @@ const Home: React.FC = () => {
 		}
 	})
 
-	// 侧边栏数据
+	/** 侧边栏数据 */
 	useEffect(() => {
 		const fetchData = async () => {
-			const blogInfo = await getBlogInfo()
-			if (blogInfo?.success && blogInfo.code === 1) {
-				setBlogInfo(blogInfo.data)
-			}
 			const blogStatistic = await getBlogStatistic()
 			if (blogStatistic?.success && blogStatistic.code === 1) {
 				setBlogStatistic(blogStatistic.data)
@@ -134,11 +129,10 @@ const Home: React.FC = () => {
 				setLinks(links.data)
 			}
 		}
-		//获取初始数据
 		fetchData()
 	}, [])
 
-	// 文章分页数据
+	/** 文章分页数据 */
 	useEffect(() => {
 		const fetchData = async () => {
 			const posts = await getPosts('', categoryId, page, defaultPageSize)
@@ -201,24 +195,22 @@ const Home: React.FC = () => {
 				{pages <= 1 ? (
 					''
 				) : (
-					<div className='flex justify-between items-center font-medium bg-gray-200 dark:bg-gray-700 dark:text-gray-400 opacity-75 mt-4 md:mt-6 rounded'>
+					<div className='flex justify-between items-center mt-4 md:mt-6 font-medium bg-white dark:bg-gray-700 dark:text-gray-400 hover:text-gray-600 rounded'>
 						<button
-							className={`p-2 font-medium dark:text-gray-400 focus:outline-none ${
-								page <= 1
-									? 'disabled:opacity-50'
-									: 'hover:text-gray-600 hover:underline'
+							className={`p-2  focus:outline-none ${
+								page <= 1 ? 'disabled:opacity-50' : 'hover:underline'
 							}`}
 							onClick={() => setPage(page - 1)}
 							disabled={page <= 1}
 						>
 							←Prev
 						</button>
-						<span className='text-gray-400 dark:text-gray-400 text-sm'> {page} / {pages} </span>
+						<span className='text-gray-400 text-sm'>
+							{page} / {pages}
+						</span>
 						<button
-							className={`p-2 font-medium dark:text-gray-400 focus:outline-none ${
-								page >= pages
-									? 'disabled:opacity-50'
-									: 'hover:text-gray-600 hover:underline'
+							className={`p-2 focus:outline-none ${
+								page >= pages ? 'disabled:opacity-50' : 'hover:underline'
 							}`}
 							onClick={() => setPage(page + 1)}
 							disabled={page >= pages}
@@ -265,17 +257,17 @@ const Home: React.FC = () => {
 					<div className='text-center text-sm'>
 						<div className='flex justify-center items-center w-32 h-32 mx-auto bg-white dark:bg-gray-700 rounded-full transition duration-1000 ease-in-out hover:bg-gray-100  dark:hover:bg-gray-800 transform hover:rotate-180'>
 							<img
-								src={blogInfo?.avatar || Avatar}
+								src={context?.avatar}
 								alt=''
 								className='w-28 h-28'
 								style={{ borderRadius: '50%' }}
 							/>
 						</div>
 						<div className='mt-2 dark:text-gray-400'>
-							<span className='text-sm'>{blogInfo?.name || 'twhuang'}</span>
+							<span className='text-sm'>{context?.name}</span>
 							<br />
 							<span className='text-xs'>
-								{blogInfo?.blogSubTitle ||
+								{context?.blogSubTitle ||
 									'You still have lots more to work on!'}
 							</span>
 						</div>
