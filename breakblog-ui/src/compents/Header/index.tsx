@@ -17,32 +17,27 @@ const Header: React.FC = () => {
 	// @ts-ignore
 	const context = useContext<BlogInfo>(AppContext)
 	/** 夜间模式 */
-	const [nightMode, setNightMode] = useState<boolean>(false)
-
-	/** 自适应系统夜间模式 或 用户是否开启夜间模式 */
-	useEffect(() => {
-		if (
-			localStorage.theme === 'dark' ||
+	const [nightMode, setNightMode] = useState<boolean>(
+		localStorage.theme === 'dark' ||
 			(!('theme' in localStorage) &&
 				window.matchMedia('(prefers-color-scheme: dark)').matches)
-		) {
+	)
+
+	useEffect(() => {
+		if (nightMode) {
 			// @ts-ignore
 			document.querySelector('html').classList.add('dark')
-			setNightMode(true)
 		} else {
 			// @ts-ignore
 			document.querySelector('html').classList.remove('dark')
-			setNightMode(false)
 		}
-	}, [])
+	}, [nightMode])
 
 	const handleClick = () => {
 		if (!nightMode) {
-			// @ts-ignore
-			document.querySelector('html').classList.add('dark')
+			localStorage.setItem('theme', 'dark')
 		} else {
-			// @ts-ignore
-			document.querySelector('html').classList.remove('dark')
+			localStorage.removeItem('theme')
 		}
 		setNightMode(!nightMode)
 	}
