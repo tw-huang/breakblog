@@ -46,29 +46,32 @@ interface Comment {
 	comment: Comment
 }
 
+/** 默认每页评论数量 */
+const defaultPageSize: number = 2
+
 const PostPage: React.FC = (props: any) => {
 	const postId = props.match.params.id
 
-	// 文章
+	/** 文章 */
 	const [post, setPost] = useState<Post>()
-	// 评论
+	/** 评论 */
 	const [comments, setComments] = useState<Array<Comment>>([])
-	// 评论分页
+	/** 评论分页 */
 	const [page, setPage] = useState<number>(1)
-	// 评论总页数
+	/** 评论总页数 */
 	const [pages, setPages] = useState<number>(0)
-	// 回复评论
+	/** 回复评论 */
 	const [replyComment, setReplyComment] = useState<Comment | null>(null)
-	// 昵称
+	/** 昵称 */
 	const [author, setAuthor] = useState<string>('')
-	// 邮件
+	/** 邮件 */
 	const [email, setEmail] = useState<string>('')
-	// 站点
+	/** 站点 */
 	const [site, setSite] = useState<string>('')
-	// 内容
+	/** 内容 */
 	const [body, setBody] = useState<string>('')
 
-	// 文章数据
+	/** 文章数据 */
 	useEffect(() => {
 		const fetchData = async () => {
 			const post = await getPost(postId)
@@ -80,10 +83,10 @@ const PostPage: React.FC = (props: any) => {
 		fetchData()
 	}, [postId])
 
-	// 评论分页数据
+	/** 评论分页数据 */
 	useEffect(() => {
 		const fetchData = async () => {
-			const comments = await getComments(postId, page, 5)
+			const comments = await getComments(postId, page, defaultPageSize)
 			if (comments?.success && comments.code === 1) {
 				setComments(comments.data.records)
 				setPages(comments.data.pages)
@@ -101,6 +104,10 @@ const PostPage: React.FC = (props: any) => {
 			alert('昵称不能为空！')
 			return
 		}
+		if (email === null || email.replace(/(^\s*)|(\s*$)/g, '') === '') {
+			alert('邮件不能为空！')
+			return
+		}
 		const fetchData = async () => {
 			const data = await postComment(
 				postId,
@@ -113,7 +120,7 @@ const PostPage: React.FC = (props: any) => {
 			if (data?.success && data.code === 1) {
 				// 提交成功后重新获取最新评论数据
 				const fetchData = async () => {
-					const comments = await getComments(postId, page, 5)
+					const comments = await getComments(postId, page, defaultPageSize)
 					if (comments?.success && comments.code === 1) {
 						setComments(comments.data.records)
 						setPages(comments.data.pages)
@@ -134,7 +141,7 @@ const PostPage: React.FC = (props: any) => {
 	// @ts-ignore
 	return (
 		<div className='md:px-8 p-2 md:py-6'>
-			<div className='flex flex-col mb-4 p-2 md:p-4 bg-white dark:bg-gray-700 rounded'>
+			<div className='flex flex-col p-2 md:p-4 bg-white dark:bg-gray-700 rounded'>
 				<span className='text-2xl mb-2 dark:text-gray-400'>{post?.title}</span>
 				<span className='text-xs mb-2 text-gray-400 dark:text-gray-500'>
 					分类：{post?.category?.name} 日期：
@@ -149,9 +156,7 @@ const PostPage: React.FC = (props: any) => {
 					className='leading-relaxed  max-w-none prose-sm md:prose md:max-w-none dark:text-gray-400'
 					dangerouslySetInnerHTML={{ __html: post?.body || '' }}
 				/>
-			</div>
-			<hr className='my-2 md:my-4' />
-			<div className='flex flex-nowrap justify-between py-8 text-sm'>
+				<div className='flex flex-nowrap justify-between py-8 text-xs'>
 				<span className='w-1/2 flex flex-row pr-2 md:pr-4'>
 					{post?.nextPostId === null ? (
 						''
@@ -164,7 +169,7 @@ const PostPage: React.FC = (props: any) => {
 						</LinkTo>
 					)}
 				</span>
-				<span className='w-1/2 flex flex-row-reverse pl-2 md:pl-4'>
+					<span className='w-1/2 flex flex-row-reverse pl-2 md:pl-4'>
 					{post?.prevPostId === null ? (
 						''
 					) : (
@@ -176,7 +181,9 @@ const PostPage: React.FC = (props: any) => {
 						</LinkTo>
 					)}
 				</span>
+				</div>
 			</div>
+			{/*<hr className='my-2 md:my-4' />*/}
 			{post?.canComment ? (
 				<div className='flex flex-col'>
 					<hr className='my-2 md:my-4' />
@@ -283,23 +290,22 @@ const PostPage: React.FC = (props: any) => {
 						{pages <= 1 ? (
 							''
 						) : (
-							<div className='flex justify-between pt-4'>
+							<div className='flex justify-between items-center mt-4 md:mt-6 font-medium bg-white dark:bg-gray-700 dark:text-gray-400 hover:text-gray-600 rounded'>
 								<button
-									className={`p-2 font-medium dark:text-gray-400 focus:outline-none ${
-										page <= 1
-											? 'disabled:opacity-50'
-											: 'hover:text-gray-600 hover:underline'
+									className={`p-2  focus:outline-none ${
+										page <= 1 ? 'disabled:opacity-50' : 'hover:underline'
 									}`}
 									onClick={() => setPage(page - 1)}
 									disabled={page <= 1}
 								>
 									←Prev
 								</button>
+								<span className='text-gray-400 text-sm'>
+									{page} / {pages}
+								</span>
 								<button
-									className={`p-2 font-medium dark:text-gray-400 focus:outline-none ${
-										page >= pages
-											? 'disabled:opacity-50'
-											: 'hover:text-gray-600 hover:underline'
+									className={`p-2 focus:outline-none ${
+										page >= pages ? 'disabled:opacity-50' : 'hover:underline'
 									}`}
 									onClick={() => setPage(page + 1)}
 									disabled={page >= pages}
@@ -353,7 +359,7 @@ const PostPage: React.FC = (props: any) => {
 									<input
 										type='text'
 										className='h-10 w-full placeholder-gray-300 dark:placeholder-gray-400 border border-gray-300 dark:border-gray-500 dark:bg-gray-600 focus:outline-none focus:ring-1 ring-gray-400 rounded-r px-2 py-1'
-										placeholder='http://twhuang.top'
+										placeholder='https://twhuang.top'
 										value={site}
 										onChange={(event) => setSite(event.target.value)}
 									/>
