@@ -160,7 +160,9 @@ const PostPage: React.FC = (props: any) => {
 				<div className='flex flex-nowrap justify-between py-4 md:py-8 text-xs md:text-sm'>
 					<span className='w-1/2 flex flex-row pr-2 md:pr-4'>
 						{post?.nextPostId === null ? (
-							''
+							<span className='text-gray-600 dark:text-gray-500'>
+								上一篇：这已经是最新的文章啦！
+							</span>
 						) : (
 							<LinkTo
 								to={'/post/' + post?.nextPostId}
@@ -172,7 +174,9 @@ const PostPage: React.FC = (props: any) => {
 					</span>
 					<span className='w-1/2 flex flex-row-reverse pl-2 md:pl-4'>
 						{post?.prevPostId === null ? (
-							''
+							<span className='text-gray-600 dark:text-gray-500'>
+								下一篇：这已经是最初的文章啦！
+							</span>
 						) : (
 							<LinkTo
 								to={'/post/' + post?.prevPostId}
