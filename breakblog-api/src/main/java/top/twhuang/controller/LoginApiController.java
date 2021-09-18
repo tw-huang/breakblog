@@ -144,7 +144,7 @@ public class LoginApiController {
         admin.setId(6);
         admin.setName("博客管理");
         admin.setPath("admin");
-        admin.setIcon("el-icon-data-analysis");
+        admin.setIcon("el-icon-setting");
         MenuVO admins = new MenuVO();
         admins.setId(601);
         admins.setName("管理博客");
