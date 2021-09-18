@@ -157,7 +157,7 @@ const PostPage: React.FC = (props: any) => {
 					dangerouslySetInnerHTML={{ __html: post?.body || '' }}
 				/>
 				<hr className='my-2 md:my-4' />
-				<div className='flex flex-nowrap justify-between py-8 text-xs md:text-sm'>
+				<div className='flex flex-nowrap justify-between py-4 md:py-8 text-xs md:text-sm'>
 					<span className='w-1/2 flex flex-row pr-2 md:pr-4'>
 						{post?.nextPostId === null ? (
 							''
