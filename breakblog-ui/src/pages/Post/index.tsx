@@ -156,31 +156,32 @@ const PostPage: React.FC = (props: any) => {
 					className='leading-relaxed  max-w-none prose-sm md:prose md:max-w-none dark:text-gray-400 post-article'
 					dangerouslySetInnerHTML={{ __html: post?.body || '' }}
 				/>
-				<div className='flex flex-nowrap justify-between py-8 text-xs'>
-				<span className='w-1/2 flex flex-row pr-2 md:pr-4'>
-					{post?.nextPostId === null ? (
-						''
-					) : (
-						<LinkTo
-							to={'/post/' + post?.nextPostId}
-							className='truncate hover:text-gray-600 dark:text-gray-400 hover:underline'
-						>
-							上一篇：{post?.nextPostTitle}
-						</LinkTo>
-					)}
-				</span>
+				<hr className='my-2 md:my-4' />
+				<div className='flex flex-nowrap justify-between py-8 text-xs md:text-sm'>
+					<span className='w-1/2 flex flex-row pr-2 md:pr-4'>
+						{post?.nextPostId === null ? (
+							''
+						) : (
+							<LinkTo
+								to={'/post/' + post?.nextPostId}
+								className='truncate hover:text-gray-600 dark:text-gray-400 hover:underline'
+							>
+								上一篇：{post?.nextPostTitle}
+							</LinkTo>
+						)}
+					</span>
 					<span className='w-1/2 flex flex-row-reverse pl-2 md:pl-4'>
-					{post?.prevPostId === null ? (
-						''
-					) : (
-						<LinkTo
-							to={'/post/' + post?.prevPostId}
-							className='truncate hover:text-gray-600 dark:text-gray-400 hover:underline'
-						>
-							下一篇：{post?.prevPostTitle}
-						</LinkTo>
-					)}
-				</span>
+						{post?.prevPostId === null ? (
+							''
+						) : (
+							<LinkTo
+								to={'/post/' + post?.prevPostId}
+								className='truncate hover:text-gray-600 dark:text-gray-400 hover:underline'
+							>
+								下一篇：{post?.prevPostTitle}
+							</LinkTo>
+						)}
+					</span>
 				</div>
 			</div>
 			{/*<hr className='my-2 md:my-4' />*/}
