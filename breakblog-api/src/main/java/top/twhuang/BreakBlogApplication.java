@@ -6,10 +6,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-public class BreakblogApplication {
+public class BreakBlogApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BreakblogApplication.class, args);
+        SpringApplication.run(BreakBlogApplication.class, args);
     }
 
 }
