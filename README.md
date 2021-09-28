@@ -2,8 +2,8 @@
 
 ### 项目简介
 
-本项目为个人博客系统，管理后台请看 [braekblog-vue](https://github.com/tw-huang/breakblog-vue) 项目
-前端技术： `React + Typescript + Tailwindcss`
+本项目为个人博客系统，管理后台请看 [braekblog-vue](https://github.com/tw-huang/breakblog-vue) 项目  
+前端技术： `React + Typescript + Tailwindcss`    
 后端技术：`SpringBoot + Mysql + Redis + Mybatis-Plus` 
 
 欢迎浏览我的博客：[BreakBlog](https://twhuang.top/)
