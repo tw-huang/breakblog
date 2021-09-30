@@ -111,25 +111,34 @@ const Home: React.FC = () => {
 
 	/** 侧边栏数据 */
 	useEffect(() => {
-		const fetchData = async () => {
+		const fetchBlogStatistic = async () => {
 			const blogStatistic = await getBlogStatistic()
 			if (blogStatistic?.success && blogStatistic.code === 1) {
 				setBlogStatistic(blogStatistic.data)
 			}
+		}
+		const fetchPostsHot = async () => {
 			const postsHot = await getPostsHot()
 			if (postsHot?.success && postsHot.code === 1) {
 				setPostsHot(postsHot.data)
 			}
+		}
+		const fetchCategories = async () => {
 			const categories = await getCategories()
 			if (categories?.success && categories.code === 1) {
 				setCategories(categories.data)
 			}
+		}
+		const fetchLinks = async () => {
 			const links = await getLinks()
 			if (links?.success && links.code === 1) {
 				setLinks(links.data)
 			}
 		}
-		fetchData()
+		fetchBlogStatistic()
+		fetchPostsHot()
+		fetchCategories()
+		fetchLinks()
 	}, [])
 
 	/** 文章分页数据 */
