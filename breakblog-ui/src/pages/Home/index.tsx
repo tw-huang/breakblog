@@ -83,7 +83,7 @@ const Home: React.FC = () => {
 	/** 总页数 */
 	const [pages, setPages] = useState<number>(0)
 	/** 分类 ID */
-	const [categoryId, setCategoryId] = useState<any>(null)
+	const [categoryId, setCategoryId] = useState<number | null>(null)
 
 	/** 监听搜索回车按键事件 */
 	useEffect(() => {
@@ -321,6 +321,7 @@ const Home: React.FC = () => {
 							className='flex justify-between mb-2 cursor-pointer border-b border-dashed dark:border-gray-800 hover:text-gray-600 hover:underline'
 							onClick={() => {
 								setCategoryId(null)
+								setPage(1)
 							}}
 						>
 							<span>全部</span>
