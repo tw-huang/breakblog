@@ -2,20 +2,29 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <groupId>top.twhuang</groupId>
+    <artifactId>breakblog</artifactId>
+    <version>1.0.0</version>
+    <name>breakblog</name>
+    <description>BreakBlog</description>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.3.10.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
-    <groupId>top.twhuang</groupId>
-    <artifactId>breakblog</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>breakblog</name>
-    <description>BreakBlog</description>
 
     <properties>
         <java.version>8</java.version>
+        <druid.version>1.2.6</druid.version>
+        <fastjson.version>1.2.75</fastjson.version>
+        <jwt.version>3.10.3</jwt.version>
+        <mybatis-plus.version>3.3.2</mybatis-plus.version>
+        <hutool-all.version>5.7.12</hutool-all.version>
+        <wagon-ssh.version>3.0.0</wagon-ssh.version>
+        <lomok.version>1.18.12</lomok.version>
     </properties>
 
     <dependencies>
@@ -44,14 +53,14 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.20</version>
+            <version>${druid.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.75</version>
+            <version>${fastjson.version}</version>
         </dependency>
 
         <dependency>
@@ -77,7 +86,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.12</version>
+            <version>${lomok.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -85,14 +94,14 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.3.2</version>
+            <version>${mybatis-plus.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
-            <version>3.10.3</version>
+            <version>${jwt.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
@@ -105,7 +114,7 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.7.12</version>
+            <version>${hutool-all.version}</version>
         </dependency>
 
     </dependencies>
@@ -116,7 +125,7 @@
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-ssh</artifactId>
-                <version>3.0.0</version>
+                <version>${wagon-ssh.version}</version>
             </extension>
         </extensions>
         <plugins>
