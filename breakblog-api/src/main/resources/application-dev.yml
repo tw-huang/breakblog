@@ -6,17 +6,20 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
   datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://twhuang.top:3306/breakblog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
     username: root
     password: breakblog
-    url: jdbc:mysql://twhuang.top:3306/breakblog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
-    platform: mysql
-    druid:
-      initial-size: 5
-      min-idle: 5
-      max-active: 20
-      max-wait: 60000
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      pool-name: BreakBlogHikariCP
+      minimum-idle: 5
+      maximum-pool-size: 15
+      auto-commit: true
+      idle-timeout: 30000
+      connection-timeout: 30000
+      max-lifetime: 1800000
+      connection-test-query: SELECT 1
   redis:
     host: twhuang.top
     password: breakblog
