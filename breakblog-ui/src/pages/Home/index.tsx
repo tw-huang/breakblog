@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // @ts-ignore
 import { Link as LinkTo } from 'react-router-dom'
 import dayjs from 'dayjs'
 import './index.css'
 import Banner from '../../compents/Banner'
 import Sidebar from '../../compents/Sidebar'
+import { PostSkeleton } from '../../compents/Skeleton'
 import { getPosts } from '../../services'
 
 interface Category {
@@ -42,7 +43,7 @@ const Home: React.FC = () => {
 	/** 总页数 */
 	const [pages, setPages] = useState<number>(0)
 	/** 文章 */
-	const [posts, setPosts] = useState<Array<Post> | null>([])
+	const [posts, setPosts] = useState<Array<Post> | null>(null)
 
 	/** 监听搜索回车按键事件 */
 	useEffect(() => {
@@ -125,7 +126,7 @@ const Home: React.FC = () => {
 								</div>
 							</div>
 						)
-					})}
+					}) || <PostSkeleton />}
 				</div>
 				{/* 分页 */}
 				{pages <= 1 ? (

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 // @ts-ignore
 import { Link as LinkTo } from 'react-router-dom'
 import AppContext from '../../store'
@@ -9,6 +9,12 @@ import {
 	getPostsHot,
 } from '../../services'
 import dayjs from 'dayjs'
+import {
+	BlogStatisticSkeleton,
+	HotPostSkeleton,
+	CategorySkeleton,
+	LinkSkeleton,
+} from '../Skeleton'
 
 interface Link {
 	id: number
@@ -67,12 +73,12 @@ const Sidebar: React.FC<Props> = (props) => {
 	const context = useContext<BlogInfo>(AppContext)
 	/** 博客统计 */
 	const [blogStatistic, setBlogStatistic] = useState<BlogStatistic | null>(null)
-	/** 友链 */
-	const [links, setLinks] = useState<Array<Link> | null>(null)
-	/** 分类 */
-	const [categories, setCategories] = useState<Array<Category> | null>(null)
 	/** 热门文章 */
 	const [postsHot, setPostsHot] = useState<Array<Post> | null>(null)
+	/** 分类 */
+	const [categories, setCategories] = useState<Array<Category> | null>(null)
+	/** 友链 */
+	const [links, setLinks] = useState<Array<Link> | null>(null)
 
 	/** 侧边栏数据 */
 	useEffect(() => {
@@ -91,7 +97,11 @@ const Sidebar: React.FC<Props> = (props) => {
 		const fetchCategories = async () => {
 			const categories = await getCategories()
 			if (categories?.success && categories.code === 1) {
-				setCategories(categories.data)
+				const data = categories.data
+				// 手动添加全部分类
+				let all = { id: null, name: '全部', postCount: data.length }
+				data.unshift(all)
+				setCategories(data)
 			}
 		}
 		const fetchLinks = async () => {
@@ -157,15 +167,18 @@ const Sidebar: React.FC<Props> = (props) => {
 			</div>
 			{/* 博客统计 */}
 			<div className='flex mt-6 py-2 justify-between text-center text-gray-600 dark:text-gray-500 text-xs bg-white dark:bg-gray-700 rounded'>
-				<span className='w-1/3'>
-					文章 <br /> {blogStatistic?.posts}
-				</span>
-				<span className='w-1/3'>
-					分类 <br /> {blogStatistic?.categories}
-				</span>
-				<span className='w-1/3'>
-					浏览量 <br /> {blogStatistic?.pageviews}
-				</span>
+				<div className='flex flex-col w-1/3'>
+					<span className='pb-1'>文章</span>
+					<span>{blogStatistic?.posts || <BlogStatisticSkeleton />}</span>
+				</div>
+				<div className='flex flex-col w-1/3'>
+					<span className='pb-1'>分类</span>
+					<span>{blogStatistic?.categories || <BlogStatisticSkeleton />}</span>
+				</div>
+				<div className='flex flex-col w-1/3'>
+					<span className='pb-1'>浏览量</span>
+					<span>{blogStatistic?.pageviews || <BlogStatisticSkeleton />}</span>
+				</div>
 			</div>
 
 			{/* 热门文章 */}
@@ -192,7 +205,7 @@ const Sidebar: React.FC<Props> = (props) => {
 								</span>
 							</div>
 						)
-					})}
+					}) || <HotPostSkeleton />}
 				</div>
 			</div>
 			{/* 文章分类 */}
@@ -201,18 +214,6 @@ const Sidebar: React.FC<Props> = (props) => {
 					文章分类:
 				</div>
 				<div className='text-sm text-gray-600 dark:text-gray-500 p-4'>
-					<div
-						className='flex justify-between mb-2 cursor-pointer border-b border-dashed dark:border-gray-800 hover:text-gray-600 hover:underline'
-						onClick={() => {
-							props.setCategoryId(null)
-							props.setPage(1)
-						}}
-					>
-						<span>全部</span>
-						<span className='rounded-full h-4 w-4 text-xs flex items-center justify-center bg-gray-50 dark:bg-gray-600 dark:text-gray-500'>
-							{categories?.length || 0}
-						</span>
-					</div>
 					{categories?.map((category: Category) => {
 						return (
 							<div
@@ -229,7 +230,7 @@ const Sidebar: React.FC<Props> = (props) => {
 								</span>
 							</div>
 						)
-					})}
+					}) || <CategorySkeleton />}
 				</div>
 			</div>
 			{/* 友情链接 */}
@@ -251,7 +252,7 @@ const Sidebar: React.FC<Props> = (props) => {
 								<span>-&gt;</span>
 							</a>
 						)
-					})}
+					}) || <LinkSkeleton />}
 				</div>
 			</div>
 		</div>
