@@ -9,13 +9,13 @@ interface BlogInfo {
 	avatar: string
 	email: string
 	blogTitle: string
-	blogSubTitle: string
+	blogSubtitle: string
 }
 
 export function AppProvider(props: any) {
 	/** 上下文  */
 	const [blogInfo, setBlogInfo] = useState<BlogInfo>({
-		blogSubTitle: 'You still have lots more to work on!',
+		blogSubtitle: 'You still have lots more to work on!',
 		blogTitle: 'BreakBlog',
 		email: 'tw.huang@foxmail.com',
 		name: 'twhuang',
