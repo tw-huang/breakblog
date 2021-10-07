@@ -11,7 +11,7 @@ public class InfoVO implements Serializable {
 
     private String blogTitle;
 
-    private String blogSubTitle;
+    private String blogSubtitle;
 
     private String name;
 
