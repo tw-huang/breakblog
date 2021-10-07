@@ -68,7 +68,7 @@ const Home: React.FC = () => {
 	const [searchText, setSearchText] = useState<string>('')
 	/** 搜索文本 ref */
 	const searchEl = useRef(null)
-	/**博客统计 */
+	/** 博客统计 */
 	const [blogStatistic, setBlogStatistic] = useState<BlogStatistic>()
 	/** 友链 */
 	const [links, setLinks] = useState<Array<Link>>([])
