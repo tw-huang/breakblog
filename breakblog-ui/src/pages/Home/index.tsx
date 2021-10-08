@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import './index.css'
 import Banner from '../../compents/Banner'
 import Sidebar from '../../compents/Sidebar'
-import { PostSkeleton } from '../../compents/Skeleton'
+import { HomeSkeleton } from '../../compents/Skeleton'
 import { getPosts } from '../../services'
 
 interface Category {
@@ -126,7 +126,7 @@ const Home: React.FC = () => {
 								</div>
 							</div>
 						)
-					}) || <PostSkeleton />}
+					}) || <HomeSkeleton />}
 				</div>
 				{/* 分页 */}
 				{pages <= 1 ? (

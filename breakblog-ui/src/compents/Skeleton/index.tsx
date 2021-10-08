@@ -24,12 +24,80 @@ export function AboutSkeleton() {
 				<span className='h-5 w-full bg-gray-200 dark:bg-gray-500 rounded' />
 				<span className='h-5 w-3/4 bg-gray-200 dark:bg-gray-500 rounded' />
 			</div>
-
 		</div>
 	)
 }
 
 export function PostSkeleton() {
+	return (
+		<div className='flex flex-col animate-pulse'>
+			<span className='h-8 md:w-2/5 w-3/5 mb-3 bg-gray-200 dark:bg-gray-500 rounded' />
+			<span className='h-4 md:w-1/3 w-3/4 mb-3 bg-gray-200 dark:bg-gray-500 rounded' />
+			<span className='h-14 w-full bg-gray-200 dark:bg-gray-500 rounded' />
+			<hr className='my-2 md:my-4' />
+			<div className='flex flex-col space-y-4'>
+				<div className='flex flex-col space-y-3'>
+					<span className='h-5 w-2/5 bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-5 w-3/5 bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-5 w-4/5 bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-5 w-full bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-5 w-3/4 bg-gray-200 dark:bg-gray-500 rounded' />
+				</div>
+				<div className='flex flex-col space-y-3'>
+					<span className='h-5 w-2/5 bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-5 w-3/5 bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-5 w-4/5 bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-5 w-full bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-5 w-3/4 bg-gray-200 dark:bg-gray-500 rounded' />
+				</div>
+				<div className='flex flex-col space-y-3'>
+					<span className='h-5 w-2/5 bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-5 w-3/5 bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-5 w-4/5 bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-5 w-full bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-5 w-3/4 bg-gray-200 dark:bg-gray-500 rounded' />
+				</div>
+				<div className='flex flex-col space-y-3'>
+					<span className='h-5 w-2/5 bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-5 w-3/5 bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-5 w-4/5 bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-5 w-full bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-5 w-3/4 bg-gray-200 dark:bg-gray-500 rounded' />
+				</div>
+				<div className='flex flex-col space-y-3'>
+					<span className='h-5 w-2/5 bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-5 w-3/5 bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-5 w-4/5 bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-5 w-full bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-5 w-3/4 bg-gray-200 dark:bg-gray-500 rounded' />
+				</div>
+			</div>
+		</div>
+	)
+}
+
+export function CommentSkeleton() {
+	return (
+		<div className='flex flex-col space-y-6 animate-pulse'>
+			<div className='flex flex-col space-y-3'>
+				<div className='flex justify-between'>
+					<span className='h-5 w-1/4 bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-5 w-14 bg-gray-200 dark:bg-gray-500 rounded' />
+				</div>
+				<span className='h-5 w-1/3 ml-4 bg-gray-200 dark:bg-gray-500 rounded' />
+			</div>
+			<div className='flex flex-col space-y-3'>
+				<div className='flex justify-between'>
+					<span className='h-5 w-1/4 bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-5 w-14 bg-gray-200 dark:bg-gray-500 rounded' />
+				</div>
+				<span className='h-5 w-1/3 ml-4 bg-gray-200 dark:bg-gray-500 rounded' />
+			</div>
+		</div>
+	)
+}
+
+export function HomeSkeleton() {
 	return (
 		<>
 			<div className='flex md:my-4 my-2 bg-white dark:bg-gray-700 rounded animate-pulse'>
@@ -37,7 +105,8 @@ export function PostSkeleton() {
 				<div className='flex flex-col space-y-3 md:p-4 p-2 w-full md:w-2/3'>
 					<span className='h-6 w-1/2 bg-gray-200 dark:bg-gray-500 rounded' />
 					<span className='h-4 w-3/5 bg-gray-200 dark:bg-gray-500 rounded' />
-					<span className='h-12 w-full bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-4 w-full bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-4 w-3/5 bg-gray-200 dark:bg-gray-500 rounded' />
 					<span className='h-4 w-1/6 bg-gray-200 dark:bg-gray-500 rounded self-end' />
 				</div>
 			</div>
@@ -46,7 +115,8 @@ export function PostSkeleton() {
 				<div className='flex flex-col space-y-3 md:p-4 p-2 w-full md:w-2/3'>
 					<span className='h-6 w-1/2 bg-gray-200 dark:bg-gray-500 rounded' />
 					<span className='h-4 w-3/5 bg-gray-200 dark:bg-gray-500 rounded' />
-					<span className='h-12 w-full bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-4 w-full bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-4 w-3/5 bg-gray-200 dark:bg-gray-500 rounded' />
 					<span className='h-4 w-1/6 bg-gray-200 dark:bg-gray-500 rounded self-end' />
 				</div>
 			</div>
@@ -55,7 +125,8 @@ export function PostSkeleton() {
 				<div className='flex flex-col space-y-3 md:p-4 p-2 w-full md:w-2/3'>
 					<span className='h-6 w-1/2 bg-gray-200 dark:bg-gray-500 rounded' />
 					<span className='h-4 w-3/5 bg-gray-200 dark:bg-gray-500 rounded' />
-					<span className='h-12 w-full bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-4 w-full bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-4 w-3/5 bg-gray-200 dark:bg-gray-500 rounded' />
 					<span className='h-4 w-1/6 bg-gray-200 dark:bg-gray-500 rounded self-end' />
 				</div>
 			</div>
@@ -64,7 +135,8 @@ export function PostSkeleton() {
 				<div className='flex flex-col space-y-3 md:p-4 p-2 w-full md:w-2/3'>
 					<span className='h-6 w-1/2 bg-gray-200 dark:bg-gray-500 rounded' />
 					<span className='h-4 w-3/5 bg-gray-200 dark:bg-gray-500 rounded' />
-					<span className='h-12 w-full bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-4 w-full bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-4 w-3/5 bg-gray-200 dark:bg-gray-500 rounded' />
 					<span className='h-4 w-1/6 bg-gray-200 dark:bg-gray-500 rounded self-end' />
 				</div>
 			</div>
@@ -73,7 +145,8 @@ export function PostSkeleton() {
 				<div className='flex flex-col space-y-3 md:p-4 p-2 w-full md:w-2/3'>
 					<span className='h-6 w-1/2 bg-gray-200 dark:bg-gray-500 rounded' />
 					<span className='h-4 w-3/5 bg-gray-200 dark:bg-gray-500 rounded' />
-					<span className='h-12 w-full bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-4 w-full bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-4 w-3/5 bg-gray-200 dark:bg-gray-500 rounded' />
 					<span className='h-4 w-1/6 bg-gray-200 dark:bg-gray-500 rounded self-end' />
 				</div>
 			</div>
@@ -82,7 +155,8 @@ export function PostSkeleton() {
 				<div className='flex flex-col space-y-3 md:p-4 p-2 w-full md:w-2/3'>
 					<span className='h-6 w-1/2 bg-gray-200 dark:bg-gray-500 rounded' />
 					<span className='h-4 w-3/5 bg-gray-200 dark:bg-gray-500 rounded' />
-					<span className='h-12 w-full bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-4 w-full bg-gray-200 dark:bg-gray-500 rounded' />
+					<span className='h-4 w-3/5 bg-gray-200 dark:bg-gray-500 rounded' />
 					<span className='h-4 w-1/6 bg-gray-200 dark:bg-gray-500 rounded self-end' />
 				</div>
 			</div>
