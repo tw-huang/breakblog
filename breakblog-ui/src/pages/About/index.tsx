@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './index.css'
 import { getBlogAbout } from '../../services'
+import { AboutSkeleton } from '../../compents/Skeleton'
 
 interface About {
 	id: number
@@ -17,7 +18,7 @@ interface About {
 }
 
 const PostPage: React.FC = () => {
-	const [about, setAbout] = useState<About>()
+	const [about, setAbout] = useState<About | null>(null)
 
 	// 初始数据
 	useEffect(() => {
@@ -33,10 +34,14 @@ const PostPage: React.FC = () => {
 	return (
 		<div className='md:px-8 p-2 md:py-6'>
 			<div className='mb-4 p-2 md:p-4 bg-white dark:bg-gray-700 rounded'>
-				<article
-					className='leading-relaxed max-w-none prose-sm md:prose md:max-w-none dark:text-gray-400'
-					dangerouslySetInnerHTML={{ __html: about?.about || '' }}
-				/>
+				{about == null ? (
+					<AboutSkeleton />
+				) : (
+					<article
+						className='leading-relaxed max-w-none prose-sm md:prose md:max-w-none dark:text-gray-400'
+						dangerouslySetInnerHTML={{ __html: about?.about || '' }}
+					/>
+				)}
 			</div>
 		</div>
 	)

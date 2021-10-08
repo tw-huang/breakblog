@@ -4,6 +4,7 @@ import { Link as LinkTo } from 'react-router-dom'
 import dayjs from 'dayjs'
 import './index.css'
 import { getPostsArchive } from '../../services'
+import { ArchiveSkeleton } from '../../compents/Skeleton'
 
 interface Category {
 	id: number
@@ -41,7 +42,7 @@ const defaultPageSize: number = 15
 
 const PostPage: React.FC = () => {
 	/** 归档 */
-	const [archives, setArchives] = useState<Array<Archive>>([])
+	const [archives, setArchives] = useState<Array<Archive> | null>(null)
 	/** 分页 */
 	const [page, setPage] = useState<number>(1)
 	/** 总页数 */
@@ -63,7 +64,7 @@ const PostPage: React.FC = () => {
 		<div className='md:px-8 p-2 md:py-6'>
 			<div className='mb-4 p-2 md:p-4 bg-white dark:bg-gray-700 rounded'>
 				<div className='archive-list relative'>
-					{archives.map((archive: Archive) => {
+					{archives?.map((archive: Archive) => {
 						return (
 							<div className='my-8 md:my-12' key={archive.date}>
 								<div className='flex items-center archive-date'>
@@ -95,7 +96,7 @@ const PostPage: React.FC = () => {
 								})}
 							</div>
 						)
-					})}
+					}) || <ArchiveSkeleton />}
 				</div>
 			</div>
 			{/* 分页 */}
