@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './index.css'
 import { getBlogAbout } from '../../services'
-import { AboutSkeleton } from '../../compents/Skeleton'
+import { AboutSkeleton } from '../../components/Skeleton'
 
 interface About {
 	id: number

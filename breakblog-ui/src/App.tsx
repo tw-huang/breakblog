@@ -7,8 +7,8 @@ import About from './pages/About'
 import Archive from './pages/Archive'
 import Post from './pages/Post'
 import NotFound from './pages/NotFound'
-import Header from './compents/Header'
-import Footer from './compents/Footer'
+import Header from './components/Header'
+import Footer from './components/Footer'
 
 const App: React.FC = () => {
 	return (

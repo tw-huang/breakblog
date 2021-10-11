@@ -4,7 +4,7 @@ import { Link as LinkTo } from 'react-router-dom'
 import dayjs from 'dayjs'
 import './index.css'
 import { getPostsArchive } from '../../services'
-import { ArchiveSkeleton } from '../../compents/Skeleton'
+import { ArchiveSkeleton } from '../../components/Skeleton'
 
 interface Category {
 	id: number
