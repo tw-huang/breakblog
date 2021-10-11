@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 import { AppProvider } from './store'
 import App from './App'
-import './index.css'
+import './global.css'
 
 ReactDOM.render(
 	<AppProvider>

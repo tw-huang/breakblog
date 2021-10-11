@@ -5,6 +5,7 @@ import dayjs from 'dayjs'
 import './index.css'
 import { getPost, getComments, postComment } from '../../services'
 import { PostSkeleton, CommentSkeleton } from '../../components/Skeleton'
+import Pagination from '../../components/Pagination'
 
 interface Category {
 	id: number
@@ -383,33 +384,7 @@ const PostPage: React.FC = (props: any) => {
 						)}
 					</div>
 					{/* 分页 */}
-					{pages <= 1 ? (
-						''
-					) : (
-						<div className='flex justify-between items-center mt-4 md:mt-6 font-medium bg-white dark:bg-gray-700 dark:text-gray-400 hover:text-gray-600 rounded'>
-							<button
-								className={`p-2  focus:outline-none ${
-									page <= 1 ? 'disabled:opacity-50' : 'hover:underline'
-								}`}
-								onClick={() => setPage(page - 1)}
-								disabled={page <= 1}
-							>
-								←Prev
-							</button>
-							<span className='text-gray-400 text-sm'>
-								{page} / {pages}
-							</span>
-							<button
-								className={`p-2 focus:outline-none ${
-									page >= pages ? 'disabled:opacity-50' : 'hover:underline'
-								}`}
-								onClick={() => setPage(page + 1)}
-								disabled={page >= pages}
-							>
-								Next→
-							</button>
-						</div>
-					)}
+					<Pagination pages={pages} page={page} setPage={setPage} />
 				</div>
 				<hr className='my-2 md:my-4' />
 				<CommentForm />

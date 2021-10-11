@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 // @ts-ignore
 import { Link as LinkTo } from 'react-router-dom'
 import dayjs from 'dayjs'
-import './index.css'
 import Banner from '../../components/Banner'
 import Sidebar from '../../components/Sidebar'
+import Pagination from '../../components/Pagination'
 import { HomeSkeleton } from '../../components/Skeleton'
 import { getPosts } from '../../services'
 
@@ -45,29 +45,23 @@ const Home: React.FC = () => {
 	/** 文章 */
 	const [posts, setPosts] = useState<Array<Post> | null>(null)
 
-	/** 监听搜索回车按键事件 */
-	useEffect(() => {
-		const handleSearchEvent = (event: { keyCode: number }) => {
-			const { keyCode } = event
-			// 仅当焦点在 searchInput 上，回车事件才执行查询
-			// @ts-ignore
-			if (keyCode === 13 && document.activeElement.id === 'searchInput') {
-				const text = searchText.replace(/(^\s*)|(\s*$)/g, '')
-				const fetchData = async () => {
-					const posts = await getPosts(text, null, 1, defaultPageSize)
-					if (posts?.success && posts.code === 1) {
-						setPosts(posts.data.records)
-						setPages(posts.data.pages)
-					}
+	/** 处理搜索事件 */
+	const handleSearchEvent = (event: { keyCode: number }) => {
+		const { keyCode } = event
+		// 仅当焦点在 searchInput 上，回车事件才执行查询
+		// @ts-ignore
+		if (keyCode === 13 && document.activeElement.id === 'searchInput') {
+			const text = searchText.replace(/(^\s*)|(\s*$)/g, '')
+			const fetchData = async () => {
+				const posts = await getPosts(text, null, 1, defaultPageSize)
+				if (posts?.success && posts.code === 1) {
+					setPosts(posts.data.records)
+					setPages(posts.data.pages)
 				}
-				fetchData()
 			}
+			fetchData()
 		}
-		document.addEventListener('keyup', handleSearchEvent)
-		return () => {
-			document.removeEventListener('keyup', handleSearchEvent)
-		}
-	})
+	}
 
 	/** 文章分页数据 */
 	useEffect(() => {
@@ -85,7 +79,7 @@ const Home: React.FC = () => {
 		<div className='flex flex-col md:flex-row'>
 			<div className='md:px-8 p-2 md:w-3/4 md:py-6'>
 				{/* 轮播图 */}
-				<Banner/>
+				<Banner />
 				{/* 文章列表 */}
 				<div>
 					{posts?.map((post: Post) => {
@@ -97,7 +91,7 @@ const Home: React.FC = () => {
 								<div
 									className={`hidden md:w-1/3 ${post.image ? 'md:block' : ''}`}
 								>
-									<img src={post.image} className='rounded-l' alt='文章配图'/>
+									<img src={post.image} className='rounded-l' alt='文章配图' />
 								</div>
 								<div
 									className={`flex flex-col w-full md:p-4 p-2 ${
@@ -126,44 +120,18 @@ const Home: React.FC = () => {
 								</div>
 							</div>
 						)
-					}) || <HomeSkeleton/>}
+					}) || <HomeSkeleton />}
 				</div>
 				{/* 分页 */}
-				{pages <= 1 ? (
-					''
-				) : (
-					<div
-						className='flex justify-between items-center mt-4 md:mt-6 font-medium bg-white dark:bg-gray-700 dark:text-gray-400 hover:text-gray-600 rounded'>
-						<button
-							className={`p-2  focus:outline-none ${
-								page <= 1 ? 'disabled:opacity-50' : 'hover:underline'
-							}`}
-							onClick={() => setPage(page - 1)}
-							disabled={page <= 1}
-						>
-							←Prev
-						</button>
-						<span className='text-gray-400 text-sm'>
-							{page} / {pages}
-						</span>
-						<button
-							className={`p-2 focus:outline-none ${
-								page >= pages ? 'disabled:opacity-50' : 'hover:underline'
-							}`}
-							onClick={() => setPage(page + 1)}
-							disabled={page >= pages}
-						>
-							Next→
-						</button>
-					</div>
-				)}
-				<hr className='my-6 md:hidden'/>
+				<Pagination pages={pages} page={page} setPage={setPage} />
+				<hr className='my-6 md:hidden' />
 			</div>
 			<Sidebar
 				setCategoryId={setCategoryId}
 				setPage={setPage}
 				searchText={searchText}
 				setSearchText={setSearchText}
+				handleSearchEvent={handleSearchEvent}
 			/>
 		</div>
 	)

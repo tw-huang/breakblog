@@ -6,6 +6,7 @@ import {
 	getBlogStatistic,
 	getCategories,
 	getLinks,
+	getPosts,
 	getPostsHot,
 } from '../../services'
 import dayjs from 'dayjs'
@@ -65,6 +66,7 @@ interface Props {
 	setPage: any
 	searchText: string
 	setSearchText: any
+	handleSearchEvent: any
 }
 
 const Sidebar: React.FC<Props> = (props) => {
@@ -127,6 +129,7 @@ const Sidebar: React.FC<Props> = (props) => {
 					placeholder='tips: 文章标题回车搜索'
 					value={props.searchText}
 					onChange={(event) => props.setSearchText(event.target.value)}
+					onKeyUp={props.handleSearchEvent}
 				/>
 				<span className='absolute bottom-3 left-2 focus:outline-none text-sm'>
 					<svg
