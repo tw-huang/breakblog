@@ -7,7 +7,7 @@ spring:
     time-zone: GMT+8
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://twhuang.top:3306/breakblog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://twhuang.top:3306/breakblog?&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
     username: root
     password: breakblog
     type: com.zaxxer.hikari.HikariDataSource
