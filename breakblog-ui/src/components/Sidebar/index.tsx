@@ -6,7 +6,6 @@ import {
 	getBlogStatistic,
 	getCategories,
 	getLinks,
-	getPosts,
 	getPostsHot,
 } from '../../services'
 import dayjs from 'dayjs'

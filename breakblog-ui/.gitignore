@@ -24,4 +24,3 @@ yarn-error.log*
 
 # ide
 .idea
-src/services/

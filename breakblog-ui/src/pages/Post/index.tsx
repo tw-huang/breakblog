@@ -53,7 +53,6 @@ const defaultPageSize: number = 2
 
 const PostPage: React.FC = (props: any) => {
 	const postId = props.match.params.id
-
 	/** 文章 */
 	const [post, setPost] = useState<Post | null>(null)
 	/** 评论 */
@@ -87,18 +86,15 @@ const PostPage: React.FC = (props: any) => {
 
 	/** 评论分页数据 */
 	useEffect(() => {
-		// 文章开启评论功能才加载评论数据
-		if (post?.canComment) {
-			const fetchData = async () => {
-				const comments = await getComments(post?.id, page, defaultPageSize)
-				if (comments?.success && comments.code === 1) {
-					setComments(comments.data.records)
-					setPages(comments.data.pages)
-				}
+		const fetchData = async () => {
+			const comments = await getComments(postId, page, defaultPageSize)
+			if (comments?.success && comments.code === 1) {
+				setComments(comments.data.records)
+				setPages(comments.data.pages)
 			}
-			fetchData()
 		}
-	}, [post, page])
+		fetchData()
+	}, [postId, page])
 
 	/** 处理评论回复 */
 	const handleSubmit = () => {
