@@ -1,8 +1,8 @@
 package top.twhuang.config;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 /**
  * @Description: 上传配置
@@ -10,17 +10,25 @@ import org.springframework.stereotype.Component;
  * @Author: tw.huang
  * @Version: v1.0.0
  **/
-@ConfigurationProperties(prefix = "app.upload")
-@Component
-@Data
+@ConfigurationProperties(prefix = "breakblog.upload")
+@Setter
+@Getter
 public class UploadConfig {
 
     public static final String TYPE_LOCAL = "local";
 
-    //上传方式 (local/cos/oss)
+    /**
+     * 上传方式 (local/cos/oss)
+     */
     private String type;
-    //地址
+
+    /**
+     * 路径
+     */
     private String path;
-    //HOST
+
+    /**
+     * host
+     */
     private String host;
 }

@@ -47,7 +47,7 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
-app:
+breakblog:
   upload:
     type: local
     path: /usr/local/nginx/html/file

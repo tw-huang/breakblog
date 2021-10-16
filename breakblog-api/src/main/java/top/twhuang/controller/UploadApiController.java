@@ -45,15 +45,15 @@ public class UploadApiController {
 
         String oldFileName = uploadFile.getOriginalFilename();
         if (StringUtils.isNotEmpty(oldFileName)) {
-            //后缀名
+            // 后缀名
             String suffixName = oldFileName.substring(oldFileName.lastIndexOf("."));
-            //文件名 uuid+后缀名
+            // 文件名 uuid+后缀名
             String newFileName = uuid + suffixName;
-
+            // 上传本地
             if (type.equals(UploadConfig.TYPE_LOCAL)) {
-                //完整路径
+                // 完整路径
                 String finalPath = uploadPath + File.separator + path + File.separator + DateUtil.today() + File.separator + newFileName;
-                //url
+                // url
                 String urlPath = host + File.separator + path + File.separator + DateUtil.today() + File.separator + newFileName;
                 try {
                     File file = new File(finalPath);
@@ -64,8 +64,7 @@ public class UploadApiController {
                     }
                     // 文件写入
                     FileCopyUtils.copy(uploadFile.getBytes(), file);
-
-                    //入库
+                    // 入库
                     FileData fileData = new FileData();
                     fileData.setName(oldFileName);
                     fileData.setUuid(uuid);
