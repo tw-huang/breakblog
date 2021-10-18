@@ -115,7 +115,7 @@ const Home: React.FC = () => {
 										{post.subtitle}
 									</span>
 									<span className='text-xs text-gray-400 dark:text-gray-600 hover:underline self-end'>
-										<LinkTo to={'/post/' + post.id}>阅读正文-&gt;</LinkTo>
+										<LinkTo to={'/post/' + post.id}>正文-&gt;</LinkTo>
 									</span>
 								</div>
 							</div>
