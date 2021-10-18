@@ -4,7 +4,7 @@ import { Link as LinkTo } from 'react-router-dom'
 import dayjs from 'dayjs'
 import './index.css'
 import { getPost, getComments, postComment } from '../../services'
-import { PostSkeleton, CommentSkeleton } from '../../components/Skeleton'
+import { PostSkeleton } from '../../components/Skeleton'
 import Pagination from '../../components/Pagination'
 
 interface Category {
@@ -53,6 +53,7 @@ const defaultPageSize: number = 2
 
 const PostPage: React.FC = (props: any) => {
 	const postId = props.match.params.id
+	console.log(postId)
 	/** 文章 */
 	const [post, setPost] = useState<Post | null>(null)
 	/** 评论 */
@@ -94,7 +95,18 @@ const PostPage: React.FC = (props: any) => {
 			}
 		}
 		fetchData()
+		initCommentFrom()
 	}, [postId, page])
+
+	/** 初始化评论表单 */
+	function initCommentFrom() {
+		// 清空内容
+		setReplyComment(null)
+		setAuthor('')
+		setEmail('')
+		setBody('')
+		setSite('')
+	}
 
 	/** 处理评论回复 */
 	const handleSubmit = () => {
@@ -129,12 +141,7 @@ const PostPage: React.FC = (props: any) => {
 					}
 				}
 				fetchData()
-				// 清空内容
-				setReplyComment(null)
-				setAuthor('')
-				setEmail('')
-				setBody('')
-				setSite('')
+				initCommentFrom()
 			}
 		}
 		fetchData()
@@ -193,95 +200,20 @@ const PostPage: React.FC = (props: any) => {
 		)
 	}
 
-	/** 评论回复 */
-	function CommentForm() {
-		return (
-			<div className='p-2 md:p-4 bg-white dark:bg-gray-700 rounded'>
-				<span className='text-lg dark:text-gray-400'>
-					{replyComment === null
-						? '发表评论'
-						: `回复 ${replyComment?.author} : ${replyComment?.body}`}
-				</span>
-				<div className='py-4'>
-					<div className='flex flex-col'>
-						<div className='flex flex-col md:flex-row'>
-							<div className='flex items-center w-full md:w-1/2 py-2 md:pr-2'>
-								<span className='text-center text-sm leading-10 h-10 w-12 bg-gray-100 dark:bg-gray-600 rounded-l'>
-									昵 称
-								</span>
-								<input
-									type='text'
-									className='h-10 w-full placeholder-gray-300 dark:placeholder-gray-400 border border-gray-300 dark:border-gray-500 dark:bg-gray-600 focus:outline-none focus:ring-1 ring-gray-400 rounded-r px-2 py-1'
-									placeholder='twhuang'
-									value={author}
-									onChange={(event) => setAuthor(event.target.value)}
-								/>
-							</div>
-
-							<div className='flex items-center w-full md:w-1/2 py-2 md:pl-2'>
-								<span className='text-center text-sm leading-10 h-10 w-12 bg-gray-100 dark:bg-gray-600 rounded-l'>
-									邮 件
-								</span>
-								<input
-									type='text'
-									className='h-10 w-full placeholder-gray-300 dark:placeholder-gray-400 border border-gray-300 dark:border-gray-500 dark:bg-gray-600 focus:outline-none focus:ring-1 ring-gray-400 rounded-r px-2 py-1'
-									placeholder='tw.huang@foxmail.com'
-									value={email}
-									onChange={(event) => setEmail(event.target.value)}
-								/>
-							</div>
-						</div>
-
-						<div className='flex items-center w-full py-2'>
-							<span className='text-center text-sm leading-10 h-10 w-12 bg-gray-100 dark:bg-gray-600 rounded-l'>
-								站 点
-							</span>
-							<input
-								type='text'
-								className='h-10 w-full placeholder-gray-300 dark:placeholder-gray-400 border border-gray-300 dark:border-gray-500 dark:bg-gray-600 focus:outline-none focus:ring-1 ring-gray-400 rounded-r px-2 py-1'
-								placeholder='https://twhuang.top'
-								value={site}
-								onChange={(event) => setSite(event.target.value)}
-							/>
-						</div>
-
-						<div className='flex w-full py-2'>
-							<span className='text-center text-sm leading-10 h-10 w-12 bg-gray-100 dark:bg-gray-600 rounded-l'>
-								内 容
-							</span>
-							<textarea
-								className='h-10 w-full placeholder-gray-300 dark:placeholder-gray-400 border border-gray-300 dark:border-gray-500 dark:bg-gray-600 focus:outline-none focus:ring-1 ring-gray-400 rounded-r px-2 py-1'
-								placeholder='写得不错，学习了！'
-								value={body}
-								onChange={(event) => setBody(event.target.value)}
-							/>
-						</div>
-						<button
-							type='submit'
-							className='h-10 bg-gray-800 text-white rounded my-2 hover:bg-gray-600'
-							onClick={handleSubmit}
-						>
-							发 表
-						</button>
-					</div>
-				</div>
+	return (
+		<div className='md:px-8 p-2 md:py-6'>
+			<div className='flex flex-col p-2 md:p-4 bg-white dark:bg-gray-700 rounded'>
+				{post == null ? <PostSkeleton /> : <PostContent />}
 			</div>
-		)
-	}
-
-	/** 评论列表内容 */
-	function CommentContent() {
-		return (
-			<div className='flex flex-col'>
-				<hr className='my-2 md:my-4' />
-				<div className='p-2 md:p-4 bg-white dark:bg-gray-700 rounded'>
-					<span className='text-xl dark:bg-gray-700 dark:text-gray-400'>
-						评论
-					</span>
-					<div className='py-4'>
-						{comments == null ? (
-							<CommentSkeleton />
-						) : (
+			{post?.canComment ? (
+				<div className={`flex flex-col`}>
+					<hr className='my-2 md:my-4' />
+					{/* 评论列表内容 */}
+					<div className='p-2 md:p-4 bg-white dark:bg-gray-700 rounded'>
+						<span className='text-xl dark:bg-gray-700 dark:text-gray-400'>
+							评论
+						</span>
+						<div className='py-4'>
 							<>
 								{/* 评论列表 */}
 								{comments?.length === 0 ? (
@@ -377,23 +309,86 @@ const PostPage: React.FC = (props: any) => {
 									})
 								)}
 							</>
-						)}
+						</div>
+						{/* 分页 */}
+						<Pagination pages={pages} page={page} setPage={setPage} />
 					</div>
-					{/* 分页 */}
-					<Pagination pages={pages} page={page} setPage={setPage} />
-				</div>
-				<hr className='my-2 md:my-4' />
-				<CommentForm />
-			</div>
-		)
-	}
+					<hr className='my-2 md:my-4' />
+					{/* 评论回复 */}
+					<div className='p-2 md:p-4 bg-white dark:bg-gray-700 rounded'>
+						<span className='text-lg dark:text-gray-400'>
+							{replyComment === null
+								? '发表评论'
+								: `回复 ${replyComment?.author} : ${replyComment?.body}`}
+						</span>
+						<div className='py-4'>
+							<div className='flex flex-col'>
+								<div className='flex flex-col md:flex-row'>
+									<div className='flex items-center w-full md:w-1/2 py-2 md:pr-2'>
+										<span className='text-center text-sm leading-10 h-10 w-12 bg-gray-100 dark:bg-gray-600 rounded-l'>
+											昵 称
+										</span>
+										<input
+											type='text'
+											className='h-10 w-full placeholder-gray-300 dark:placeholder-gray-400 border border-gray-300 dark:border-gray-500 dark:bg-gray-600 focus:outline-none focus:ring-1 ring-gray-400 rounded-r px-2 py-1'
+											placeholder='twhuang'
+											value={author}
+											onChange={(event) => setAuthor(event.target.value)}
+										/>
+									</div>
 
-	return (
-		<div className='md:px-8 p-2 md:py-6'>
-			<div className='flex flex-col p-2 md:p-4 bg-white dark:bg-gray-700 rounded'>
-				{post == null ? <PostSkeleton /> : <PostContent />}
-			</div>
-			{post?.canComment ? <CommentContent /> : ''}
+									<div className='flex items-center w-full md:w-1/2 py-2 md:pl-2'>
+										<span className='text-center text-sm leading-10 h-10 w-12 bg-gray-100 dark:bg-gray-600 rounded-l'>
+											邮 件
+										</span>
+										<input
+											type='text'
+											className='h-10 w-full placeholder-gray-300 dark:placeholder-gray-400 border border-gray-300 dark:border-gray-500 dark:bg-gray-600 focus:outline-none focus:ring-1 ring-gray-400 rounded-r px-2 py-1'
+											placeholder='tw.huang@foxmail.com'
+											value={email}
+											onChange={(event) => setEmail(event.target.value)}
+										/>
+									</div>
+								</div>
+
+								<div className='flex items-center w-full py-2'>
+									<span className='text-center text-sm leading-10 h-10 w-12 bg-gray-100 dark:bg-gray-600 rounded-l'>
+										站 点
+									</span>
+									<input
+										type='text'
+										className='h-10 w-full placeholder-gray-300 dark:placeholder-gray-400 border border-gray-300 dark:border-gray-500 dark:bg-gray-600 focus:outline-none focus:ring-1 ring-gray-400 rounded-r px-2 py-1'
+										placeholder='https://twhuang.top'
+										value={site}
+										onChange={(event) => setSite(event.target.value)}
+									/>
+								</div>
+
+								<div className='flex w-full py-2'>
+									<span className='text-center text-sm leading-10 h-10 w-12 bg-gray-100 dark:bg-gray-600 rounded-l'>
+										内 容
+									</span>
+									<textarea
+										className='h-10 w-full placeholder-gray-300 dark:placeholder-gray-400 border border-gray-300 dark:border-gray-500 dark:bg-gray-600 focus:outline-none focus:ring-1 ring-gray-400 rounded-r px-2 py-1'
+										placeholder='写得不错，学习了！'
+										value={body}
+										onChange={(event) => setBody(event.target.value)}
+									/>
+								</div>
+								<button
+									type='submit'
+									className='h-10 bg-gray-800 text-white rounded my-2 hover:bg-gray-600'
+									onClick={handleSubmit}
+								>
+									发 表
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			) : (
+				''
+			)}
 		</div>
 	)
 }
