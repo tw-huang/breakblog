@@ -113,16 +113,16 @@ const PostPage: React.FC = (props: any) => {
 
 	/** 处理评论回复 */
 	const handleSubmit = () => {
-		if (body === null || body.replace(/(^\s*)|(\s*$)/g, '') === '') {
-			alert('发表内容不能为空！')
-			return
-		}
 		if (author === null || author.replace(/(^\s*)|(\s*$)/g, '') === '') {
 			alert('昵称不能为空！')
 			return
 		}
 		if (email === null || email.replace(/(^\s*)|(\s*$)/g, '') === '') {
 			alert('邮件不能为空！')
+			return
+		}
+		if (body === null || body.replace(/(^\s*)|(\s*$)/g, '') === '') {
+			alert('发表内容不能为空！')
 			return
 		}
 		const fetchData = async () => {
@@ -235,8 +235,8 @@ const PostPage: React.FC = (props: any) => {
 													<span className='text-gray-600 dark:text-gray-500'>
 														{comment.author}
 													</span>
-													<span className='text-gray-400 dark:text-gray-500 text-sm mx-4 '>
-														|
+													<span className='text-gray-400 dark:text-gray-500 text-sm mx-2'>
+														-
 													</span>
 													<span className='text-sm text-gray-400 dark:text-gray-500'>
 														{dayjs(comment.timestamp).format(
@@ -275,8 +275,8 @@ const PostPage: React.FC = (props: any) => {
 													<span className='text-gray-600 dark:text-gray-500'>
 														{comment.author}
 													</span>
-													<span className='text-gray-400 dark:text-gray-500 text-sm mx-4 '>
-														|
+													<span className='text-gray-400 dark:text-gray-500 text-sm mx-2'>
+														-
 													</span>
 													<span className='text-sm text-gray-400 dark:text-gray-500'>
 														{dayjs(comment.timestamp).format(
@@ -320,11 +320,25 @@ const PostPage: React.FC = (props: any) => {
 				{/* 评论回复 */}
 				<div className='p-2 md:p-4 bg-white dark:bg-gray-700 rounded'>
 					{post?.canComment ? (
-						<span className='text-lg dark:text-gray-400'>
-							{replyComment === null
-								? '发表评论'
-								: `回复 ${replyComment?.author} : ${replyComment?.body}`}
-						</span>
+						<div className='dark:text-gray-400'>
+							{replyComment === null ? (
+								<span className='text-lg'>发表评论</span>
+							) : (
+								<div className='flex justify-between items-center'>
+									<span className='text-lg'>
+										回复 {replyComment?.author} : {replyComment?.body}
+									</span>
+									<button
+										className='focus:outline-none hover:text-gray-600 hover:underline'
+										onClick={() => {
+											setReplyComment(null)
+										}}
+									>
+										取消 x
+									</button>
+								</div>
+							)}
+						</div>
 					) : (
 						<span className='text-lg dark:text-gray-400'>禁止评论</span>
 					)}
@@ -332,9 +346,9 @@ const PostPage: React.FC = (props: any) => {
 						<div className='flex flex-col'>
 							<div className='flex flex-col md:flex-row'>
 								<div className='flex items-center w-full md:w-1/2 py-2 md:pr-2'>
-									<span className='text-center text-sm leading-10 h-10 w-12 bg-gray-100 dark:bg-gray-600 rounded-l'>
-										昵 称
-									</span>
+									<div className='text-center text-sm leading-10 h-10 w-12 bg-gray-100 dark:bg-gray-600 rounded-l'>
+										昵称*
+									</div>
 									<input
 										type='text'
 										className='h-10 w-full placeholder-gray-300 dark:placeholder-gray-400 border border-gray-300 dark:border-gray-500 dark:bg-gray-600 focus:outline-none focus:ring-1 ring-gray-400 rounded-r px-2 py-1'
@@ -347,7 +361,7 @@ const PostPage: React.FC = (props: any) => {
 
 								<div className='flex items-center w-full md:w-1/2 py-2 md:pl-2'>
 									<span className='text-center text-sm leading-10 h-10 w-12 bg-gray-100 dark:bg-gray-600 rounded-l'>
-										邮 件
+										邮箱*
 									</span>
 									<input
 										type='text'
@@ -362,7 +376,7 @@ const PostPage: React.FC = (props: any) => {
 
 							<div className='flex items-center w-full py-2'>
 								<span className='text-center text-sm leading-10 h-10 w-12 bg-gray-100 dark:bg-gray-600 rounded-l'>
-									站 点
+									站点
 								</span>
 								<input
 									type='text'
@@ -376,7 +390,7 @@ const PostPage: React.FC = (props: any) => {
 
 							<div className='flex w-full py-2'>
 								<span className='text-center text-sm leading-10 h-10 w-12 bg-gray-100 dark:bg-gray-600 rounded-l'>
-									内 容
+									内容*
 								</span>
 								<textarea
 									className='h-10 w-full placeholder-gray-300 dark:placeholder-gray-400 border border-gray-300 dark:border-gray-500 dark:bg-gray-600 focus:outline-none focus:ring-1 ring-gray-400 rounded-r px-2 py-1'
