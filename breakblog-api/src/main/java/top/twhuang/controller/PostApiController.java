@@ -3,10 +3,12 @@ package top.twhuang.controller;
 import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import top.twhuang.dto.BlogHomeDTO;
 import top.twhuang.dto.PageDTO;
 import top.twhuang.entity.Category;
 import top.twhuang.entity.Post;
@@ -45,16 +47,12 @@ public class PostApiController {
                             @RequestParam(name = "categoryId", required = false) Integer categoryId,
                             @RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum,
                             @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
-        LambdaQueryWrapper<Post> qw = new QueryWrapper<Post>().lambda();
-        if (StringUtils.isNoneBlank(keyword)) {
-            qw.like(Post::getTitle, keyword);
-        }
-        if (!Objects.isNull(categoryId)) {
-            qw.eq(Post::getCategoryId, categoryId);
-        }
-        qw.orderByDesc(Post::getTimestamp);
-        Page<Post> page = postService.page(new Page<>(pageNum, pageSize), qw);
-        page.getRecords().forEach(post -> post.setCategory(categoryService.getById(post.getCategoryId())));
+        BlogHomeDTO blogHomeDTO = new BlogHomeDTO();
+        blogHomeDTO.setKeyword(keyword);
+        blogHomeDTO.setCategoryId(categoryId);
+        blogHomeDTO.setPageNum(pageNum);
+        blogHomeDTO.setPageSize(pageSize);
+        IPage<Post> page = postService.getPage(blogHomeDTO);
         return Result.success(page);
     }
 
@@ -103,7 +101,7 @@ public class PostApiController {
 
     @GetMapping("/posts")
     public Result posts(PageDTO pageDTO) {
-        Map map = postService.getPage(pageDTO);
+        Map<String, Object> map = postService.getPage(pageDTO);
         return Result.success(map);
     }
 

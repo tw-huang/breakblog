@@ -1,6 +1,9 @@
 package top.twhuang.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import top.twhuang.dto.BlogHomeDTO;
 import top.twhuang.dto.PageDTO;
 import top.twhuang.entity.Post;
 
@@ -8,7 +11,21 @@ import java.util.Map;
 
 public interface PostService extends IService<Post> {
 
-    Map getPage(PageDTO pageDTO);
+    /**
+     * 博客首页文章
+     *
+     * @param blogHomeDTO blogHomeDTO
+     * @return Page<Post>
+     */
+    IPage<Post> getPage(BlogHomeDTO blogHomeDTO);
+
+    /**
+     * 后台文章
+     *
+     * @param pageDTO pageDTO
+     * @return Map
+     */
+    Map<String, Object> getPage(PageDTO pageDTO);
 
     /**
      * 更新文章浏览量

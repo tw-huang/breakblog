@@ -47,4 +47,60 @@
         WHERE
             del_flag = 0
     </select>
+
+    <resultMap type="top.twhuang.entity.Post" id="postMap">
+        <id column="pId" property="id"/>
+        <result column="pDelFlag" property="delFlag"/>
+        <result column="pCreateTime" property="createTime"/>
+        <result column="pUpdateTime" property="updateTime"/>
+        <result column="pTitle" property="title"/>
+        <result column="pSubtitle" property="subtitle"/>
+        <result column="pImage" property="image"/>
+        <result column="pBody" property="body"/>
+        <result column="pTimestamp" property="timestamp"/>
+        <result column="pCanComment" property="canComment"/>
+        <result column="pCategoryId" property="categoryId"/>
+        <result column="pPageView" property="pageView"/>
+        <association property="category" javaType="top.twhuang.entity.Category">
+            <id column="cId" property="id" />
+            <result column="cDelFlag" property="delFlag"/>
+            <result column="cCreateTime" property="createTime"/>
+            <result column="cUpdateTime" property="updateTime"/>
+            <result column="cName" property="name"/>
+        </association>
+    </resultMap>
+
+    <select id="selectBlogPostPage" resultMap="postMap">
+        SELECT
+            p.id AS pId,
+            p.del_flag AS pDelFlag,
+            p.create_time AS pCreateTime,
+            p.update_time AS pUpdateTime,
+            p.title AS pTitle,
+            p.subtitle AS pSubtitle,
+            p.image AS pImage,
+            p.body AS pBody,
+            p.`timestamp` AS pTimestamp,
+            p.can_comment AS pCanComment,
+            p.category_id AS pCategoryId,
+            p.page_view AS pPageView,
+            c.id AS cId,
+            c.del_flag AS cDelFlag,
+            c.create_time AS cCreateTime,
+            c.update_time AS cUpdateTime,
+            c.NAME AS cName
+        FROM
+            post p
+                LEFT JOIN category c ON c.id = p.category_id
+        WHERE
+            p.del_flag = 0
+            AND c.del_flag = 0
+            <if test="keyword != null and keyword !=''">
+                AND p.title like concat('%',#{keyword},'%')
+            </if>
+            <if test="categoryId != null">
+                AND p.category_id like concat('%',#{categoryId},'%')
+            </if>
+    </select>
+
 </mapper>

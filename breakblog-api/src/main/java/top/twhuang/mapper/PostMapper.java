@@ -1,6 +1,8 @@
 package top.twhuang.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import top.twhuang.entity.Post;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -49,5 +51,16 @@ public interface PostMapper extends BaseMapper<Post> {
      * @return Post
      */
     Post selectNextPost(@Param("id") Integer id);
+
+    /**
+     * 根据标题关键词、分类 ID 查询文章
+     *
+     * @param page       page
+     * @param keyword    标题关键词
+     * @param categoryId 分类 ID
+     * @return
+     */
+    IPage<Post> selectBlogPostPage(IPage<Post> page, @Param("keyword") String keyword, @Param("categoryId") Integer categoryId);
+
 
 }
