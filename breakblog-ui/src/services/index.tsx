@@ -12,7 +12,7 @@ if (env === 'development') {
 // 获取文章列表
 export async function getPosts(
 	keyword: string,
-	category: number | null,
+	categoryId: number | null,
 	pageNum: number,
 	pageSize: number
 ) {
@@ -21,7 +21,7 @@ export async function getPosts(
 		method: 'get',
 		params: {
 			keyword: keyword,
-			category: category,
+			categoryId: categoryId,
 			pageNum: pageNum,
 			pageSize: pageSize,
 		},
