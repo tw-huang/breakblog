@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import top.twhuang.dto.BlogHomeDTO;
 import top.twhuang.dto.PageDTO;
@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api")
 @AllArgsConstructor
+@Slf4j
 public class PostApiController {
 
     private PostService postService;
