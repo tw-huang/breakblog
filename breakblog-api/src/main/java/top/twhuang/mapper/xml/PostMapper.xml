@@ -101,6 +101,7 @@
             <if test="categoryId != null">
                 AND p.category_id like concat('%',#{categoryId},'%')
             </if>
+            ORDER BY p.id DESC
     </select>
 
 </mapper>

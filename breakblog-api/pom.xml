@@ -147,7 +147,7 @@
                         <configuration>
                             <serverId>breakblog-server</serverId>
                             <fromFile>target/${project.artifactId}.jar</fromFile>
-                            <url>scp://106.53.155.82/root/breakblog</url>
+                            <url>scp://twhuang.top/root/breakblog</url>
                             <commands>
                                 <command>sh /root/breakblog/run.sh</command>
                             </commands>
