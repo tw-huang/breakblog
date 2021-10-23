@@ -50,7 +50,7 @@ const Header: React.FC = () => {
 					{context.blogTitle}
 				</span>
 			</LinkTo>
-			<div className='flex items-center font-medium'>
+			<div className='flex items-center font-semibold'>
 				<LinkTo
 					to={'/'}
 					className='hover:text-gray-600 dark:text-gray-400 hover:underline'

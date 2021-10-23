@@ -69,7 +69,7 @@ const PostPage: React.FC = () => {
 						return (
 							<div className='my-8 md:my-12' key={archive.date}>
 								<div className='flex items-center archive-date'>
-									<span className='flex-none text-2xl dark:text-gray-400 font-medium'>
+									<span className='flex-none text-2xl dark:text-gray-400'>
 										{archive.date}
 									</span>
 								</div>
@@ -85,7 +85,7 @@ const PostPage: React.FC = () => {
 											</span>
 											<LinkTo
 												to={'/post/' + post.id}
-												className='flex flex-grow px-4 md:px-12 font-medium dark:text-gray-400 hover:text-gray-600 hover:underline'
+												className='flex flex-grow px-4 md:px-12 dark:text-gray-400 hover:text-gray-600 hover:underline'
 											>
 												{post.title}
 											</LinkTo>

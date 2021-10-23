@@ -89,9 +89,15 @@ const Home: React.FC = () => {
 								key={post.id}
 							>
 								<div
-									className={`hidden md:w-1/3 ${post.image ? 'md:block' : ''}`}
+									className={`hidden md:w-1/3 p-4 ${
+										post.image ? 'md:block' : ''
+									}`}
 								>
-									<img src={post.image} className='rounded-l' alt='文章配图' />
+									<img
+										src={post.image}
+										className='transform hover:scale-110 rounded-l'
+										alt='文章配图'
+									/>
 								</div>
 								<div
 									className={`flex flex-col w-full md:p-4 p-2 ${
@@ -101,7 +107,7 @@ const Home: React.FC = () => {
 									<div className='pb-2 flex'>
 										<LinkTo
 											to={'/post/' + post.id}
-											className='text-lg md:text-xl font-medium truncate dark:text-gray-400 hover:text-gray-600 hover:underline'
+											className='text-lg md:text-xl truncate dark:text-gray-400 hover:text-gray-600 hover:underline'
 										>
 											{post.title}
 										</LinkTo>
@@ -114,7 +120,7 @@ const Home: React.FC = () => {
 									<span className='text-sm pb-2 text-gray-600 dark:text-gray-500'>
 										{post.subtitle}
 									</span>
-									<span className='text-xs text-gray-400 dark:text-gray-600 hover:underline self-end'>
+									<span className='text-xs italic text-gray-400 dark:text-gray-600 hover:underline self-end'>
 										<LinkTo to={'/post/' + post.id}>正文-&gt;</LinkTo>
 									</span>
 								</div>
