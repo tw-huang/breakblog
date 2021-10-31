@@ -120,7 +120,7 @@ const Home: React.FC = () => {
 									<span className='text-sm pb-2 text-gray-600 dark:text-gray-500'>
 										{post.subtitle}
 									</span>
-									<span className='text-xs italic text-gray-400 dark:text-gray-600 hover:underline self-end'>
+									<span className='text-xs text-gray-400 dark:text-gray-600 hover:underline self-end'>
 										<LinkTo to={'/post/' + post.id}>正文-&gt;</LinkTo>
 									</span>
 								</div>
