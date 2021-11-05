@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @Author: tw.huang
@@ -66,4 +68,12 @@ public interface PostMapper extends BaseMapper<Post> {
 
     @Override
     Post selectById(Serializable id);
+
+    /**
+     * 根据 postIds 获取文章列表
+     * @param postHotSet
+     * @return
+     */
+    List<Post> selectPostHot(Set<Integer> postHotSet);
+
 }

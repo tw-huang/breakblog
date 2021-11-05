@@ -45,17 +45,8 @@ public class PostApiController {
 
     @GetMapping("/blog/posts/hot")
     public Result blogPostsHot() {
-        //先从redis读取今日访问量最高的五篇文章
-        Set<String> postHotSet = redisTemplate.opsForZSet().reverseRange(POST_ID_ZSET + DateUtil.format(new Date(), "yyyy-MM"), 0, -1);
-        if (!Objects.isNull(postHotSet) && postHotSet.size() >= 5) {
-            ArrayList<Post> list = new ArrayList<>();
-            postHotSet.forEach(x -> list.add(postService.getById(x)));
-            return Result.success(list);
-        } else {
-            List<Post> list = postService.list(new QueryWrapper<Post>().lambda().orderByDesc(Post::getPageView).last("LIMIT 5"));
-            list.forEach(post -> post.setCategory(categoryService.getById(post.getCategoryId())));
-            return Result.success(list);
-        }
+        List<Post> list = postService.getPostHot();
+        return Result.success(list);
     }
 
     @GetMapping("/blog/posts")

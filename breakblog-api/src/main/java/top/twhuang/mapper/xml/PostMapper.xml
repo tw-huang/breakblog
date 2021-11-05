@@ -129,4 +129,39 @@
         where p.id = #{id}
     </select>
 
+    <select id="selectPostHot" resultMap="postMap">
+        SELECT
+            p.id AS pId,
+            p.del_flag AS pDelFlag,
+            p.create_time AS pCreateTime,
+            p.update_time AS pUpdateTime,
+            p.title AS pTitle,
+            p.subtitle AS pSubtitle,
+            p.image AS pImage,
+            p.body AS pBody,
+            p.`timestamp` AS pTimestamp,
+            p.can_comment AS pCanComment,
+            p.category_id AS pCategoryId,
+            p.page_view AS pPageView,
+            c.id AS cId,
+            c.del_flag AS cDelFlag,
+            c.create_time AS cCreateTime,
+            c.update_time AS cUpdateTime,
+            c.NAME AS cName
+        FROM
+            post p
+                LEFT JOIN category c ON c.id = p.category_id
+        where
+            p.del_flag = 0 and p.id in
+        <foreach item="item" collection="collection" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+        ORDER BY FIELD(p.id,
+            <foreach item="item" collection="collection" separator=",">
+                #{item}
+            </foreach>
+            )
+        limit 5
+    </select>
+
 </mapper>

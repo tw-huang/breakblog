@@ -1,10 +1,14 @@
 package top.twhuang.service.Impl;
 
+import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
 import top.twhuang.dto.BlogHomeDTO;
 import top.twhuang.dto.PageDTO;
 import top.twhuang.entity.Category;
@@ -19,9 +23,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -35,6 +38,11 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
 
     @Resource
     private CommentService commentService;
+
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
+
+    public final static String POST_ID_ZSET = "post_id_zset::";
 
     @Override
     public Post getById(Serializable id) {
@@ -100,5 +108,20 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     @Override
     public Integer getSumPageViews() {
         return postMapper.selectSumPageViews();
+    }
+
+    @Override
+    public List<Post> getPostHot() {
+        List<Post> list;
+        //先从redis读取今日访问量最高的五篇文章
+        Set<String> postHotSet = redisTemplate.opsForZSet().reverseRange(POST_ID_ZSET + DateUtil.format(new Date(), "yyyy-MM"), 0, -1);
+        if (!Objects.isNull(postHotSet) && postHotSet.size() >= 5) {
+            Set<Integer> collect = postHotSet.stream().map(Integer::valueOf).collect(Collectors.toSet());
+            list = postMapper.selectPostHot(collect);
+        } else {
+            list = postMapper.selectList(new QueryWrapper<Post>().lambda().orderByDesc(Post::getPageView).last("LIMIT 5"));
+            list.forEach(post -> post.setCategory(categoryService.getById(post.getCategoryId())));
+        }
+        return list;
     }
 }

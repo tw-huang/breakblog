@@ -6,6 +6,7 @@ import top.twhuang.dto.BlogHomeDTO;
 import top.twhuang.dto.PageDTO;
 import top.twhuang.entity.Post;
 
+import java.util.List;
 import java.util.Map;
 
 public interface PostService extends IService<Post> {
@@ -62,4 +63,12 @@ public interface PostService extends IService<Post> {
      * @return Integer
      */
     Integer getSumPageViews();
+
+    /**
+     * 获取今日最热文章列表
+     *
+     * @return
+     */
+    List<Post> getPostHot();
+
 }
