@@ -4,7 +4,7 @@ let env = process.env.NODE_ENV
 let baseUrl = ''
 
 if (env === 'development') {
-	baseUrl = 'https://twhuang.top/api/breakblog'
+	baseUrl = 'http://localhost:9000/api'
 } else if (env === 'production') {
 	baseUrl = 'https://twhuang.top/api/breakblog'
 }

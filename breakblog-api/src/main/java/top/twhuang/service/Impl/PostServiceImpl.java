@@ -16,9 +16,9 @@ import top.twhuang.service.CommentService;
 import top.twhuang.service.PostService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import top.twhuang.vo.InfoVO;
 
 import javax.annotation.Resource;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +35,11 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
 
     @Resource
     private CommentService commentService;
+
+    @Override
+    public Post getById(Serializable id) {
+        return postMapper.selectById(id);
+    }
 
     @Override
     public IPage<Post> getPage(BlogHomeDTO blogHomeDTO) {

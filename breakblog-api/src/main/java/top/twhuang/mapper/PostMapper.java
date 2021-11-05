@@ -7,6 +7,8 @@ import top.twhuang.entity.Post;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.io.Serializable;
+
 /**
  * @Author: tw.huang
  * @DateTime: 2020-07-19 2:54
@@ -62,5 +64,6 @@ public interface PostMapper extends BaseMapper<Post> {
      */
     IPage<Post> selectBlogPostPage(IPage<Post> page, @Param("keyword") String keyword, @Param("categoryId") Integer categoryId);
 
-
+    @Override
+    Post selectById(Serializable id);
 }

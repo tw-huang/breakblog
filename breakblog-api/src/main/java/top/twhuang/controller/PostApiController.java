@@ -1,5 +1,6 @@
 package top.twhuang.controller;
 
+import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -8,6 +9,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.RedisTemplate;
 import top.twhuang.dto.BlogHomeDTO;
 import top.twhuang.dto.PageDTO;
 import top.twhuang.entity.Category;
@@ -34,13 +36,26 @@ import java.util.stream.Collectors;
 public class PostApiController {
 
     private PostService postService;
+
     private CategoryService categoryService;
+
+    private RedisTemplate<String, String> redisTemplate;
+
+    public final static String POST_ID_ZSET = "post_id_zset::";
 
     @GetMapping("/blog/posts/hot")
     public Result blogPostsHot() {
-        List<Post> list = postService.list(new QueryWrapper<Post>().lambda().orderByDesc(Post::getPageView).last("LIMIT 5"));
-        list.forEach(post -> post.setCategory(categoryService.getById(post.getCategoryId())));
-        return Result.success(list);
+        //先从redis读取今日访问量最高的五篇文章
+        Set<String> postHotSet = redisTemplate.opsForZSet().reverseRange(POST_ID_ZSET + DateUtil.format(new Date(), "yyyy-MM"), 0, -1);
+        if (!Objects.isNull(postHotSet) && postHotSet.size() >= 5) {
+            ArrayList<Post> list = new ArrayList<>();
+            postHotSet.forEach(x -> list.add(postService.getById(x)));
+            return Result.success(list);
+        } else {
+            List<Post> list = postService.list(new QueryWrapper<Post>().lambda().orderByDesc(Post::getPageView).last("LIMIT 5"));
+            list.forEach(post -> post.setCategory(categoryService.getById(post.getCategoryId())));
+            return Result.success(list);
+        }
     }
 
     @GetMapping("/blog/posts")
@@ -97,6 +112,8 @@ public class PostApiController {
         postVO.setNextPostTitle(Objects.isNull(nextPost) ? null : nextPost.getTitle());
         // 增加文章浏览量
         postService.updatePageView(id);
+        // 文章ID浏览器记录到redis
+        redisTemplate.opsForZSet().incrementScore(POST_ID_ZSET + DateUtil.format(new Date(), "yyyy-MM"), id.toString(), 1);
         return Result.success(postVO);
     }
 
