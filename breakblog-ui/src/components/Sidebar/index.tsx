@@ -183,10 +183,10 @@ const Sidebar: React.FC<Props> = (props) => {
 				</div>
 			</div>
 
-			{/* 热门文章 */}
+			{/* 本月热门 */}
 			<div className='mt-6 bg-white dark:bg-gray-700 rounded'>
 				<div className='font-medium bg-gray-200 dark:bg-gray-800 dark:text-gray-400 opacity-75 px-2 py-1 rounded-t'>
-					热门文章:
+					本月热门:
 				</div>
 				<div className='text-sm p-4'>
 					{postsHot?.map((post: Post) => {
