@@ -53,7 +53,6 @@ const defaultPageSize: number = 3
 
 const PostPage: React.FC = (props: any) => {
 	const postId = props.match.params.id
-	console.log(postId)
 	/** 文章 */
 	const [post, setPost] = useState<Post | null>(null)
 	/** 评论 */
