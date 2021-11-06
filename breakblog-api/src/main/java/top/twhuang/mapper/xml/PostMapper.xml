@@ -161,7 +161,6 @@
                 #{item}
             </foreach>
             )
-        limit 5
     </select>
 
 </mapper>

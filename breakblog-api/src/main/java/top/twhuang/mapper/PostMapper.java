@@ -74,6 +74,6 @@ public interface PostMapper extends BaseMapper<Post> {
      * @param postHotSet
      * @return
      */
-    List<Post> selectPostHot(Set<Integer> postHotSet);
+    List<Post> selectPostHot(List<Integer> postHotSet);
 
 }

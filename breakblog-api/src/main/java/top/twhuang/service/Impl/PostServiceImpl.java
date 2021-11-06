@@ -114,9 +114,9 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     public List<Post> getPostHot() {
         List<Post> list;
         //先从redis读取今日访问量最高的五篇文章
-        Set<String> postHotSet = redisTemplate.opsForZSet().reverseRange(POST_ID_ZSET + DateUtil.format(new Date(), "yyyy-MM"), 0, -1);
+        Set<String> postHotSet = redisTemplate.opsForZSet().reverseRange(POST_ID_ZSET + DateUtil.format(new Date(), "yyyy-MM"), 0, 5);
         if (!Objects.isNull(postHotSet) && postHotSet.size() >= 5) {
-            Set<Integer> collect = postHotSet.stream().map(Integer::valueOf).collect(Collectors.toSet());
+            List<Integer> collect = postHotSet.stream().map(Integer::valueOf).collect(Collectors.toList());
             list = postMapper.selectPostHot(collect);
         } else {
             list = postMapper.selectList(new QueryWrapper<Post>().lambda().orderByDesc(Post::getPageView).last("LIMIT 5"));

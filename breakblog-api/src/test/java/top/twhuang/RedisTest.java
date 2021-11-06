@@ -7,7 +7,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @SpringBootTest
 public class RedisTest {
@@ -19,10 +22,13 @@ public class RedisTest {
 
     @Test
     void redis() {
-        Set<String> range = redisTemplate.opsForZSet().reverseRange(POST_ID_ZSET + DateUtil.format(new Date(), "yyyy-MM"), 0, -1);
-        assert range != null;
-        range.forEach(x->{
-            System.out.println(x);
-        });
+        Set<String> postHotSet = redisTemplate.opsForZSet().reverseRange(POST_ID_ZSET + DateUtil.format(new Date(), "yyyy-MM"), 0, 4);
+        if (!Objects.isNull(postHotSet) && postHotSet.size() >= 5) {
+            List<Integer> collect = postHotSet.stream().map(Integer::valueOf).collect(Collectors.toList());
+            collect.forEach(x->{
+                System.out.println(x);
+            });
+
+        }
     }
 }
