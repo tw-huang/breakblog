@@ -5,9 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import top.twhuang.dto.BlogHomeDTO;
 import top.twhuang.dto.PageDTO;
@@ -22,7 +20,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -45,12 +42,12 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     public final static String POST_ID_ZSET = "post_id_zset::";
 
     @Override
-    public Post getById(Serializable id) {
-        return postMapper.selectById(id);
+    public Post getPostById(Integer id) {
+        return postMapper.selectPostById(id);
     }
 
     @Override
-    public IPage<Post> getPage(BlogHomeDTO blogHomeDTO) {
+    public IPage<Post> getBlogPage(BlogHomeDTO blogHomeDTO) {
         Page<Post> page = new Page<>(blogHomeDTO.getPageNum(), blogHomeDTO.getPageSize());
         return postMapper.selectBlogPostPage(page, blogHomeDTO.getKeyword(), blogHomeDTO.getCategoryId());
     }
@@ -98,16 +95,6 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     @Override
     public Post getNextPost(Integer id) {
         return postMapper.selectNextPost(id);
-    }
-
-    @Override
-    public Integer getCountPages() {
-        return postMapper.selectCountPages();
-    }
-
-    @Override
-    public Integer getSumPageViews() {
-        return postMapper.selectSumPageViews();
     }
 
     @Override

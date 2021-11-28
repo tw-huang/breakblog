@@ -12,12 +12,19 @@ import java.util.Map;
 public interface PostService extends IService<Post> {
 
     /**
+     * 根据 id 获取 post
+     * @param id
+     * @return
+     */
+    Post getPostById(Integer id);
+
+    /**
      * 博客首页文章
      *
      * @param blogHomeDTO blogHomeDTO
      * @return Page<Post>
      */
-    IPage<Post> getPage(BlogHomeDTO blogHomeDTO);
+    IPage<Post> getBlogPage(BlogHomeDTO blogHomeDTO);
 
     /**
      * 后台文章
@@ -50,19 +57,6 @@ public interface PostService extends IService<Post> {
      */
     Post getNextPost(Integer id);
 
-    /**
-     * 文章数量
-     *
-     * @return Integer
-     */
-    Integer getCountPages();
-
-    /**
-     * 文章总浏览量
-     *
-     * @return Integer
-     */
-    Integer getSumPageViews();
 
     /**
      * 获取今日最热文章列表

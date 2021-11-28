@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class BlogHomeDTO {
 
-    private Integer pageNum = 1;
+    private Integer pageNum;
 
-    private Integer pageSize = 10;
+    private Integer pageSize;
 
     private String keyword;
 

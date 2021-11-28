@@ -20,25 +20,18 @@ import java.util.Set;
 public interface PostMapper extends BaseMapper<Post> {
 
     /**
+     * 根据 id 获取 post
+     * @param id
+     * @return
+     */
+    Post selectPostById(Integer id);
+
+    /**
      * 更新文章浏览量
      *
      * @param id 文章ID
      */
     void updatePageView(@Param("id") Integer id);
-
-    /**
-     * 文章总浏览量
-     *
-     * @return Integer
-     */
-    Integer selectSumPageViews();
-
-    /**
-     * 文章数量
-     *
-     * @return Integer
-     */
-    Integer selectCountPages();
 
     /**
      * 根据文章ID选择前一文章
@@ -65,9 +58,6 @@ public interface PostMapper extends BaseMapper<Post> {
      * @return
      */
     IPage<Post> selectBlogPostPage(IPage<Post> page, @Param("keyword") String keyword, @Param("categoryId") Integer categoryId);
-
-    @Override
-    Post selectById(Serializable id);
 
     /**
      * 根据 postIds 获取文章列表

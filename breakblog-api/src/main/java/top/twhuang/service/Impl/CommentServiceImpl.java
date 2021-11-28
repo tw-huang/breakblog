@@ -1,9 +1,11 @@
 package top.twhuang.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.ObjectUtils;
+import top.twhuang.dto.BlogCommentDTO;
 import top.twhuang.dto.PageDTO;
 import top.twhuang.entity.Comment;
 import top.twhuang.entity.Post;
@@ -19,7 +21,6 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 
 @Service
@@ -60,5 +61,11 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         map.put("total", page.getTotal());
         map.put("size", page.getSize());
         return map;
+    }
+
+    @Override
+    public IPage<Comment> getBlogPage(BlogCommentDTO blogCommentDTO) {
+        Page<Comment> commentPage = new Page<>(blogCommentDTO.getPageNum(), blogCommentDTO.getPageSize());
+        return commentMapper.selectBlogCommentPage(commentPage, blogCommentDTO.getPostId());
     }
 }

@@ -22,13 +22,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class CategoryApiController {
 
-    private CategoryService categoryService;
-
-    @GetMapping("/blog/categories")
-    public Result blogCategories() {
-        List<Category> list = categoryService.getList();
-        return Result.success(list);
-    }
+    private final CategoryService categoryService;
 
     @GetMapping("/categories")
     public Result categories(PageDTO pageDTO) {

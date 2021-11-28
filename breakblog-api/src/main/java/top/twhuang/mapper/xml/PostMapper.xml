@@ -30,24 +30,6 @@
             AND del_flag = 0
     </select>
 
-    <select id="selectSumPageViews" resultType="java.lang.Integer">
-        SELECT
-            SUM( page_view ) AS clicks
-        FROM
-            post
-        WHERE
-            del_flag = 0
-    </select>
-
-    <select id="selectCountPages" resultType="java.lang.Integer">
-        SELECT
-            COUNT(*) AS posts
-        FROM
-            post
-        WHERE
-            del_flag = 0
-    </select>
-
     <resultMap type="top.twhuang.entity.Post" id="postMap">
         <id column="pId" property="id"/>
         <result column="pDelFlag" property="delFlag"/>
@@ -104,7 +86,7 @@
             ORDER BY p.id DESC
     </select>
 
-    <select id="selectById" resultMap="postMap">
+    <select id="selectPostById" resultMap="postMap">
         SELECT
             p.id AS pId,
             p.del_flag AS pDelFlag,

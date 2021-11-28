@@ -22,8 +22,17 @@ public interface CategoryService extends IService<Category> {
      */
     Integer getCategories();
 
+    /**
+     * 后台分类
+     * @param pageDTO
+     * @return
+     */
     Map getPage(PageDTO pageDTO);
 
+    /**
+     *
+     * @return
+     */
     Map<String, Object> categoryReport();
 
     /**

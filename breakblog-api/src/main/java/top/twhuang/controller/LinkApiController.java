@@ -10,7 +10,6 @@ import top.twhuang.util.Result;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 /**
  * @Author: tw.huang
@@ -23,12 +22,6 @@ import java.util.List;
 public class LinkApiController {
 
     private LinkService linkService;
-
-    @GetMapping("/blog/links")
-    public Result blogLinks() {
-        List<Link> list = linkService.getList();
-        return Result.success(list);
-    }
 
     @GetMapping("/links")
     public Result links(PageDTO pageDTO) {

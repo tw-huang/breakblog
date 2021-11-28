@@ -3,7 +3,6 @@ package top.twhuang.service.Impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -12,8 +11,6 @@ import top.twhuang.mapper.AdminMapper;
 import top.twhuang.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import top.twhuang.service.CategoryService;
-import top.twhuang.service.PostService;
 import top.twhuang.vo.InfoVO;
 import top.twhuang.vo.StatisticVO;
 
@@ -24,10 +21,6 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     @Autowired
     private AdminMapper adminMapper;
-    @Autowired
-    private PostService postService;
-    @Autowired
-    private CategoryService categoryService;
 
     @Override
     public Admin getAdminByUsername(String username) {
@@ -36,11 +29,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     @Override
     public StatisticVO getBlogStatistic() {
-        StatisticVO vo = new StatisticVO();
-        vo.setPosts(postService.getCountPages());
-        vo.setPageviews(postService.getSumPageViews());
-        vo.setCategories(categoryService.getCategories());
-        return vo;
+        return adminMapper.getBlogStatistic();
     }
 
     @Override

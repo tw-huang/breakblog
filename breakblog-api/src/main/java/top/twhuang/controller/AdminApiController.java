@@ -2,7 +2,6 @@ package top.twhuang.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import lombok.AllArgsConstructor;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import top.twhuang.dto.AdminDTO;
@@ -21,28 +20,6 @@ import top.twhuang.util.Result;
 public class AdminApiController {
 
     private AdminService adminService;
-
-    @GetMapping("/blog/info")
-    public Result blogInfo() {
-        return Result.success(adminService.getBlogInfo());
-    }
-
-    @GetMapping("/blog/statistic")
-    public Result blogStatistic() {
-        return Result.success(adminService.getBlogStatistic());
-    }
-
-    @GetMapping("/blog/about")
-    public Result blogAbout() {
-        Admin admin = adminService.getById(1);
-        if (ObjectUtils.isNotEmpty(admin)) {
-            admin.setUsername(null);
-            admin.setPassword(null);
-            admin.setPhone(null);
-            return Result.success(admin);
-        }
-        return Result.failure();
-    }
 
     @PutMapping("/admin")
     public Result putLink(@RequestBody AdminDTO adminDTO) {
