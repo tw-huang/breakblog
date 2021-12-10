@@ -35,10 +35,6 @@ public class BlogApiController {
 
     private LinkService linkService;
 
-    private RedisTemplate<String, String> redisTemplate;
-
-    public final static String POST_ID_ZSET = "post_id_zset::";
-
 
     @GetMapping("/info")
     public Result blogInfo() {
@@ -154,11 +150,14 @@ public class BlogApiController {
         postVO.setPrevPostTitle(Objects.isNull(prevPost) ? null : prevPost.getTitle());
         postVO.setNextPostId(Objects.isNull(nextPost) ? null : nextPost.getId());
         postVO.setNextPostTitle(Objects.isNull(nextPost) ? null : nextPost.getTitle());
+        return Result.success(postVO);
+    }
+
+    @PutMapping("/post/{id}")
+    public Result blogPostPut(@PathVariable Integer id) {
         // 增加文章浏览量
         postService.updatePageView(id);
-        // 文章ID浏览器记录到redis
-        redisTemplate.opsForZSet().incrementScore(POST_ID_ZSET + DateUtil.format(new Date(), "yyyy-MM"), id.toString(), 1);
-        return Result.success(postVO);
+        return Result.success("ok");
     }
 
 }

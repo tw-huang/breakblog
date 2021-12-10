@@ -1,6 +1,7 @@
 package top.twhuang.service.Impl;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -85,6 +86,8 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     @Override
     public void updatePageView(Integer id) {
         postMapper.updatePageView(id);
+        // 文章ID浏览器记录到redis
+        redisTemplate.opsForZSet().incrementScore(POST_ID_ZSET + DateUtil.format(new Date(), "yyyy-MM"), id.toString(), 1);
     }
 
     @Override
@@ -102,7 +105,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
         List<Post> list;
         //先从redis读取今日访问量最高的五篇文章
         Set<String> postHotSet = redisTemplate.opsForZSet().reverseRange(POST_ID_ZSET + DateUtil.format(new Date(), "yyyy-MM"), 0, 4);
-        if (!Objects.isNull(postHotSet) && postHotSet.size() >= 5) {
+        if (ObjectUtil.isNotNull(postHotSet) && Objects.requireNonNull(postHotSet).size() >= 5) {
             List<Integer> collect = postHotSet.stream().map(Integer::valueOf).collect(Collectors.toList());
             list = postMapper.selectPostHot(collect);
         } else {
