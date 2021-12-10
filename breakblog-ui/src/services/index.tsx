@@ -56,6 +56,25 @@ export async function getComments(
 			console.log(err)
 		})
 }
+// 点击文章
+export async function postClick(postId:number){
+	return axios({
+		url: baseUrl + '/blog/post/' + postId,
+		method: 'put',
+		headers: {
+			'Content-type': 'application/json',
+		},
+		data: {
+			postId: postId,
+		},
+	})
+		.then((res) => {
+			return res.data
+		})
+		.catch((err) => {
+			console.log(err)
+		})
+}
 
 // 提交文章评论
 export async function postComment(

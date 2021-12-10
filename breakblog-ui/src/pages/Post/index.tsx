@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Link as LinkTo } from 'react-router-dom'
 import dayjs from 'dayjs'
 import './index.css'
-import { getPost, getComments, postComment } from '../../services'
+import { getPost, getComments, postComment, postClick } from '../../services'
 import { PostSkeleton } from '../../components/Skeleton'
 import Pagination from '../../components/Pagination'
 
@@ -76,12 +76,15 @@ const PostPage: React.FC = (props: any) => {
 
 	/** 文章数据 */
 	useEffect(() => {
+		// 滚动条默认顶部
+		document.body.scrollTop = document.documentElement.scrollTop = 0
 		const fetchData = async () => {
 			const post = await getPost(postId)
 			if (post?.success && post.code === 1) {
 				setPost(post.data)
 				setPage(1)
 			}
+			await postClick(postId)
 		}
 		fetchData()
 	}, [postId])

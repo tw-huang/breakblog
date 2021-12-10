@@ -53,6 +53,7 @@ const Home: React.FC = () => {
 		if (keyCode === 13 && document.activeElement.id === 'searchInput') {
 			const text = searchText.replace(/(^\s*)|(\s*$)/g, '')
 			const fetchData = async () => {
+				document.body.scrollTop = document.documentElement.scrollTop = 0
 				const posts = await getPosts(text, null, 1, defaultPageSize)
 				if (posts?.success && posts.code === 1) {
 					setPosts(posts.data.records)
@@ -66,6 +67,7 @@ const Home: React.FC = () => {
 	/** 文章分页数据 */
 	useEffect(() => {
 		const fetchData = async () => {
+			document.body.scrollTop = document.documentElement.scrollTop = 0
 			const posts = await getPosts('', categoryId, page, defaultPageSize)
 			if (posts?.success && posts.code === 1) {
 				setPosts(posts.data.records)
