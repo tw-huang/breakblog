@@ -1,0 +1,35 @@
+server:
+  port: 9000
+
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://twhuang.top:3306/breakblog?&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: break0801mysql
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      pool-name: BreakBlogHikariCP
+      minimum-idle: 5
+      maximum-pool-size: 15
+      auto-commit: true
+      idle-timeout: 30000
+      connection-timeout: 30000
+      max-lifetime: 1800000
+      connection-test-query: SELECT 1
+  servlet:
+    multipart:
+      #开启文件上传
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+  data:
+    redis:
+      host: twhuang.top
+      password: break0801redis
+      port: 6379
+      database: 1
+      timeout: 5000
