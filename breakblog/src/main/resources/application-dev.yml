@@ -7,9 +7,9 @@ spring:
     time-zone: GMT+8
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://twhuang.top:3306/breakblog?&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://192.168.2.200:3306/breakblog?&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
     username: root
-    password: break0801mysql
+    password: password
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       pool-name: BreakBlogHikariCP
@@ -28,8 +28,8 @@ spring:
       max-request-size: 100MB
   data:
     redis:
-      host: twhuang.top
-      password: break0801redis
+      host: 192.168.2.200
+      password: password
       port: 6379
       database: 1
       timeout: 5000
